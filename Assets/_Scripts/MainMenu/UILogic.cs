@@ -10,7 +10,6 @@ public class UILogic : MonoBehaviour {
     public InputField inputField = null;
     public NetworkScript networkScript;
     public NetworkManager networkManager;
-    public ClientManager clientManager;
 	// Use this for initialization
 	void Start () {
 	
@@ -27,7 +26,18 @@ public class UILogic : MonoBehaviour {
     public void Host()
     {
         NetworkClient client = networkManager.StartHost();
-    
+
+
+        //ClientScene.Ready(networkManager.client.connection);
+
+        //if (ClientScene.localPlayers.Count == 0)
+        //{
+        //    ClientScene.AddPlayer(0);
+        //}
+
+       // SceneManager.LoadScene(networkScript.currentLevel);
+
+
       //  NetworkServer.Listen(networkScript.port);
         hosting = true;
         //SceneManager.LoadScene("defaultscene");
@@ -47,7 +57,6 @@ public class UILogic : MonoBehaviour {
             Debug.Log("Invalid ip!");
             return;
         }
-        clientManager.gameObject.active = true;
-        clientManager.Connect(ip, networkScript.port);
+        networkManager.StartClient();
     }
 }

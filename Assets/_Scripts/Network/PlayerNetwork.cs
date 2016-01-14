@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class PlayerNetwork : MonoBehaviour {
 
@@ -12,4 +13,5 @@ public class PlayerNetwork : MonoBehaviour {
 	void Update () {
 	
 	}
+
 }
