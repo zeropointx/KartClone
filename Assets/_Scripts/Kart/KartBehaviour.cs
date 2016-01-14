@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CarBehaviour : MonoBehaviour {
+public class KartBehaviour : MonoBehaviour {
 
     public float speed;
     private float maxSpeed;
