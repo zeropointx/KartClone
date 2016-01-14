@@ -4,14 +4,14 @@ using System.Collections;
 public class KartBehaviour : MonoBehaviour {
 
     public float speed;
-    private float maxSpeed;
+    public float maxSpeed;
     private float engineDeceleration;
 
 	// Use this for initialization
 	void Start () {
-        maxSpeed = 12.5f;
+        maxSpeed = 50;
         speed = 0;
-        engineDeceleration = 0.5f;
+        engineDeceleration = 10f;
 	}
 	
 	// Update is called once per frame
