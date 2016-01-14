@@ -11,10 +11,12 @@ public class InventoryScript : MonoBehaviour
     public WEAPON currentWeapon;
     public GameObject weaponImage;
     weaponImageScript imageScript;
+    public int randomSeed = 1337;
     
 
     void Start()
     {
+        Random.seed = randomSeed;
         currentWeapon = WEAPON.noWeapon;
         imageScript = weaponImage.GetComponent<weaponImageScript>();
     }
@@ -24,18 +26,22 @@ public class InventoryScript : MonoBehaviour
         updateWeaponTexture();
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.tag == "weaponBox")
+        if (other.gameObject.tag == "weaponBox")
         {
             Debug.Log("Collided with weaponBox!");
-            pickUpRandomWeapon();
+
+            if (currentWeapon == WEAPON.noWeapon)
+            {
+                pickUpRandomWeapon();
+            }
         }
     }
 
     public void pickUpRandomWeapon()
     {
-        currentWeapon = ((WEAPON)Random.Range(0, weaponAmount-1));
+        currentWeapon = ((WEAPON)Random.Range(0, 2));
     }
 
     public void updateWeaponTexture()

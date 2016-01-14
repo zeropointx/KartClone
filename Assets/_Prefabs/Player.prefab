@@ -48,9 +48,11 @@ GameObject:
   - 114: {fileID: 11440818}
   - 114: {fileID: 11408312}
   - 114: {fileID: 11451734}
+  - 64: {fileID: 6466866}
+  - 114: {fileID: 11467998}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,6 +162,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116366}
   m_Mesh: {fileID: 4300000, guid: df1cd1e03925d5c4f93ec84b8145b394, type: 3}
+--- !u!64 &6466866
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169864}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: df1cd1e03925d5c4f93ec84b8145b394, type: 3}
 --- !u!81 &8115084
 AudioListener:
   m_ObjectHideFlags: 1
@@ -240,6 +254,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02081b861f3c431468e2739f18199069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11467998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0646267e956a3d84ab508bf21a25a67a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon1Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  weapon2Sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  weapon3Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  noWeaponSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  currentWeapon: 0
+  weaponImage: {fileID: 0}
+  randomSeed: 10
 --- !u!124 &12406898
 Behaviour:
   m_ObjectHideFlags: 1
