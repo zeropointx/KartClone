@@ -18,7 +18,7 @@ public class InventoryScript : MonoBehaviour
     {
         Random.seed = randomSeed;
         currentWeapon = WEAPON.noWeapon;
-        imageScript = weaponImage.GetComponent<weaponImageScript>();
+       // imageScript = weaponImage.GetComponent<weaponImageScript>();
     }
 
     void Update()
@@ -41,14 +41,14 @@ public class InventoryScript : MonoBehaviour
 
     public void pickUpRandomWeapon()
     {
-        currentWeapon = ((WEAPON)Random.Range(0, 2));
+        currentWeapon = ((WEAPON)Random.Range(1, 2));
     }
 
     public void updateWeaponTexture()
     {
         if(currentWeapon == WEAPON.noWeapon)
         {
-            imageScript.updateSprite(noWeaponSprite);
+           // imageScript.updateSprite(noWeaponSprite);
         }
 
         else if(currentWeapon == WEAPON.Weapon1)

@@ -285,7 +285,7 @@ MonoBehaviour:
   weapon1Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   weapon2Sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   weapon3Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  noWeaponSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  noWeaponSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   currentWeapon: 0
   weaponImage: {fileID: 0}
   randomSeed: 10
@@ -383,6 +383,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 75aab51199a7cda45b9222f6d127147b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: noWeaponSprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169864}
