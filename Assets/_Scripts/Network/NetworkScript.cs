@@ -36,7 +36,6 @@ public class NetworkScript : MonoBehaviour {
         playerCount--;
         
     }
-    [RPC]
     void NetworkLoadLevel(string level)
     {
         SceneManager.LoadScene(currentLevel);

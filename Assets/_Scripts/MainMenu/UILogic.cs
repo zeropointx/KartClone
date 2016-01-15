@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 
 public class UILogic : MonoBehaviour {
 
-    bool hosting = false;
     public InputField inputField = null;
     public NetworkScript networkScript;
     public NetworkManager networkManager;
@@ -39,7 +38,6 @@ public class UILogic : MonoBehaviour {
 
 
       //  NetworkServer.Listen(networkScript.port);
-        hosting = true;
         //SceneManager.LoadScene("defaultscene");
      //   clientManager.ConnectLocal();
  
@@ -57,6 +55,7 @@ public class UILogic : MonoBehaviour {
             Debug.Log("Invalid ip!");
             return;
         }
+        networkManager.networkAddress = ip;
         networkManager.StartClient();
     }
 }
