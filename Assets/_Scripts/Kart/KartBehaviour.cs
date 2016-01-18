@@ -8,19 +8,22 @@ public class KartBehaviour : MonoBehaviour {
     private float speed;
     private float maxSpeed;
     private float turnSpeed;
-    private float maxTurn;
     private float acceleration;
     private float brakeForce;
     private float engineDeceleration;
+    private GameObject mainCamera;
 
 	// Use this for initialization
 	void Start () {
-        maxSpeed = 50;
+        steeringWheel = 0;
+        pedal = 0;
         speed = 0;
-        turnSpeed = 75;
-        acceleration = 25;
-        brakeForce = 45;
-        engineDeceleration = 10f;
+        maxSpeed = 50;
+        turnSpeed = 100;
+        acceleration = 2.5f;
+        brakeForce = 2.5f;
+        engineDeceleration = 0.5f;
+        mainCamera = transform.FindChild("Main Camera").gameObject;
 	}
 	
 	// Update is called once per frame
@@ -33,24 +36,33 @@ public class KartBehaviour : MonoBehaviour {
             speedChange = (pedal < 0) ? brakeForce : acceleration;
 
         //steer
-        if (Mathf.Abs(speed) > 0)
+        if (0.0f < Mathf.Abs(speed))
         {
             rotation = steeringWheel;
-            if (speed < 0.5f * maxSpeed)
-                rotation *= Mathf.Abs(speed) * 0.075f;
-            //speedChange *= 0.75f;
-        }    
-        
+            if (Mathf.Abs(speed) < 1.0f)
+                rotation *= 0.005f;
+            else if (Mathf.Abs(speed) > 1.5f)
+            {
+                rotation = steeringWheel;
+                if (speed < 0.5f * maxSpeed)
+                    rotation *= ((maxSpeed / Mathf.Abs(speed)) * 0.5f);
+            }
+        }
+        else
+            rotation = 0;
+
         //speed
-        speed -= engineDeceleration * Time.deltaTime;
-        speed += speedChange * pedal * Time.deltaTime;
+        speed -= engineDeceleration;
+        speed += speedChange * pedal;
         speed = Mathf.Min(speed, maxSpeed);
         speed = Mathf.Max(speed, 0);
 
         //transform
-        transform.Rotate(new Vector3(0, turnSpeed * rotation * Time.deltaTime, 0));
+        if (Mathf.Abs(rotation) > 0)
+            transform.Rotate(new Vector3(0, turnSpeed * rotation * Time.deltaTime, 0));
         transform.position += speed * Time.deltaTime * transform.forward;
-	}
+        mainCamera.transform.LookAt(transform);
+    }
 
     public void Accelerate(float pedalValue) {
         pedal = pedalValue;
