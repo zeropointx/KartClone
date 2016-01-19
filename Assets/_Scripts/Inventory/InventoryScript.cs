@@ -5,7 +5,7 @@ public class InventoryScript : MonoBehaviour
 {
 
     //TODO: Better names one we know them
-    public enum WEAPON { Weapon1, Weapon2, Weapon3, noWeapon };
+    public enum WEAPON { BowlingBall, noWeapon };
     public Sprite weapon1Sprite, weapon2Sprite, weapon3Sprite, noWeaponSprite;
     int weaponAmount;
     public WEAPON currentWeapon;
@@ -42,7 +42,7 @@ public class InventoryScript : MonoBehaviour
 
     public void pickUpRandomWeapon()
     {
-        currentWeapon = ((WEAPON)Random.Range(0, 2));
+        currentWeapon = ((WEAPON)Random.Range(0, 0));
     }
 
     public void updateWeaponTexture()
@@ -52,19 +52,9 @@ public class InventoryScript : MonoBehaviour
             imageScript.updateSprite(noWeaponSprite);
         }
 
-        else if (currentWeapon == WEAPON.Weapon1)
+        else if (currentWeapon == WEAPON.BowlingBall)
         {
             imageScript.updateSprite(weapon1Sprite);
-        }
-
-        else if (currentWeapon == WEAPON.Weapon2)
-        {
-            imageScript.updateSprite(weapon2Sprite);
-        }
-
-        else if (currentWeapon == WEAPON.Weapon3)
-        {
-            imageScript.updateSprite(weapon3Sprite);
         }
     }
 
