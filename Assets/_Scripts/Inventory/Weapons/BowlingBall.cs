@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BowlingBall : Weapon
+public class BowlingBall : MonoBehaviour
 {
 
 

@@ -52,6 +52,7 @@ GameObject:
   - 54: {fileID: 5468226}
   - 65: {fileID: 6558444}
   - 114: {fileID: 11481806}
+  - 114: {fileID: 11410198}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -216,6 +217,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58095763a6dcc8b4191c99312f5892c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11410198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8acac45d8835e9147be4fed7686f4c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bowlingBall: {fileID: 176684, guid: 4999114a78229774db33f98533ff4679, type: 2}
 --- !u!114 &11440818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,6 +456,10 @@ Prefab:
       propertyPath: weaponImageUI
       value: 
       objectReference: {fileID: 136688, guid: 2f114f11cb276b647bc4eb61c6f4070b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: bowlingBall
+      value: 
+      objectReference: {fileID: 176684, guid: 4999114a78229774db33f98533ff4679, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169864}

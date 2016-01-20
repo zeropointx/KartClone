@@ -1,28 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Weapon : MonoBehaviour {
-
-    public GameObject player;
+public class Weapon : MonoBehaviour
+{
     InventoryScript inventory;
-	// Use this for initialization
-	void Start () 
+
+    //Weapon prefabs
+    public GameObject bowlingBall;
+
+
+    void Start()
     {
-        inventory = player.GetComponent<InventoryScript>();
-	}
-	
-	// Update is called once per frame
-	void Update () 
+        inventory = gameObject.GetComponent<InventoryScript>();
+    }
+
+    void Update()
     {
         if (inventory.currentWeapon != InventoryScript.WEAPON.noWeapon)
         {
-            // Update
-            if (Input.GetButtonDown("Shoot"))
+            if (inventory.currentWeapon == InventoryScript.WEAPON.BowlingBall)
             {
-
+                // Update
+                if (Input.GetButtonDown("Shoot"))
+                {
+                    // Position fixing...
+                    Instantiate(bowlingBall, transform.position+(transform.forward*4), transform.rotation);
+                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
+                }
 
             }
 
         }
-	}
+    }
 }
