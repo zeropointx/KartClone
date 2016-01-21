@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class InventoryScript : MonoBehaviour
+public class InventoryScript : NetworkBehaviour
 {
 
-    //TODO: Better names one we know them
+    //TODO: Better names once we know them
     public enum WEAPON { BowlingBall, noWeapon };
     public Sprite weapon1Sprite, weapon2Sprite, weapon3Sprite, noWeaponSprite;
     int weaponAmount;
@@ -36,6 +37,7 @@ public class InventoryScript : MonoBehaviour
             if (currentWeapon == WEAPON.noWeapon)
             {
                 pickUpRandomWeapon();
+                Destroy(other.gameObject);
             }
         }
     }
