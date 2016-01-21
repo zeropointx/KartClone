@@ -17,25 +17,35 @@ public class Weapon : NetworkBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Shoot"))
+        if (!isLocalPlayer)
         {
-            shootServer();
+            return;
         }
+            if (Input.GetButtonDown("Shoot"))
+            {
+                CmdshootServer();
+            }
+        
     }
-    void shootServer()
+    [Command]
+    void CmdshootServer()
     {
         switch (inventory.currentWeapon)
         {
             case InventoryScript.WEAPON.noWeapon:
                 {
+                       // Position fixing...
+                    GameObject ball = (GameObject)Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
+                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
+                    NetworkServer.Spawn(ball);
                     break;
                 }
             case InventoryScript.WEAPON.BowlingBall:
                 {
                     // Position fixing...
-                    Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
+                    GameObject ball = (GameObject)Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
                     inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
-
+                    NetworkServer.Spawn(ball);
                     break;
                 }
         }

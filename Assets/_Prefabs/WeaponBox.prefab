@@ -27,7 +27,6 @@ GameObject:
   - 4: {fileID: 424162}
   - 54: {fileID: 5457172}
   - 65: {fileID: 6555786}
-  - 114: {fileID: 11401082}
   m_Layer: 0
   m_Name: WeaponBox
   m_TagString: weaponBox
@@ -121,17 +120,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5849755, y: 1.556246, z: 1.5770812}
   m_Center: {x: -0.015170693, y: 0.011407018, z: -0.009187698}
---- !u!114 &11401082
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c23a8fe375fce2f45adefd77a98f66b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

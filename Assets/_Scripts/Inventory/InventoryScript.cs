@@ -9,6 +9,7 @@ public class InventoryScript : NetworkBehaviour
     public enum WEAPON { BowlingBall, noWeapon };
     public Sprite weapon1Sprite, weapon2Sprite, weapon3Sprite, noWeaponSprite;
     int weaponAmount;
+    [SyncVar]
     public WEAPON currentWeapon;
     public GameObject weaponImageUI;
     weaponImageScript imageScript;
@@ -30,6 +31,8 @@ public class InventoryScript : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (isLocalPlayer)
+            return;
         if (other.gameObject.tag == "weaponBox")
         {
             Debug.Log("Collided with weaponBox!");
