@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class HUD : MonoBehaviour {
-    public GameObject localPlayer;
+       public GameObject localPlayer = null;
      GameObject weaponImageUI;
      weaponImageScript imageScript;
      public Sprite weapon1Sprite, weapon2Sprite, weapon3Sprite, noWeaponSprite;
+     InventoryScript.WEAPON uiweapon = InventoryScript.WEAPON.noWeapon;
 	// Use this for initialization
 	void Start () {
         weaponImageUI = transform.FindChild("weaponImageUI").gameObject;
@@ -14,13 +15,22 @@ public class HUD : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-            updateWeaponTexture();
+          if (localPlayer == null)
+          {
+              updateWeaponTexture(InventoryScript.WEAPON.noWeapon);
+              return;
+          }
+         InventoryScript.WEAPON currentWeapon = localPlayer.GetComponent<InventoryScript>().currentWeapon;
+        if(currentWeapon != uiweapon)
+            updateWeaponTexture(currentWeapon);
 
 	}
 
-    public void updateWeaponTexture()
+    public void updateWeaponTexture(InventoryScript.WEAPON currentWeapon)
     {
-        InventoryScript.WEAPON currentWeapon = localPlayer.GetComponent<InventoryScript>().currentWeapon;
+      
+            imageScript.updateSprite(noWeaponSprite);
+       
         if (currentWeapon == InventoryScript.WEAPON.noWeapon)
         {
             imageScript.updateSprite(noWeaponSprite);
@@ -30,5 +40,6 @@ public class HUD : MonoBehaviour {
         {
             imageScript.updateSprite(weapon1Sprite);
         }
+        uiweapon = currentWeapon;
     }
 }
