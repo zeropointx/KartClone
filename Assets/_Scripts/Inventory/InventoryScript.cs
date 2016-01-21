@@ -31,7 +31,7 @@ public class InventoryScript : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (isLocalPlayer)
+        if (!isServer)
             return;
         if (other.gameObject.tag == "weaponBox")
         {
