@@ -22,14 +22,14 @@ public class KartBehaviour : MonoBehaviour {
         steeringWheel = 0;
         pedal = 0;
         speed = 0;
-        maxSpeed = 55;
+        maxSpeed = 45;
         turnSpeed = 75;
-        acceleration = 0.5f;
-        brakeForce = 1.5f;
-        engineDeceleration = 0.25f;
+        acceleration = 0.35f;
+        brakeForce = 1.25f;
+        engineDeceleration = 0.15f;
         groundDistance = 0;
         mainCamera = transform.FindChild("Main Camera").gameObject;
-        tiltLimitX = 30;
+        tiltLimitX = 45;
         tiltLimitZ = 45;
 	}
 	
@@ -70,17 +70,7 @@ public class KartBehaviour : MonoBehaviour {
     private float UpdateSteer() {
         float result = 0;
         if (0.0f < Mathf.Abs(speed))
-        {
             result = steeringWheel;
-            if (Mathf.Abs(speed) < 1.0f)
-                result *= 0.005f;
-            else if (Mathf.Abs(speed) > 1.5f)
-            {
-                result = steeringWheel;
-                if (speed < 0.5f * maxSpeed)
-                    result *= ((maxSpeed / Mathf.Abs(speed)) * 0.5f);
-            }
-        }
         return result;
     }
 
