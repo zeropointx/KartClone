@@ -12,11 +12,13 @@ public class PlayerNetwork : NetworkBehaviour {
             GetComponent<KartBehaviour>().enabled = false;
             transform.FindChild("Main Camera").gameObject.active = false;
         }
+        else
+            GameObject.Find("HUD").GetComponent<HUD>().localPlayer = gameObject;
 	}
     void Awake()
     {
-        if(isLocalPlayer)
-        GameObject.Find("HUD").GetComponent<HUD>().localPlayer = gameObject;
+
+      
     }
 	// Update is called once per frame
 	void Update () {
