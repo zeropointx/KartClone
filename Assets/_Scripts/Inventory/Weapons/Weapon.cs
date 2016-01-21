@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Weapon : MonoBehaviour
+public class Weapon : NetworkBehaviour
 {
     InventoryScript inventory;
 
@@ -16,20 +17,27 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        if (inventory.currentWeapon != InventoryScript.WEAPON.noWeapon)
+        if (Input.GetButtonDown("Shoot"))
         {
-            if (inventory.currentWeapon == InventoryScript.WEAPON.BowlingBall)
-            {
-                // Update
-                if (Input.GetButtonDown("Shoot"))
+            shootServer();
+        }
+    }
+    void shootServer()
+    {
+        switch (inventory.currentWeapon)
+        {
+            case InventoryScript.WEAPON.noWeapon:
+                {
+                    break;
+                }
+            case InventoryScript.WEAPON.BowlingBall:
                 {
                     // Position fixing...
-                    Instantiate(bowlingBall, transform.position+(transform.forward*4), transform.rotation);
+                    Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
                     inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
+
+                    break;
                 }
-
-            }
-
         }
     }
 }
