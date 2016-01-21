@@ -13,7 +13,11 @@ public class PlayerNetwork : NetworkBehaviour {
             transform.FindChild("Main Camera").gameObject.active = false;
         }
 	}
-	
+    void Awake()
+    {
+        if(isLocalPlayer)
+        GameObject.Find("HUD").GetComponent<HUD>().localPlayer = gameObject;
+    }
 	// Update is called once per frame
 	void Update () {
 	

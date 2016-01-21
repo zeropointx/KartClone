@@ -850,6 +850,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fbb5bd4f0d18948913dd351254be4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localPlayer: {fileID: 0}
+  weapon1Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  weapon2Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  weapon3Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  noWeaponSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &1654807230
 GameObject:
   m_ObjectHideFlags: 0
