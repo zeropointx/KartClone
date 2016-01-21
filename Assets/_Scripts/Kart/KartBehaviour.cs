@@ -7,6 +7,7 @@ public class KartBehaviour : MonoBehaviour {
     private float pedal;
     private float speed;
     private float maxSpeed;
+    private float maxReverse;
     private float turnSpeed;
     private float acceleration;
     private float brakeForce;
@@ -23,6 +24,7 @@ public class KartBehaviour : MonoBehaviour {
         pedal = 0;
         speed = 0;
         maxSpeed = 45;
+        maxReverse = 15;
         turnSpeed = 75;
         acceleration = 0.35f;
         brakeForce = 1.25f;
@@ -80,13 +82,15 @@ public class KartBehaviour : MonoBehaviour {
         {
             groundNormal = hit.normal;
             groundDistance = hit.distance;
+            if (groundDistance > 2.5f)
+                transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, groundNormal), Time.deltaTime);
+
             return true;
         }
         return false;
     }
 
     private void UpdateTilt() {
-        
         float x = transform.eulerAngles.x;
         float y = transform.eulerAngles.y;
         float z = transform.eulerAngles.z;
@@ -101,7 +105,7 @@ public class KartBehaviour : MonoBehaviour {
         else
             z = Mathf.Max(z, 360 - tiltLimitZ);
         
-
+        
         transform.rotation = Quaternion.Euler(x, y, z);
     }
 
