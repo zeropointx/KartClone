@@ -3,6 +3,11 @@ using System.Collections;
 
 public class KartBehaviour : MonoBehaviour {
 
+    enum KartState
+    {
+        FORWARD, STOPPED, REVERSE
+    };
+
     private float steeringWheel;
     private float pedal;
     private float speed;
@@ -17,6 +22,7 @@ public class KartBehaviour : MonoBehaviour {
     private GameObject mainCamera;
     private float tiltLimitX;
     private float tiltLimitZ;
+    KartState state;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +39,7 @@ public class KartBehaviour : MonoBehaviour {
         mainCamera = transform.FindChild("Main Camera").gameObject;
         tiltLimitX = 45;
         tiltLimitZ = 45;
+        state = KartState.STOPPED;
 	}
 	
 	// Update is called once per frame
@@ -40,6 +47,19 @@ public class KartBehaviour : MonoBehaviour {
         float speedChange = 0;
 
         //controls
+        switch(state)
+        {
+            case KartState.FORWARD:
+                break;
+            case KartState.STOPPED:
+                //speed = 0;
+                break;
+            case KartState.REVERSE:
+                break;
+            default:
+                break;
+        }
+
         if (Mathf.Abs(pedal) > 0)
             speedChange = (pedal < 0) ? brakeForce : acceleration;
         float steer = UpdateSteer();
@@ -68,6 +88,14 @@ public class KartBehaviour : MonoBehaviour {
         //camera
         mainCamera.transform.LookAt(transform);
     }
+
+    void OnCollisionEnter(Collision collision){
+        Debug.Log(collision.impulse.magnitude);
+        if (collision.impulse.magnitude > 1000)
+            Reset();
+    }
+
+    //own functions
 
     private float UpdateSteer() {
         float result = 0;
@@ -125,8 +153,8 @@ public class KartBehaviour : MonoBehaviour {
         return speed;
     }
 
-    public void Reset() {
+    public void Reset(float speedMultiplier = 0) {
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        speed = 0;
+        speed *= speedMultiplier;
     }
 }
