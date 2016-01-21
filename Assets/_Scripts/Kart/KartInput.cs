@@ -14,5 +14,7 @@ public class KartInput : MonoBehaviour {
 	void Update () {
         kartScript.Accelerate(Input.GetAxis("Vertical"));
         kartScript.Steer(Input.GetAxis("Horizontal"));
+        if (Input.GetKeyDown(KeyCode.R))
+            kartScript.Reset();
 	}
 }
