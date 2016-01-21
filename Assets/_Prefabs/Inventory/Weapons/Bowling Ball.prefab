@@ -44,7 +44,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9c8396ada4a308649abe72cea55cec6b, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8d32f84b5e8cc47af229609204f92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 100
+  thrust: 10
   rb: {fileID: 0}
 --- !u!114 &11495678
 MonoBehaviour:
@@ -168,7 +168,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: thrust
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints
@@ -186,6 +186,10 @@ Prefab:
       propertyPath: m_InterpolateMovement
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9c8396ada4a308649abe72cea55cec6b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 176684}

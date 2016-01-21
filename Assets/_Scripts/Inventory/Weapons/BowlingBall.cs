@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 public class BowlingBall : NetworkBehaviour
 {
-    public float thrust = 100;
+    public float thrust = 1;
     public Rigidbody rb;
     float destroyTimer = 0.0f;
     // Use this for initialization
@@ -26,7 +26,7 @@ public class BowlingBall : NetworkBehaviour
     {
       //  if (isServer)
      //   {
-            rb.AddForce(transform.forward * thrust);
+            rb.AddForce(transform.forward * thrust, ForceMode.VelocityChange);
       //  }
     }
 
