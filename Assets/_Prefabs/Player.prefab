@@ -317,7 +317,7 @@ MonoBehaviour:
   m_SendInterval: 0.033333335
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
-  m_SyncSpin: 0
+  m_SyncSpin: 1
   m_MovementTheshold: 0.001
   m_SnapThreshold: 5
   m_InterpolateRotation: 5
@@ -460,6 +460,10 @@ Prefab:
       propertyPath: bowlingBall
       value: 
       objectReference: {fileID: 176684, guid: 4999114a78229774db33f98533ff4679, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_SyncSpin
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169864}

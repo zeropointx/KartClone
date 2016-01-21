@@ -11,7 +11,7 @@ public class UILogic : MonoBehaviour {
     public NetworkManager networkManager;
 	// Use this for initialization
 	void Start () {
-	
+        inputField.text = "127.0.0.1";
 	}
 	
 	// Update is called once per frame
@@ -25,22 +25,6 @@ public class UILogic : MonoBehaviour {
     public void Host()
     {
         NetworkClient client = networkManager.StartHost();
-
-
-        //ClientScene.Ready(networkManager.client.connection);
-
-        //if (ClientScene.localPlayers.Count == 0)
-        //{
-        //    ClientScene.AddPlayer(0);
-        //}
-
-       // SceneManager.LoadScene(networkScript.currentLevel);
-
-
-      //  NetworkServer.Listen(networkScript.port);
-        //SceneManager.LoadScene("defaultscene");
-     //   clientManager.ConnectLocal();
- 
     }
     public void Connect()
     {

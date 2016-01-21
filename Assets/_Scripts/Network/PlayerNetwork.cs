@@ -12,11 +12,6 @@ public class PlayerNetwork : NetworkBehaviour {
             GetComponent<KartBehaviour>().enabled = false;
             transform.FindChild("Main Camera").gameObject.active = false;
         }
-        else
-        {
-            GameObject uiObject = GameObject.Instantiate(uiPrefab);
-
-        }
 	}
 	
 	// Update is called once per frame
