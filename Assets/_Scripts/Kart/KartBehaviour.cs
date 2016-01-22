@@ -23,6 +23,7 @@ public class KartBehaviour : MonoBehaviour {
     private float tiltLimitX;
     private float tiltLimitZ;
     KartState state;
+    float collisionImmunityTimer;
 
 	// Use this for initialization
 	void Start () {
@@ -39,11 +40,15 @@ public class KartBehaviour : MonoBehaviour {
         mainCamera = transform.FindChild("Main Camera").gameObject;
         tiltLimitX = 45;
         tiltLimitZ = 45;
+        collisionImmunityTimer = 0;
         state = KartState.STOPPED;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        //timers
+        collisionImmunityTimer += Time.deltaTime;
+
         float speedChange = 0;
 
         //controls
@@ -90,9 +95,23 @@ public class KartBehaviour : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision){
-        Debug.Log(collision.impulse.magnitude);
-        if (collision.impulse.magnitude > 1000)
-            Reset();
+        if (collisionImmunityTimer > 3)
+        {
+            if (collision.impulse.magnitude > 100 && speed > 0.25f * maxSpeed)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(new Ray(transform.position + new Vector3(0, 1.25f, 0), transform.forward), out hit))
+                {
+                    if (hit.distance < 10)
+                    {
+                        Reset();
+                        transform.position -= 2.0f * transform.forward;
+                        collisionImmunityTimer = 0;
+                        Debug.Log("hard kart collision");
+                    }
+                }
+            }
+        }     
     }
 
     //own functions
