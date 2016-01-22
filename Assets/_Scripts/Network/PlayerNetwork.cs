@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class PlayerNetwork : NetworkBehaviour {
+    MyNetworkManager networkManager = null;
     public GameObject uiPrefab = null;
 	// Use this for initialization
 	void Start () {
@@ -14,6 +15,7 @@ public class PlayerNetwork : NetworkBehaviour {
         }
         else
             GameObject.Find("HUD").GetComponent<HUD>().localPlayer = gameObject;
+        networkManager = GameObject.Find("NetworkManager").GetComponent<MyNetworkManager>();
 	}
     void Awake()
     {
@@ -22,7 +24,7 @@ public class PlayerNetwork : NetworkBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 }
