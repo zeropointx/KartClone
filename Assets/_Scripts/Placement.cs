@@ -11,13 +11,13 @@ public class Placement : MonoBehaviour
     int checkpointAmount;
     int lapAmount;
 
-    public List<GameObject> checkPoints = new List<GameObject>();
-    public GameObject track;
+    GameObject track;
     TrackInformation trackInformation;
 
     void Start()
     {
-        trackInformation = track.GetComponent<TrackInformation>();
+        track = GameObject.Find("Track");
+        trackInformation = track.GetComponent<TrackInformation>();       
     }
 
     void Update()
@@ -30,14 +30,14 @@ public class Placement : MonoBehaviour
         GameObject GG = col.gameObject;
         if (GG.tag == "checkPoint")
         {
-            for (int i = 0; i < checkPoints.Count; i++)
+            for (int i = 0; i < trackInformation.checkPoints.Count; i++)
             {
-                if (GG == checkPoints[i])
+                if (GG == trackInformation.checkPoints[i])
                 {
-                    if (GG == checkPoints[currentCheckPointIndex + 1])
+                    if (GG == trackInformation.checkPoints[currentCheckPointIndex + 1])
                     {
                         currentCheckPointIndex++;
-                        if (currentCheckPointIndex == (checkPoints.Count - 1))
+                        if (currentCheckPointIndex == (trackInformation.checkPoints.Count - 1))
                         {
                             Debug.Log("Doge");
                             currentLap++;

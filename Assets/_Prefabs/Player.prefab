@@ -53,6 +53,7 @@ GameObject:
   - 65: {fileID: 6558444}
   - 114: {fileID: 11481806}
   - 114: {fileID: 11410198}
+  - 114: {fileID: 11497526}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -91,7 +92,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: -2.0606308, y: -12.481878, z: 81.37749}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 464604}
@@ -317,6 +318,29 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 50
   m_InterpolateMovement: 1
+--- !u!114 &11497526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1b6545eca047c498dcf59e6e5be463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLap: 0
+  currentCheckPointIndex: 0
+  checkPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  track: {fileID: 0}
 --- !u!124 &12406898
 Behaviour:
   m_ObjectHideFlags: 1
@@ -331,6 +355,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: checkPoints.Array.size
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_AssetId.i0
       value: 133
