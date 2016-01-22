@@ -34,11 +34,11 @@ public class KartBehaviour : MonoBehaviour {
         maxReverse = 15;
         turnSpeed = 75;
         acceleration = 0.35f;
-        brakeForce = 1.25f;
+        brakeForce = -1.25f;
         engineDeceleration = 0.15f;
         groundDistance = 0;
         mainCamera = transform.FindChild("Main Camera").gameObject;
-        tiltLimitX = 45;
+        tiltLimitX = 30;
         tiltLimitZ = 45;
         collisionImmunityTimer = 0;
         state = KartState.STOPPED;
@@ -50,39 +50,67 @@ public class KartBehaviour : MonoBehaviour {
         collisionImmunityTimer += Time.deltaTime;
 
         float speedChange = 0;
+        Vector3 direction = transform.forward;
 
         //controls
         switch(state)
         {
             case KartState.FORWARD:
+                if (pedal != 0)
+                    speedChange = (pedal > 0) ? acceleration : brakeForce;
+                speed -= engineDeceleration;
+                UpdateControls(speedChange);
+                speed = Mathf.Min(speed, maxSpeed);
+                speed = Mathf.Max(speed, 0);
+                if (speed == 0)
+                    state = KartState.STOPPED;
                 break;
+
             case KartState.STOPPED:
-                //speed = 0;
+                speed = 0;
+                if (pedal != 0)
+                    state = (pedal > 0) ? KartState.FORWARD : KartState.REVERSE;
                 break;
+
             case KartState.REVERSE:
+                state = KartState.STOPPED;
                 break;
+                /*
+                if (pedal != 0)
+                    speedChange = (pedal > 0) ? -acceleration : -brakeForce;
+                speed += engineDeceleration;
+                UpdateControls(speedChange);
+                speed = Mathf.Max(speed, maxReverse);
+                speed = Mathf.Min(speed, 0);
+                if (speed == 0)
+                    state = KartState.STOPPED;
+                break;
+                */
             default:
+                Debug.LogError("invalid Kart state!");
                 break;
         }
-
+        /*
         if (Mathf.Abs(pedal) > 0)
             speedChange = (pedal < 0) ? brakeForce : acceleration;
-        float steer = UpdateSteer();
+        */
 
         //transform
-        speed -= engineDeceleration;
+        //speed -= engineDeceleration;
+        /*
         if (groundDistance < 5)
         {
-            speed += speedChange * pedal;
+            speed += speedChange * Mathf.Abs(pedal);
             if (Mathf.Abs(steer) > 0)
                 transform.Rotate(new Vector3(0, turnSpeed * steer * Time.deltaTime, 0));
         }
+        
         speed = Mathf.Min(speed, maxSpeed);
         speed = Mathf.Max(speed, 0);
         Vector3 direction = transform.forward;
+        */
         if (groundDistance > 2)
-            direction -= groundNormal * 0.25f;
-
+            direction -= groundNormal * 0.1f;
         transform.position += speed * Time.deltaTime * direction;
     }
 
@@ -114,14 +142,7 @@ public class KartBehaviour : MonoBehaviour {
         }     
     }
 
-    //own functions
-
-    private float UpdateSteer() {
-        float result = 0;
-        if (0.0f < Mathf.Abs(speed))
-            result = steeringWheel;
-        return result;
-    }
+    //private
 
     private bool GroundCollision() {
         RaycastHit hit;
@@ -155,6 +176,18 @@ public class KartBehaviour : MonoBehaviour {
         
         transform.rotation = Quaternion.Euler(x, y, z);
     }
+
+    private void UpdateControls(float speedChange) {
+        float steer = (Mathf.Abs(speed) > 0) ? steeringWheel : 0;
+        if (groundDistance < 5)
+        {
+            speed += speedChange * Mathf.Abs(pedal);
+            if (Mathf.Abs(steer) > 0)
+                transform.Rotate(new Vector3(0, turnSpeed * steer * Time.deltaTime, 0));
+        }
+    }
+
+    //public
 
     public void Accelerate(float pedalValue) {
         pedal = pedalValue;
