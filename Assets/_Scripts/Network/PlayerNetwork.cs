@@ -7,9 +7,9 @@ public class PlayerNetwork : NetworkBehaviour {
     public GameObject uiPrefab = null;
 	// Use this for initialization
 	void Start () {
+        GetComponent<KartInput>().enabled = false;
 	    if(!isLocalPlayer)
         {
-            GetComponent<KartInput>().enabled = false;
             GetComponent<KartBehaviour>().enabled = false;
             transform.FindChild("Main Camera").gameObject.active = false;
         }

@@ -8,23 +8,40 @@ public class MyNetworkManager : NetworkManager {
     int minPlayerCountToStart = 2;
     public override void OnServerConnect(NetworkConnection conn)
     {
-        //Debug.Log("trololo");
-        playerCount++;
-        Debug.Log("Player count server " + playerCount);
         base.OnServerConnect(conn);
+       // Debug.Log("Player connected! Current players " + playerCount);
+    
+    }
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        base.OnServerDisconnect(conn);
+        playerCount--;
+        Debug.Log("Player disconnected! Current players " + playerCount);
+
     }
     public override void OnClientConnect(NetworkConnection conn)
     {
-        playerCount++;
-        if(playerCount >=minPlayerCountToStart)
-        {
-            ready = true;
-        }
-        Debug.Log("Player count client " + playerCount);
+        base.OnClientConnect(conn);
     }
     public override void OnClientDisconnect(NetworkConnection conn)
     {
-        playerCount--;
-        Debug.Log("Player count " + playerCount);
+        base.OnClientDisconnect(conn);
+    }
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+    {
+        playerCount++;
+        if (playerCount >= minPlayerCountToStart)
+        {
+            ready = true;
+            GameObject gamemode = GameObject.Find("Gamemode");
+            if(gamemode == null)
+            {
+                Debug.Log("Gamemode object doesn´t exist, ERROR!!!");
+                return;
+            }
+            gamemode.GetComponent<Gamemode>().setState(Gamemode.State.STARTING);
+        }
+        Debug.Log("Player added! Current players " + playerCount);
+        base.OnServerAddPlayer(conn, playerControllerId);
     }
 }

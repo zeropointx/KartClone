@@ -180,7 +180,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &6558444
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -331,16 +331,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLap: 0
   currentCheckPointIndex: 0
-  checkPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  track: {fileID: 0}
 --- !u!124 &12406898
 Behaviour:
   m_ObjectHideFlags: 1
@@ -493,6 +483,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_RotationSyncCompression
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
