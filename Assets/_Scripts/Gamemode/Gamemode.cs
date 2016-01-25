@@ -1,17 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class Gamemode : NetworkBehaviour {
     public GameObject startTimerText;
     public GameObject statusText;
+    private List<Player> players = new List<Player>();
     public enum State
     {
         WAITING_FOR_PLAYERS,
         STARTING,
         RACING,
         DONE_RACING
+    }
+    public struct Player
+    {
+        int placement;
+        GameObject gameObject;
+        public Player(int placement, GameObject gameObject)
+        {
+            this.placement = placement;
+            this.gameObject = gameObject;
+        }
+    }
+
+    public void AddPlayer(Player p)
+    {
+        if (!players.Contains(p))
+            players.Add(p);
     }
     [SyncVar]
     public State currentState;

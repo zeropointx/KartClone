@@ -16,6 +16,7 @@ public class PlayerNetwork : NetworkBehaviour {
         else
             GameObject.Find("HUD").GetComponent<HUD>().localPlayer = gameObject;
         networkManager = GameObject.Find("NetworkManager").GetComponent<MyNetworkManager>();
+        GameObject.Find("Gamemode").GetComponent<Gamemode>().AddPlayer(new Gamemode.Player(-1, gameObject));
 	}
     void Awake()
     {
