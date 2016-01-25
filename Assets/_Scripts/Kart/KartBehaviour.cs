@@ -3,47 +3,45 @@ using System.Collections;
 
 public class KartBehaviour : MonoBehaviour {
 
-    enum KartState
+    public enum KartState
     {
         FORWARD, STOPPED, REVERSE
     };
 
-    private float steeringWheel;
-    private float pedal;
-    private float speed;
-    private float maxSpeed;
-    private float maxReverse;
-    private float turnSpeed;
-    private float acceleration;
-    private float brakeForce;
-    private float engineDeceleration;
-    private float groundDistance;
-    private Vector3 groundNormal;
-    private GameObject mainCamera;
-    private float tiltLimitX;
-    private float tiltLimitZ;
-    KartState state;
-    float collisionImmunityTimer;
-    float stopTimer;
+    //TODO set as private
+    //controls
+    private float steeringWheel = 0;
+    private float pedal = 0;
+    private float speed = 0;
+
+    //stats
+    public float maxSpeed;
+    public float maxReverse;
+    public float turnSpeed;
+    public float acceleration;
+    public float brakeForce;
+    public float engineDeceleration;
+
+    //common
+    public float tiltLimitX = 30;
+    public float tiltLimitZ = 45;
+    public float flyLimit = 2.0f;
+    public KartState state = KartState.STOPPED;
+    private float groundDistance = 0;
+    private GameObject mainCamera = null;
+    private Vector3 groundNormal = new Vector3(0, 0, 0);
+    private float collisionImmunityTimer = 0;
+    private float stopTimer = 0;
 
 	// Use this for initialization
 	void Start () {
-        steeringWheel = 0;
-        pedal = 0;
-        speed = 0;
         maxSpeed = 45;
         maxReverse = -15;
         turnSpeed = 75;
         acceleration = 0.35f;
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
-        groundDistance = 0;
         mainCamera = transform.FindChild("Main Camera").gameObject;
-        tiltLimitX = 30;
-        tiltLimitZ = 45;
-        collisionImmunityTimer = 0;
-        stopTimer = 0;
-        state = KartState.STOPPED;
 	}
 	
 	// Update is called once per frame
@@ -60,7 +58,7 @@ public class KartBehaviour : MonoBehaviour {
                 if (pedal != 0)
                     speedChange = (pedal > 0) ? acceleration : brakeForce;
                 UpdateControls();
-                if (groundDistance < 3)
+                if (groundDistance < flyLimit)
                 {
                     speed -= engineDeceleration;
                     speed += speedChange * pedal;
@@ -87,7 +85,7 @@ public class KartBehaviour : MonoBehaviour {
                 if (pedal != 0)
                     speedChange = (pedal > 0) ? brakeForce : acceleration;
                 UpdateControls();
-                if (groundDistance < 3)
+                if (groundDistance < flyLimit)
                 {
                     speed += engineDeceleration;
                     speed += speedChange * pedal;
@@ -103,7 +101,7 @@ public class KartBehaviour : MonoBehaviour {
         }
 
         Vector3 direction = transform.forward;
-        if (groundDistance > 3)
+        if (groundDistance > flyLimit)
             direction -= groundNormal * 0.25f;
         transform.position += speed * Time.deltaTime * direction;
     }
@@ -117,6 +115,7 @@ public class KartBehaviour : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision){
+        // TODO fix later
         /*
         if (collisionImmunityTimer > 3)
         {
@@ -146,7 +145,7 @@ public class KartBehaviour : MonoBehaviour {
         {
             groundNormal = hit.normal;
             groundDistance = hit.distance;
-            if (groundDistance > 2.5f)
+            if (groundDistance > flyLimit)
                 transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, groundNormal), Time.deltaTime);
 
             return true;
@@ -169,13 +168,12 @@ public class KartBehaviour : MonoBehaviour {
         else
             z = Mathf.Max(z, 360 - tiltLimitZ);
         
-        
         transform.rotation = Quaternion.Euler(x, y, z);
     }
 
     private void UpdateControls() {
         float steer = (Mathf.Abs(speed) > 0) ? steeringWheel : 0;
-        if (groundDistance < 5)
+        if (groundDistance < flyLimit)
         {
             if (Mathf.Abs(steer) > 0)
                 transform.Rotate(new Vector3(0, turnSpeed * steer * Time.deltaTime, 0));
