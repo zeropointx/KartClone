@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KartBehaviour : MonoBehaviour {
+public class KartBehaviour : MonoBehaviour
+{
 
     public enum KartState
     {
-        FORWARD, STOPPED, REVERSE
+        FORWARD, STOPPED, REVERSE, SPINNING
     };
 
     //TODO set as private
@@ -21,6 +22,7 @@ public class KartBehaviour : MonoBehaviour {
     public float acceleration;
     public float brakeForce;
     public float engineDeceleration;
+    public float spinSpeed = 250;
 
     //common
     public float tiltLimitX = 30;
@@ -32,9 +34,11 @@ public class KartBehaviour : MonoBehaviour {
     private Vector3 groundNormal = new Vector3(0, 0, 0);
     private float collisionImmunityTimer = 0;
     private float stopTimer = 0;
+    private float spinTimer = 0;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         maxSpeed = 45;
         maxReverse = -15;
         turnSpeed = 75;
@@ -42,10 +46,11 @@ public class KartBehaviour : MonoBehaviour {
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
         mainCamera = transform.FindChild("Main Camera").gameObject;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         //timers
         collisionImmunityTimer += Time.deltaTime;
 
@@ -95,6 +100,18 @@ public class KartBehaviour : MonoBehaviour {
                     state = KartState.STOPPED;
                 break;
 
+            case KartState.SPINNING:
+
+                spinTimer += Time.deltaTime;
+
+                transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
+                if (spinTimer > 3)
+                {
+                    spinTimer = 0;
+                    state = KartState.STOPPED;                 
+                }
+                break;
+
             default:
                 Debug.LogError("invalid Kart state!");
                 break;
@@ -106,7 +123,8 @@ public class KartBehaviour : MonoBehaviour {
         transform.position += speed * Time.deltaTime * direction;
     }
 
-    void LateUpdate() {
+    void LateUpdate()
+    {
         GroundCollision();
         UpdateTilt();
 
@@ -114,7 +132,8 @@ public class KartBehaviour : MonoBehaviour {
         mainCamera.transform.LookAt(transform);
     }
 
-    void OnCollisionEnter(Collision collision){
+    void OnCollisionEnter(Collision collision)
+    {
         // TODO fix later
         /*
         if (collisionImmunityTimer > 3)
@@ -139,7 +158,8 @@ public class KartBehaviour : MonoBehaviour {
 
     //private
 
-    private bool GroundCollision() {
+    private bool GroundCollision()
+    {
         RaycastHit hit;
         if (Physics.Raycast(new Ray(transform.position, Vector3.down), out hit))
         {
@@ -153,7 +173,8 @@ public class KartBehaviour : MonoBehaviour {
         return false;
     }
 
-    private void UpdateTilt() {
+    private void UpdateTilt()
+    {
         float x = transform.eulerAngles.x;
         float y = transform.eulerAngles.y;
         float z = transform.eulerAngles.z;
@@ -167,11 +188,12 @@ public class KartBehaviour : MonoBehaviour {
             z = Mathf.Min(z, tiltLimitZ);
         else
             z = Mathf.Max(z, 360 - tiltLimitZ);
-        
+
         transform.rotation = Quaternion.Euler(x, y, z);
     }
 
-    private void UpdateControls() {
+    private void UpdateControls()
+    {
         float steer = (Mathf.Abs(speed) > 0) ? steeringWheel : 0;
         if (groundDistance < flyLimit)
         {
@@ -182,23 +204,27 @@ public class KartBehaviour : MonoBehaviour {
 
     //public
 
-    public void Accelerate(float pedalValue) {
+    public void Accelerate(float pedalValue)
+    {
         pedal = pedalValue;
         pedal = Mathf.Min(pedal, 1);
         pedal = Mathf.Max(pedal, -1);
     }
 
-    public void Steer(float wheelPosition) {
+    public void Steer(float wheelPosition)
+    {
         steeringWheel = wheelPosition;
         steeringWheel = Mathf.Min(steeringWheel, 1);
         steeringWheel = Mathf.Max(steeringWheel, -1);
     }
 
-    public float GetSpeed() {
+    public float GetSpeed()
+    {
         return speed;
     }
 
-    public void Reset(float speedMultiplier = 0) {
+    public void Reset(float speedMultiplier = 0)
+    {
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         speed *= speedMultiplier;
     }
