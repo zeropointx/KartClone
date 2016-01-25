@@ -9,6 +9,8 @@ public class MyNetworkManager : NetworkManager {
     public override void OnServerConnect(NetworkConnection conn)
     {
         //Debug.Log("trololo");
+        playerCount++;
+        Debug.Log("Player count server " + playerCount);
         base.OnServerConnect(conn);
     }
     public override void OnClientConnect(NetworkConnection conn)
@@ -18,7 +20,7 @@ public class MyNetworkManager : NetworkManager {
         {
             ready = true;
         }
-        Debug.Log("Player count " + playerCount);
+        Debug.Log("Player count client " + playerCount);
     }
     public override void OnClientDisconnect(NetworkConnection conn)
     {
