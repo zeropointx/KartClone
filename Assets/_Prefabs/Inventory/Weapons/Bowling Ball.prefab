@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8d32f84b5e8cc47af229609204f92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 5
+  thrust: 90
   rb: {fileID: 5422926}
 --- !u!114 &11495678
 MonoBehaviour:
@@ -168,7 +168,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: thrust
-      value: 5
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints

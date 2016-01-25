@@ -102,6 +102,7 @@ public class KartBehaviour : MonoBehaviour
 
             case KartState.SPINNING:
 
+                speed = 0;
                 spinTimer += Time.deltaTime;
 
                 transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
