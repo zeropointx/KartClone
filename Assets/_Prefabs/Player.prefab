@@ -424,10 +424,12 @@ MonoBehaviour:
   acceleration: 0
   brakeForce: 0
   engineDeceleration: 0
+  spinSpeed: 250
   tiltLimitX: 30
   tiltLimitZ: 45
   flyLimit: 2
   state: 1
+  spinTime: 3
 --- !u!114 &11410198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -484,6 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 0}
+  hitState: 1
 --- !u!114 &11451734
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -698,6 +701,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_CollisionDetection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hitState
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

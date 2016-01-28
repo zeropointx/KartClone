@@ -7,7 +7,7 @@ public class BowlingBall : NetworkBehaviour
     public float thrust = 1;
     public Rigidbody rb;
     float destroyTimer = 0.0f;
-    KartBehaviour kBehaviour;
+    PlayerNetwork PN;
     // Use this for initialization
     void Start()
     {
@@ -48,9 +48,9 @@ public class BowlingBall : NetworkBehaviour
         GameObject GG = col.gameObject;
         if(GG.tag == "Player")
         {
-            kBehaviour = GG.GetComponent<KartBehaviour>();
+            PN = GG.GetComponent<PlayerNetwork>();
             //Spin2Win
-            kBehaviour.state = KartBehaviour.KartState.SPINNING;
+            PN.hitState = PlayerNetwork.KartHitState.SPINNING;
             Destroy(gameObject);
         }
     }
