@@ -75,7 +75,6 @@ public class KartBehaviour : MonoBehaviour
             case KartState.STOPPED:
                 stopTimer += Time.deltaTime;
                 speed = 0;
-                rigidbody.velocity = Vector3.zero;
                 rigidbody.angularVelocity = Vector3.zero;
                 if (stopTimer > 0.25f)
                 {
@@ -169,6 +168,11 @@ public class KartBehaviour : MonoBehaviour
     public KartState GetState()
     {
         return state;
+    }
+
+    public void SetState(KartState _state)
+    {
+        state = _state;
     }
 
     public void Reset(float speedMultiplier = 0)
