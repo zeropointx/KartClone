@@ -6,7 +6,7 @@ public class KartBehaviour : MonoBehaviour
 
     public enum KartState
     {
-        FORWARD, STOPPED, REVERSE, SPINNING
+        FORWARD, STOPPED, REVERSE
     };
 
     //TODO set as private
@@ -34,7 +34,10 @@ public class KartBehaviour : MonoBehaviour
     private Vector3 groundNormal = new Vector3(0, 0, 0);
     private float collisionImmunityTimer = 0;
     private float stopTimer = 0;
+
     private float spinTimer = 0;
+    public float spinTime = 3;
+    PlayerNetwork pw;
 
     // Use this for initialization
     void Start()
@@ -46,6 +49,7 @@ public class KartBehaviour : MonoBehaviour
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
         mainCamera = transform.FindChild("Main Camera").gameObject;
+        pw = gameObject.GetComponent<PlayerNetwork>();
     }
 
     // Update is called once per frame
@@ -100,23 +104,12 @@ public class KartBehaviour : MonoBehaviour
                     state = KartState.STOPPED;
                 break;
 
-            case KartState.SPINNING:
-
-                speed = 0;
-                spinTimer += Time.deltaTime;
-
-                transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
-                if (spinTimer > 3)
-                {
-                    spinTimer = 0;
-                    state = KartState.STOPPED;                 
-                }
-                break;
-
             default:
                 Debug.LogError("invalid Kart state!");
                 break;
         }
+
+        checkHitUpdate();
 
         Vector3 direction = transform.forward;
         if (groundDistance > flyLimit)
@@ -228,5 +221,21 @@ public class KartBehaviour : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         speed *= speedMultiplier;
+    }
+
+    void checkHitUpdate()
+    {
+        if (pw.hitState == PlayerNetwork.KartHitState.SPINNING)
+        {
+            speed = 0;
+            spinTimer += Time.deltaTime;
+            transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
+            if (spinTimer > spinTime)
+            {
+                spinTimer = 0;
+                state = KartState.STOPPED;
+                pw.hitState = PlayerNetwork.KartHitState.NORMAL;
+            }
+        }
     }
 }
