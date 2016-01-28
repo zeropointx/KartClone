@@ -25,12 +25,11 @@ public class KartBehaviour : MonoBehaviour
     public float spinSpeed = 250;
 
     //common
-    public float tiltLimitX = 30;
-    public float tiltLimitZ = 45;
     public float flyLimit = 2.0f;
     public KartState state = KartState.STOPPED;
     private float groundDistance = 0;
     private GameObject mainCamera = null;
+    private Rigidbody rigidbody = null;
     private Vector3 groundNormal = new Vector3(0, 0, 0);
     private float collisionImmunityTimer = 0;
     private float stopTimer = 0;
@@ -42,13 +41,14 @@ public class KartBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        maxSpeed = 45;
+        maxSpeed = 40;
         maxReverse = -15;
         turnSpeed = 75;
-        acceleration = 0.35f;
+        acceleration = 0.275f;
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
         mainCamera = transform.FindChild("Main Camera").gameObject;
+        rigidbody = transform.GetComponent<Rigidbody>();
         pw = gameObject.GetComponent<PlayerNetwork>();
     }
 
@@ -80,6 +80,8 @@ public class KartBehaviour : MonoBehaviour
             case KartState.STOPPED:
                 stopTimer += Time.deltaTime;
                 speed = 0;
+                rigidbody.velocity = Vector3.zero;
+                rigidbody.angularVelocity = Vector3.zero;
                 if (stopTimer > 0.25f)
                 {
                     if (pedal != 0)
@@ -112,15 +114,13 @@ public class KartBehaviour : MonoBehaviour
         checkHitUpdate();
 
         Vector3 direction = transform.forward;
-        if (groundDistance > flyLimit)
-            direction -= groundNormal * 0.25f;
+        direction -= groundNormal * 0.25f * Time.deltaTime;
         transform.position += speed * Time.deltaTime * direction;
     }
 
     void LateUpdate()
     {
         GroundCollision();
-        UpdateTilt();
 
         //camera
         mainCamera.transform.LookAt(transform);
@@ -152,38 +152,34 @@ public class KartBehaviour : MonoBehaviour
 
     //private
 
-    private bool GroundCollision()
+    private void GroundCollision()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(new Ray(transform.position, Vector3.down), out hit))
+        RaycastHit hit1;
+        if (Physics.Raycast(new Ray(transform.position, Vector3.down), out hit1))
         {
-            groundNormal = hit.normal;
-            groundDistance = hit.distance;
-            if (groundDistance > flyLimit)
-                transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, groundNormal), Time.deltaTime);
-
-            return true;
+            if (hit1.transform.gameObject.name == "Track")
+            {
+                groundNormal = hit1.normal;
+                groundDistance = hit1.distance;
+                RaycastHit hit2;
+                if (Physics.Raycast(new Ray(transform.position, -transform.up), out hit2))
+                {
+                    if (hit2.transform.gameObject.name == "Track")
+                    {
+                        if (hit2.distance > 0.75f)
+                            transform.rotation = Quaternion.Slerp/*Unclamped*/(transform.rotation, Quaternion.FromToRotation(transform.up, groundNormal), hit2.distance * Time.deltaTime);
+                    }
+                    else
+                        Reset();
+                    if (Vector3.Angle(transform.position - hit1.normal, transform.position - hit2.normal) > 5.0f)
+                    {
+                        transform.rotation = Quaternion.Slerp/*Unclamped*/(transform.rotation, Quaternion.FromToRotation(transform.up, Vector3.up), 1.0f * Time.deltaTime);
+                    }
+                }
+                else
+                    Reset(0.25f);
+            }
         }
-        return false;
-    }
-
-    private void UpdateTilt()
-    {
-        float x = transform.eulerAngles.x;
-        float y = transform.eulerAngles.y;
-        float z = transform.eulerAngles.z;
-
-        if (x < 180)
-            x = Mathf.Min(x, tiltLimitX);
-        else
-            x = Mathf.Max(x, 360 - tiltLimitX);
-
-        if (z < 180)
-            z = Mathf.Min(z, tiltLimitZ);
-        else
-            z = Mathf.Max(z, 360 - tiltLimitZ);
-
-        transform.rotation = Quaternion.Euler(x, y, z);
     }
 
     private void UpdateControls()
@@ -220,6 +216,8 @@ public class KartBehaviour : MonoBehaviour
     public void Reset(float speedMultiplier = 0)
     {
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        rigidbody.velocity *= speedMultiplier;
+        rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
     }
 

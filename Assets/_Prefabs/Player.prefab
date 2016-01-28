@@ -948,8 +948,6 @@ MonoBehaviour:
   brakeForce: 0
   engineDeceleration: 0
   spinSpeed: 250
-  tiltLimitX: 30
-  tiltLimitZ: 45
   flyLimit: 2
   state: 1
   spinTime: 3
