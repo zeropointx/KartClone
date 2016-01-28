@@ -43,8 +43,8 @@ public class KartBehaviour : MonoBehaviour
     {
         maxSpeed = 40;
         maxReverse = -15;
-        turnSpeed = 75;
-        acceleration = 0.275f;
+        turnSpeed = 100;
+        acceleration = 0.475f;
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
         mainCamera = transform.FindChild("Main Camera").gameObject;
@@ -59,6 +59,7 @@ public class KartBehaviour : MonoBehaviour
         collisionImmunityTimer += Time.deltaTime;
 
         float speedChange = 0;
+        float steer = steeringWheel;
 
         //controls
         switch (state)
@@ -66,7 +67,6 @@ public class KartBehaviour : MonoBehaviour
             case KartState.FORWARD:
                 if (pedal != 0)
                     speedChange = (pedal > 0) ? acceleration : brakeForce;
-                UpdateControls();
                 if (groundDistance < flyLimit)
                 {
                     speed -= engineDeceleration;
@@ -93,9 +93,9 @@ public class KartBehaviour : MonoBehaviour
                 break;
 
             case KartState.REVERSE:
+                steer *= -1.0f;
                 if (pedal != 0)
                     speedChange = (pedal > 0) ? brakeForce : acceleration;
-                UpdateControls();
                 if (groundDistance < flyLimit)
                 {
                     speed += engineDeceleration;
@@ -114,13 +114,15 @@ public class KartBehaviour : MonoBehaviour
         checkHitUpdate();
 
         Vector3 direction = transform.forward;
-        direction -= groundNormal * 0.25f * Time.deltaTime;
+        //direction -= groundNormal * 0.15f * Time.deltaTime;
+        if (groundDistance < 3.0f)
+            transform.Rotate(new Vector3(0, turnSpeed * steer * Time.deltaTime, 0));
+        GroundCollision();
         transform.position += speed * Time.deltaTime * direction;
     }
 
     void LateUpdate()
     {
-        GroundCollision();
 
         //camera
         mainCamera.transform.LookAt(transform);
@@ -166,8 +168,8 @@ public class KartBehaviour : MonoBehaviour
                 {
                     if (hit2.transform.gameObject.name == "Track")
                     {
-                        if (hit2.distance > 0.75f)
-                            transform.rotation = Quaternion.Slerp/*Unclamped*/(transform.rotation, Quaternion.FromToRotation(transform.up, groundNormal), hit2.distance * Time.deltaTime);
+                        if (hit2.distance > 1.5f)
+                            transform.rotation = Quaternion.Slerp/*Unclamped*/(transform.rotation, Quaternion.FromToRotation(transform.up, groundNormal), 2.0f * hit2.distance * Time.deltaTime);
                     }
                     else
                         Reset();
@@ -179,16 +181,6 @@ public class KartBehaviour : MonoBehaviour
                 else
                     Reset(0.25f);
             }
-        }
-    }
-
-    private void UpdateControls()
-    {
-        float steer = (Mathf.Abs(speed) > 0) ? steeringWheel : 0;
-        if (groundDistance < flyLimit)
-        {
-            if (Mathf.Abs(steer) > 0)
-                transform.Rotate(new Vector3(0, turnSpeed * steer * Time.deltaTime, 0));
         }
     }
 
