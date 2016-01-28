@@ -34,10 +34,6 @@ public class Weapon : NetworkBehaviour
         {
             case InventoryScript.WEAPON.noWeapon:
                 {
-                       // Position fixing...
-                    GameObject ball = (GameObject)Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
-                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
-                    NetworkServer.Spawn(ball);
                     break;
                 }
             case InventoryScript.WEAPON.BowlingBall:
