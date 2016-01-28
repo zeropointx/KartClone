@@ -55,7 +55,7 @@ public class Gamemode : NetworkBehaviour {
 	// Use this for initialization
 	void Start () {
         if(isServer)
-            setState(State.WAITING_FOR_PLAYERS);
+            setState(State.RACING);
 	}
 	
 	// Update is called once per frame

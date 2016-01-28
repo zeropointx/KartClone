@@ -8,6 +8,7 @@ public class HUD : MonoBehaviour {
      GameObject weaponImageUI;
     GameObject track;
     GameObject placementText;
+    GameObject speedText;
      weaponImageScript imageScript;
      public Gamemode gamemode;
      public Sprite weapon1Sprite, weapon2Sprite, weapon3Sprite, noWeaponSprite;
@@ -19,6 +20,7 @@ public class HUD : MonoBehaviour {
         lapText = GameObject.Find("LapText");
         track = GameObject.Find("Track");
         placementText = transform.FindChild("Placement").gameObject;
+        speedText = transform.FindChild("Speed").gameObject;
 	}
 	
 	// Update is called once per frame
@@ -33,6 +35,8 @@ public class HUD : MonoBehaviour {
             updateWeaponTexture(currentWeapon);
         lapText.GetComponent<Text>().text = "Lap: " + localPlayer.GetComponent<Placement>().currentLap + "\\" + track.GetComponent<TrackInformation>().lapAmount;
         placementText.GetComponent<Text>().text = gamemode.getPlacement(localPlayer) + " th";
+
+        speedText.GetComponent<Text>().text = "Speed: " + (int)localPlayer.GetComponent<KartBehaviour>().GetSpeed();
 	}
 
     public void updateWeaponTexture(InventoryScript.WEAPON currentWeapon)
