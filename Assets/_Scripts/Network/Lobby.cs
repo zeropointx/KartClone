@@ -8,11 +8,15 @@ public class Lobby : MonoBehaviour {
     GameObject lobby;
 	void Start () {
         lobby = GameObject.Find("Lobby");
-        lobby.GetComponent<NetworkLobbyManager>().StartServer();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+    public void StartHost()
+    {
+        lobby.GetComponent<NetworkLobbyManager>().StartHost();
+    }
 }
