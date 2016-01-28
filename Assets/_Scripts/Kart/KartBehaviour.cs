@@ -47,6 +47,7 @@ public class KartBehaviour : MonoBehaviour
         mainCamera = transform.FindChild("Main Camera").gameObject;
         physicsScript = transform.gameObject.GetComponent<KartPhysics>();
         rigidbody = transform.GetComponent<Rigidbody>();
+        rigidbody.centerOfMass = new Vector3(0, -3.0f, 0.25f);
         pw = gameObject.GetComponent<PlayerNetwork>();
     }
 
