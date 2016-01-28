@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class MyNetworkManager : NetworkManager {
     public bool ready = false;
     public int playerCount = 0;
-    int minPlayerCountToStart = 2;
+    int minPlayerCountToStart = 4;
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
