@@ -4,9 +4,9 @@ using UnityEngine.Networking;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    MyNetworkManager networkManager = null;
+    MyNetworkLobbyManager networkManager = null;
     public GameObject uiPrefab = null;
-
+    bool initialized = false;
     public enum KartHitState
     {
         SPINNING, NORMAL
@@ -24,8 +24,8 @@ public class PlayerNetwork : NetworkBehaviour
         }
         else
             GameObject.Find("HUD").GetComponent<HUD>().localPlayer = gameObject;
-        networkManager = GameObject.Find("NetworkManager").GetComponent<MyNetworkManager>();
-        GameObject.Find("Gamemode").GetComponent<Gamemode>().AddPlayer(new Gamemode.Player(-1, gameObject));
+        networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
+      
 
 
     }
@@ -37,7 +37,15 @@ public class PlayerNetwork : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(!initialized)
+        {
+            GameObject gamemode = GameObject.Find("Gamemode");
+            if (gamemode != null)
+            {
+                gamemode.GetComponent<Gamemode>().AddPlayer(new Gamemode.Player(-1, gameObject));
+                initialized = true;
+            }
+        }
     }
 
     public KartHitState hitUpdate()
