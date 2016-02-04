@@ -6,7 +6,7 @@ public class InventoryScript : NetworkBehaviour
 {
 
     //TODO: Better names once we know them
-    public enum WEAPON { BowlingBall, noWeapon };
+    public enum WEAPON { BowlingBall, SpeedBoost, noWeapon };
 
     int weaponAmount;
     [SyncVar]
@@ -46,10 +46,7 @@ public class InventoryScript : NetworkBehaviour
 
     public void pickUpRandomWeapon()
     {
-        currentWeapon = ((WEAPON)Random.Range(0, 0));
+        currentWeapon = ((WEAPON)Random.Range(0, 1));
     }
-
-
-
 
 }

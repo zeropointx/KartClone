@@ -8,6 +8,7 @@ public class Weapon : NetworkBehaviour
 
     //Weapon prefabs
     public GameObject bowlingBall;
+    public GameObject speedBoost;
 
 
     void Start()
@@ -38,10 +39,20 @@ public class Weapon : NetworkBehaviour
                 }
             case InventoryScript.WEAPON.BowlingBall:
                 {
-                    // Position fixing...
+                    // TODO: Fix positioning for network
                     GameObject ball = (GameObject)Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
                     inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
                     NetworkServer.Spawn(ball);
+                    break;
+                }
+            case InventoryScript.WEAPON.SpeedBoost:
+                {
+                    GameObject speed = (GameObject)Instantiate(speedBoost, transform.position - new Vector3(0,0,1), Quaternion.LookRotation(-transform.forward));
+                    //vähä kovakoodattu shittii
+                    speed.transform.position = transform.position;
+                    speed.transform.parent = gameObject.transform;
+                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
+                    NetworkServer.Spawn(speed);
                     break;
                 }
         }
