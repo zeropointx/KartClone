@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class HarpoonHead : MonoBehaviour {
-    float speed = 5.0f;
+public class HarpoonHead : NetworkBehaviour {
+    float speed = 100.0f;
     public GameObject harpoon = null;
     bool initialized = false;
-    Transform hitObject = null;
+    public Transform hitObject = null;
     Vector3 hitPos;
 	// Use this for initialization
 	void Start () {
-	
+        if(isServer)
+        Destroy(gameObject, 5);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (!isServer)
+            return;
         if(hitObject == null)
         transform.position += transform.forward * Time.deltaTime * speed;
 
