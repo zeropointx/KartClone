@@ -1136,7 +1136,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 178776}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.633647, y: 1.7213978, z: 0.99379253}
+  m_LocalPosition: {x: 0, y: 1.7213978, z: 0.99379253}
   m_LocalScale: {x: 0.051238794, y: 0.074413866, z: 0.04685326}
   m_Children:
   - {fileID: 400222}
@@ -1152,7 +1152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121842}
   m_LocalRotation: {x: 0.000000029802322, y: -0.70653814, z: -0.000000029802326, w: -0.70767504}
-  m_LocalPosition: {x: -0.6290281, y: 1.1801927, z: 0.0485386}
+  m_LocalPosition: {x: 0, y: 1.1801927, z: 0.0485386}
   m_LocalScale: {x: 1.4522939, y: 1, z: 0.68856585}
   m_Children:
   - {fileID: 431742}
@@ -1254,7 +1254,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152354}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: -0.37, y: -0.977, z: 1.001}
+  m_LocalPosition: {x: 0, y: -0.977, z: 1.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 469530}
@@ -1282,7 +1282,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0606308, y: -10.272, z: 81.37749}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 482180}
@@ -1654,7 +1654,7 @@ MonoBehaviour:
   brakeForce: 0
   engineDeceleration: 0
   spinSpeed: 250
-  flyLimit: 2
+  jumpLimit: 0
   state: 1
   spinTime: 3
 --- !u!114 &11410198
@@ -1939,6 +1939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac199f35e4c566b4ea9b382ea63d1c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastTrackPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11467998
 MonoBehaviour:
   m_ObjectHideFlags: 1
