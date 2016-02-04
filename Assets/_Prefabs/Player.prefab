@@ -1670,6 +1670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bowlingBall: {fileID: 176684, guid: 4999114a78229774db33f98533ff4679, type: 2}
   speedBoost: {fileID: 175662, guid: 757734dfd307d034387727747fbb1134, type: 2}
+  harpoonPrefab: {fileID: 165418, guid: bfb3b72d6700e364c81ccb83f6e42401, type: 2}
 --- !u!114 &11411088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2207,6 +2208,10 @@ Prefab:
       propertyPath: speedBoost
       value: 
       objectReference: {fileID: 175662, guid: 757734dfd307d034387727747fbb1134, type: 2}
+    - target: {fileID: 0}
+      propertyPath: harpoonPrefab
+      value: 
+      objectReference: {fileID: 165418, guid: bfb3b72d6700e364c81ccb83f6e42401, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169864}

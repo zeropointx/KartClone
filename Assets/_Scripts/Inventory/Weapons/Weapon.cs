@@ -9,7 +9,7 @@ public class Weapon : NetworkBehaviour
     //Weapon prefabs
     public GameObject bowlingBall;
     public GameObject speedBoost;
-
+    public GameObject harpoonPrefab;
 
     void Start()
     {
@@ -53,6 +53,16 @@ public class Weapon : NetworkBehaviour
                     speed.transform.parent = gameObject.transform;
                     inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
                     NetworkServer.Spawn(speed);
+                    break;
+                }
+            case InventoryScript.WEAPON.Harpoon:
+                {
+                    GameObject hook = (GameObject)Instantiate(harpoonPrefab, transform.position+transform.forward*20,transform.rotation);
+                    hook.transform.parent = transform;
+                    //vähä kovakoodattu shittii
+
+                    inventory.currentWeapon = InventoryScript.WEAPON.Harpoon;
+                    NetworkServer.Spawn(hook);
                     break;
                 }
         }

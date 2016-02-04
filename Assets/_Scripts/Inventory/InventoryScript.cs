@@ -12,7 +12,8 @@ public class InventoryScript : NetworkBehaviour
     { 
         BowlingBall = 0, 
         SpeedBoost = 1, 
-        noWeapon  = 2
+        Harpoon = 2,
+        noWeapon  = 8
     };
 
     [SyncVar]

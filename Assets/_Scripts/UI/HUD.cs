@@ -8,7 +8,6 @@ public class HUD : MonoBehaviour {
      GameObject weaponImageUI;
     GameObject track;
     GameObject placementText;
-    GameObject speedText;
      weaponImageScript imageScript;
      public Gamemode gamemode;
      public Sprite bowlingBallSprite, speedBoostSprite, weapon3Sprite, noWeaponSprite;
@@ -22,7 +21,6 @@ public class HUD : MonoBehaviour {
         lapText = GameObject.Find("LapText");
         track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject;
         placementText = transform.FindChild("Placement").gameObject;
-        speedText = transform.FindChild("Speed").gameObject;
         speedIndicator = GameObject.Find("ATJMittari");
 	}
 	
@@ -39,7 +37,6 @@ public class HUD : MonoBehaviour {
         lapText.GetComponent<Text>().text = "Lap: " + localPlayer.GetComponent<Placement>().currentLap + "\\" + track.GetComponent<TrackInformation>().lapAmount;
         placementText.GetComponent<Text>().text = gamemode.getPlacement(localPlayer) + " th";
         int speed = (int)localPlayer.GetComponent<KartBehaviour>().GetSpeed();
-        speedText.GetComponent<Text>().text = "Speed: " + speed;
         Vector3 eulerAngles = new Vector3();
         eulerAngles.z = 0.0f;
         float eulerMax = -388;
