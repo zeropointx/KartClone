@@ -13,6 +13,8 @@ public class HUD : MonoBehaviour {
      public Gamemode gamemode;
      public Sprite weapon1Sprite, weapon2Sprite, weapon3Sprite, noWeaponSprite;
      InventoryScript.WEAPON uiweapon = InventoryScript.WEAPON.noWeapon;
+     GameObject speedIndicator;
+     public float speedy = 0.0f;
 	// Use this for initialization
 	void Start () {
         weaponImageUI = transform.FindChild("weaponImageUI").gameObject;
@@ -21,6 +23,7 @@ public class HUD : MonoBehaviour {
         track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject;
         placementText = transform.FindChild("Placement").gameObject;
         speedText = transform.FindChild("Speed").gameObject;
+        speedIndicator = GameObject.Find("ATJMittari");
 	}
 	
 	// Update is called once per frame
@@ -35,8 +38,16 @@ public class HUD : MonoBehaviour {
             updateWeaponTexture(currentWeapon);
         lapText.GetComponent<Text>().text = "Lap: " + localPlayer.GetComponent<Placement>().currentLap + "\\" + track.GetComponent<TrackInformation>().lapAmount;
         placementText.GetComponent<Text>().text = gamemode.getPlacement(localPlayer) + " th";
-
-        speedText.GetComponent<Text>().text = "Speed: " + (int)localPlayer.GetComponent<KartBehaviour>().GetSpeed();
+        int speed = (int)localPlayer.GetComponent<KartBehaviour>().GetSpeed();
+        speedText.GetComponent<Text>().text = "Speed: " + speed;
+        Vector3 eulerAngles = new Vector3();
+        eulerAngles.z = 0.0f;
+        float eulerMax = -388;
+        float eulerMin = -149.0f;
+        float maxSpeed = 160.0f;
+        eulerAngles.z = -(Mathf.Abs(eulerMax - eulerMin) / maxSpeed * speed) + eulerMin;
+        speedIndicator.transform.eulerAngles = eulerAngles;
+        speedy = eulerAngles.z;
 	}
 
     public void updateWeaponTexture(InventoryScript.WEAPON currentWeapon)
