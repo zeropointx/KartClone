@@ -113,8 +113,8 @@ public class KartPhysics : MonoBehaviour
         {
             if (relative.transform.gameObject.tag == "track")
             {
-                if (Vector3.Angle(transform.position - groundNormal, transform.position - relative.normal) > 3.5f)
-                    transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, Vector3.up), 0.5f * Time.deltaTime);
+                if (Vector3.Angle(transform.position - groundNormal, transform.position - relative.normal) > 2.5f)
+                    transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, Vector3.up), 1.0f * Time.deltaTime);
                 Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.1f);
             }
         }

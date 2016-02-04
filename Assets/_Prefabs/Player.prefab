@@ -1603,8 +1603,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.4392302, y: 3.3432655, z: 3.2393873}
-  m_Center: {x: 0.23226726, y: 0.5599413, z: -0.093826294}
+  m_Size: {x: 2.45, y: 3.7, z: 3.2393873}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!81 &8115084
 AudioListener:
   m_ObjectHideFlags: 1
@@ -1952,7 +1952,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: 0
-  randomSeed: 10
 --- !u!114 &11481806
 MonoBehaviour:
   m_ObjectHideFlags: 1
