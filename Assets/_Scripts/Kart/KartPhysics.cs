@@ -7,7 +7,8 @@ public class KartPhysics : MonoBehaviour
     private KartBehaviour kartScript;
     private Vector3 groundNormal = new Vector3(0, 0, 0);
     private float groundDistance = 0;
-    private Vector3 jumpDirection = new Vector3(0, 0, 0);
+    public Vector3 lastTrackPosition = new Vector3(0, 0, 0);
+    private float airTime = 0;
 
     // Use this for initialization
     void Start()
@@ -26,7 +27,6 @@ public class KartPhysics : MonoBehaviour
                 if (groundDistance >= kartScript.getJumpLimit())
                 {
                     kartScript.SetState(KartBehaviour.KartState.JUMP);
-                    jumpDirection = transform.forward;
                 }
                 break;
 
@@ -42,7 +42,18 @@ public class KartPhysics : MonoBehaviour
                     z = Mathf.Clamp(z, 0, 20);
                 transform.rotation = Quaternion.LerpUnclamped(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, z), Time.deltaTime);
                 if (groundDistance < kartScript.getJumpLimit())
+                {
                     kartScript.SetState(KartBehaviour.KartState.FORWARD);
+                    airTime = 0;
+                }
+                if (airTime > 4)
+                {
+                    kartScript.Reset();
+                    kartScript.SetState(KartBehaviour.KartState.STOPPED);
+                    transform.position = lastTrackPosition;
+                    airTime = 0;
+                }
+                airTime += Time.deltaTime;
                 break;
 
             default:
@@ -53,12 +64,19 @@ public class KartPhysics : MonoBehaviour
         RaycastHit directDown;
         if (Physics.Raycast(new Ray(transform.position, Vector3.down), out directDown))
         {
+            Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.1f);
             if (directDown.transform.gameObject.tag == "track")
             {
                 groundNormal = directDown.normal;
                 groundDistance = directDown.distance;
-                Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.5f);
+                if (kartScript.GetState() != KartBehaviour.KartState.JUMP)
+                    lastTrackPosition = directDown.point + 3.0f * Vector3.up - 16.0f * transform.forward;
             }
+        }
+        else
+        {
+            groundDistance = float.MaxValue;
+            kartScript.SetState(KartBehaviour.KartState.JUMP);
         }
     }
 
@@ -97,7 +115,7 @@ public class KartPhysics : MonoBehaviour
             {
                 if (Vector3.Angle(transform.position - groundNormal, transform.position - relative.normal) > 3.5f)
                     transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, Vector3.up), 0.5f * Time.deltaTime);
-                Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.5f);
+                Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.1f);
             }
         }
     }
@@ -112,5 +130,4 @@ public class KartPhysics : MonoBehaviour
     {
         return groundNormal;
     }
-
 }

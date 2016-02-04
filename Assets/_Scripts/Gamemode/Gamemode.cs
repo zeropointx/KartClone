@@ -88,8 +88,7 @@ public class Gamemode : NetworkBehaviour {
                         dp.gameObject = p.gameObject;
                         dp.currentLap = placement.currentLap;
                         dp.currentCheckpointIndex = placement.currentCheckPointIndex;
-                        //TODO fix checkpoints in defaultScene
-                        //dp.distanceToNextCheckpoint = Vector3.Distance( track.checkPoints[dp.currentCheckpointIndex + 1].transform.position,dp.gameObject.transform.position);
+                        dp.distanceToNextCheckpoint = Vector3.Distance( track.checkPoints[dp.currentCheckpointIndex + 1].transform.position,dp.gameObject.transform.position);
                         tempPlayerList.Add(dp);
                     }
                     players.Clear();
