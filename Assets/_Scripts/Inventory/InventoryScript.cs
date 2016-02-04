@@ -2,23 +2,25 @@
 using System.Collections;
 using UnityEngine.Networking;
 
+
+
 public class InventoryScript : NetworkBehaviour
 {
 
     //TODO: Better names once we know them
-    public enum WEAPON { BowlingBall, SpeedBoost, noWeapon };
+    public enum WEAPON 
+    { 
+        BowlingBall, 
+        SpeedBoost, 
+        noWeapon 
+    };
 
-    int weaponAmount;
     [SyncVar]
     public WEAPON currentWeapon;
 
 
-    public int randomSeed = 1337;
-
-
     void Start()
     {
-        Random.seed = randomSeed;
         currentWeapon = WEAPON.noWeapon;
 
     }
@@ -46,7 +48,7 @@ public class InventoryScript : NetworkBehaviour
 
     public void pickUpRandomWeapon()
     {
-        currentWeapon = ((WEAPON)Random.Range(0, 1));
+        currentWeapon = ((WEAPON)Random.Range(0, 2));
     }
 
 }
