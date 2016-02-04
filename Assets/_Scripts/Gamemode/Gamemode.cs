@@ -83,12 +83,13 @@ public class Gamemode : NetworkBehaviour {
                         DebugPlayer dp = new DebugPlayer();
                         Player p = players[i];
                         Placement placement = p.gameObject.GetComponent<Placement>();
-                        TrackInformation track = GameObject.Find("Track").GetComponent<TrackInformation>();
+                        TrackInformation track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject.GetComponent<TrackInformation>();
 
                         dp.gameObject = p.gameObject;
                         dp.currentLap = placement.currentLap;
                         dp.currentCheckpointIndex = placement.currentCheckPointIndex;
-                        dp.distanceToNextCheckpoint = Vector3.Distance( track.checkPoints[dp.currentCheckpointIndex + 1].transform.position,dp.gameObject.transform.position);
+                        //TODO fix checkpoints in defaultScene
+                        //dp.distanceToNextCheckpoint = Vector3.Distance( track.checkPoints[dp.currentCheckpointIndex + 1].transform.position,dp.gameObject.transform.position);
                         tempPlayerList.Add(dp);
                     }
                     players.Clear();

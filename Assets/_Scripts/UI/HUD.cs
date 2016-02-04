@@ -18,7 +18,7 @@ public class HUD : MonoBehaviour {
         weaponImageUI = transform.FindChild("weaponImageUI").gameObject;
         imageScript = weaponImageUI.GetComponent<weaponImageScript>();
         lapText = GameObject.Find("LapText");
-        track = GameObject.Find("Track");
+        track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject;
         placementText = transform.FindChild("Placement").gameObject;
         speedText = transform.FindChild("Speed").gameObject;
 	}

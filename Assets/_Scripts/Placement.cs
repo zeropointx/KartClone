@@ -16,7 +16,7 @@ public class Placement : MonoBehaviour
 
     void Start()
     {
-        track = GameObject.Find("Track");
+        track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject;
         trackInformation = track.GetComponent<TrackInformation>();       
     }
 

@@ -1349,6 +1349,23 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 4300002, guid: 1b6e2c3d79264004a8a4b5d622e2c2cf, type: 3}
+--- !u!1 &1821279101 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100006, guid: 1b6e2c3d79264004a8a4b5d622e2c2cf, type: 3}
+  m_PrefabInternal: {fileID: 1821279098}
+--- !u!114 &1821279102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1821279101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce51b7f1d0412a84dbcc1b7917642d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkPoints: []
+  lapAmount: 0
 --- !u!1 &1920987566
 GameObject:
   m_ObjectHideFlags: 0

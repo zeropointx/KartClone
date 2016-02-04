@@ -41,10 +41,10 @@ public class KartBehaviour : MonoBehaviour
     void Start()
     {
         //stats
-        maxSpeed = 36;
+        maxSpeed = 65;
         maxReverse = -15;
         turnSpeed = 100;
-        acceleration = 0.275f;
+        acceleration = 0.25f;
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
         spinSpeed = 250;
@@ -54,7 +54,7 @@ public class KartBehaviour : MonoBehaviour
         mainCamera = transform.FindChild("Main Camera").gameObject;
         physicsScript = transform.gameObject.GetComponent<KartPhysics>();
         rigidbody = transform.GetComponent<Rigidbody>();
-        rigidbody.centerOfMass = new Vector3(0, -3.0f, 0.2f);
+        rigidbody.centerOfMass = new Vector3(0, -3.5f, 0.2f);
         pw = gameObject.GetComponent<PlayerNetwork>();
     }
 
