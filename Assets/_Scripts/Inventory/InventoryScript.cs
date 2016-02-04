@@ -10,9 +10,9 @@ public class InventoryScript : NetworkBehaviour
     //TODO: Better names once we know them
     public enum WEAPON 
     { 
-        BowlingBall, 
-        SpeedBoost, 
-        noWeapon 
+        BowlingBall = 0, 
+        SpeedBoost = 1, 
+        noWeapon  = 2
     };
 
     [SyncVar]
@@ -27,9 +27,28 @@ public class InventoryScript : NetworkBehaviour
 
     void Update()
     {
+        bool input = false;
+        int index;
+        for (index = (int)KeyCode.Keypad0; index < (int)KeyCode.Keypad9+1; index++ )
+        {
+            if (Input.GetKeyDown((KeyCode)index))
+            {
+                input = true;
+                break;
+            }
+        }
+        if(input)
+        {
+            CmdDebugChangeWeapon(index - (int)KeyCode.Keypad0);
+        }
 
+           
     }
-
+    [Command]
+   void CmdDebugChangeWeapon(int index)
+    {
+        currentWeapon = (WEAPON)index;
+    }
     void OnTriggerEnter(Collider other)
     {
         if (!isServer)
