@@ -22,10 +22,10 @@ public class KartBehaviour : MonoBehaviour
     public float acceleration;
     public float brakeForce;
     public float engineDeceleration;
-    public float spinSpeed = 250;
+    public float spinSpeed;
 
     //common
-    public float flyLimit = 2.0f;
+    public float jumpLimit;
     public KartState state = KartState.STOPPED;
     private GameObject mainCamera = null;
     private Rigidbody rigidbody = null;
@@ -34,20 +34,27 @@ public class KartBehaviour : MonoBehaviour
     private float spinTimer = 0;
     public float spinTime = 3;
     PlayerNetwork pw;
+    private Vector3 oldPosition = new Vector3(0, 0, 0);
+    private float trueSpeed = 0.0f;
 
     // Use this for initialization
     void Start()
     {
-        maxSpeed = 35;
+        //stats
+        maxSpeed = 36;
         maxReverse = -15;
         turnSpeed = 100;
-        acceleration = 0.25f;
+        acceleration = 0.275f;
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
+        spinSpeed = 250;
+
+        //common
+        jumpLimit = 1.75f;
         mainCamera = transform.FindChild("Main Camera").gameObject;
         physicsScript = transform.gameObject.GetComponent<KartPhysics>();
         rigidbody = transform.GetComponent<Rigidbody>();
-        rigidbody.centerOfMass = new Vector3(0, -3.0f, 0.25f);
+        rigidbody.centerOfMass = new Vector3(0, -3.0f, 0.2f);
         pw = gameObject.GetComponent<PlayerNetwork>();
     }
 
@@ -63,11 +70,8 @@ public class KartBehaviour : MonoBehaviour
             case KartState.FORWARD:
                 if (pedal != 0)
                     speedChange = (pedal > 0) ? acceleration : brakeForce;
-                if (physicsScript.GetGroundDistance() < flyLimit)
-                {
-                    speed -= engineDeceleration;
-                    speed += speedChange * pedal;
-                }
+                speed -= engineDeceleration;
+                speed += speedChange * pedal;
                 speed = Mathf.Clamp(speed, 0, maxSpeed);
                 if (speed == 0)
                     state = KartState.STOPPED;
@@ -91,17 +95,16 @@ public class KartBehaviour : MonoBehaviour
                 steer *= -1.0f;
                 if (pedal != 0)
                     speedChange = (pedal > 0) ? brakeForce : acceleration;
-                if (physicsScript.GetGroundDistance() < flyLimit)
-                {
-                    speed += engineDeceleration;
-                    speed += speedChange * pedal;
-                }
+                speed += engineDeceleration;
+                speed += speedChange * pedal;
                 speed = Mathf.Clamp(speed, maxReverse, 0);
                 if (speed == 0)
                     state = KartState.STOPPED;
                 break;
 
             case KartState.JUMP:
+                speed -= engineDeceleration;
+                speed = Mathf.Clamp(speed, 0, maxSpeed);
                 break;
 
             default:
@@ -115,39 +118,15 @@ public class KartBehaviour : MonoBehaviour
         direction -= physicsScript.GetGroundNormal() * 0.15f * Time.deltaTime;
         if (physicsScript.GetGroundDistance() < 3.0f)
             transform.Rotate(new Vector3(0, turnSpeed * steer * Time.deltaTime, 0));
+        oldPosition = transform.position;
         transform.position += speed * Time.deltaTime * direction;
+        trueSpeed = Vector3.Distance(transform.position, oldPosition) / Time.deltaTime;
     }
 
     void LateUpdate()
     {
         mainCamera.transform.LookAt(transform);
     }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        // TODO fix later
-        /*
-        if (collisionImmunityTimer > 3)
-        {
-            if (collision.impulse.magnitude > 100 && speed > 0.25f * maxSpeed)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(new Ray(transform.position + new Vector3(0, 1.25f, 0), transform.forward), out hit))
-                {
-                    if (hit.distance < 10)
-                    {
-                        Reset();
-                        transform.position -= 2.0f * transform.forward;
-                        collisionImmunityTimer = 0;
-                        Debug.Log("hard kart collision");
-                    }
-                }
-            }
-        }
-        */
-    }
-
-    //private
 
     //public
 
@@ -163,7 +142,7 @@ public class KartBehaviour : MonoBehaviour
 
     public float GetSpeed()
     {
-        return speed;
+        return Mathf.Abs(trueSpeed);
     }
 
     public KartState GetState()
@@ -182,6 +161,11 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.velocity *= speedMultiplier;
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
+    }
+
+    public float getJumpLimit()
+    {
+        return jumpLimit;
     }
 
     void checkHitUpdate()
