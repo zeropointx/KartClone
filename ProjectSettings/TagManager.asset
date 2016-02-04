@@ -6,6 +6,7 @@ TagManager:
   tags:
   - weaponBox
   - checkPoint
+  - track
   layers:
   - Default
   - TransparentFX

@@ -53,7 +53,7 @@ public class KartPhysics : MonoBehaviour
         RaycastHit directDown;
         if (Physics.Raycast(new Ray(transform.position, Vector3.down), out directDown))
         {
-            if (directDown.transform.gameObject.name == "BezierCurve")
+            if (directDown.transform.gameObject.tag == "track")
             {
                 groundNormal = directDown.normal;
                 groundDistance = directDown.distance;
@@ -93,7 +93,7 @@ public class KartPhysics : MonoBehaviour
         RaycastHit relative;
         if (Physics.Raycast(new Ray(transform.position, -transform.up), out relative))
         {
-            if (relative.transform.gameObject.name == "BezierCurve")
+            if (relative.transform.gameObject.tag == "track")
             {
                 if (Vector3.Angle(transform.position - groundNormal, transform.position - relative.normal) > 3.5f)
                     transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, Vector3.up), 0.5f * Time.deltaTime);
