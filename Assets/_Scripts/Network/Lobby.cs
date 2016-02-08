@@ -7,10 +7,11 @@ public class Lobby : MonoBehaviour {
 
 	// Use this for initialization
     GameObject lobby;
-    Text inputField;
+    InputField inputField;
 	void Start () {
         lobby = GameObject.Find("Lobby");
-        inputField = GameObject.Find("InputField").transform.FindChild("Text").GetComponent<Text>();
+        inputField = GameObject.Find("InputField").GetComponent<InputField>();
+        inputField.text = "127.0.0.1";
 	}
 	
 	// Update is called once per frame

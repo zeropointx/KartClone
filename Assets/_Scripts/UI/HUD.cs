@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour {
     GameObject lapText;
-       public GameObject localPlayer = null;
+       public static GameObject localPlayer = null;
      GameObject weaponImageUI;
     GameObject track;
     GameObject placementText;

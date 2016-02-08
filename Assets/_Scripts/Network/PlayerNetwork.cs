@@ -23,7 +23,7 @@ public class PlayerNetwork : NetworkBehaviour
             transform.FindChild("Main Camera").gameObject.active = false;
         }
         else
-            GameObject.Find("HUD").GetComponent<HUD>().localPlayer = gameObject;
+           HUD.localPlayer = gameObject;
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
       
 

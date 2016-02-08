@@ -18,9 +18,10 @@ public class HarpoonHead : NetworkBehaviour {
 	void Update () {
         if (!isServer)
             return;
-        if(hitObject == null)
-        transform.position += transform.forward * Time.deltaTime * speed;
-
+        if (hitObject == null)
+        {
+            transform.position += transform.forward * Time.deltaTime * speed;
+        }
         if (harpoon == null)
         {
             Destroy(gameObject);
@@ -40,11 +41,17 @@ public class HarpoonHead : NetworkBehaviour {
 	}
     void OnTriggerEnter(Collider other)
     {
+        if (other.transform.root == HUD.localPlayer)
+            return;
         hitObject = other.transform;
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
             hitPos = hit.point;
+        }
+        if(hitObject.root.GetComponent<Rigidbody>() != null)
+        {
+            transform.parent = hitObject;
         }
     }
 }

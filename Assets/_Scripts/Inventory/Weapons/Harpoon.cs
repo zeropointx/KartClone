@@ -13,15 +13,12 @@ public class Harpoon : NetworkBehaviour {
             harpoonHead = (GameObject)GameObject.Instantiate(harpoonHeadPrefab, transform.position + transform.forward*5, transform.rotation);
             harpoonHead.GetComponent<HarpoonHead>().harpoon = gameObject;
             NetworkServer.Spawn(harpoonHead);
-           // harpoonHead
         }
       }
 	
-	// Update is called once per frame
 	void Update () {
         if (harpoonHead == null)
         {
-            transform.root.GetComponent<InventoryScript>().currentWeapon = InventoryScript.WEAPON.noWeapon;
             Destroy(gameObject);
             return;
         }
@@ -33,11 +30,13 @@ public class Harpoon : NetworkBehaviour {
         if(harpoonHead.GetComponent<HarpoonHead>().hitObject != null)
         {
             Vector3 force = harpoonHead.transform.position - transform.root.position;
-            force *= Time.deltaTime * 100f;
+            force.Normalize();
+            force *= Time.deltaTime * 10000f;
             
             transform.root.GetComponent<Rigidbody>().AddForce(force, ForceMode.Acceleration);
         }
 	}
+    //Player presses mouse again and sends to server that it has to remove hook
     [Command]
     void CmdHandleQuitHook()
     {
