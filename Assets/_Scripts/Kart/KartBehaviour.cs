@@ -3,17 +3,10 @@ using System.Collections;
 
 public class KartBehaviour : MonoBehaviour
 {
-
-    public enum KartState
-    {
-        FORWARD, STOPPED, REVERSE, JUMP
-    };
-
-    //TODO set as private
     //controls
-    private float steeringWheel = 0;
-    private float pedal = 0;
-    private float speed = 0;
+    public float steeringWheel = 0;
+    public float pedal = 0;
+    public float speed = 0;
 
     //stats
     public float maxSpeed;
@@ -26,16 +19,21 @@ public class KartBehaviour : MonoBehaviour
 
     //common
     public float jumpLimit;
-    public KartState state = KartState.STOPPED;
-    private GameObject mainCamera = null;
-    private Rigidbody rigidbody = null;
-    private KartPhysics physicsScript = null;
-    private float stopTimer = 0;
-    private float spinTimer = 0;
+    public KartState state = null;
+    public GameObject mainCamera = null;
+    public Rigidbody rigidbody = null;
+    public float spinTimer = 0;
     public float spinTime = 3;
-    PlayerNetwork pw;
+    
+    //private
+    private PlayerNetwork pw;
     private Vector3 oldPosition = new Vector3(0, 0, 0);
     private float trueSpeed = 0.0f;
+
+    //physics
+    public Vector3 groundNormal = new Vector3(0, 0, 0);
+    public float groundDistance = 0;
+    public Vector3 lastTrackPosition = new Vector3(0, 0, 0);
 
     // Use this for initialization
     void Start()
@@ -51,8 +49,8 @@ public class KartBehaviour : MonoBehaviour
 
         //common
         jumpLimit = 1.75f;
+        state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
-        physicsScript = transform.gameObject.GetComponent<KartPhysics>();
         rigidbody = transform.GetComponent<Rigidbody>();
         rigidbody.centerOfMass = new Vector3(0, -2.0f, 0.0f);
         pw = gameObject.GetComponent<PlayerNetwork>();
@@ -61,66 +59,8 @@ public class KartBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float speedChange = 0;
-        float steer = steeringWheel;
-
-        //controls
-        switch (state)
-        {
-            case KartState.FORWARD:
-                if (pedal != 0)
-                    speedChange = (pedal > 0) ? acceleration : brakeForce;
-                speed -= engineDeceleration;
-                speed += speedChange * pedal;
-                speed = Mathf.Clamp(speed, 0, maxSpeed);
-                if (speed == 0)
-                    state = KartState.STOPPED;
-                break;
-
-            case KartState.STOPPED:
-                stopTimer += Time.deltaTime;
-                speed = 0;
-                rigidbody.angularVelocity = Vector3.zero;
-                if (stopTimer > 0.25f)
-                {
-                    if (pedal != 0)
-                    {
-                        state = (pedal > 0) ? KartState.FORWARD : KartState.REVERSE;
-                        stopTimer = 0;
-                    }
-                }
-                break;
-
-            case KartState.REVERSE:
-                steer *= -1.0f;
-                if (pedal != 0)
-                    speedChange = (pedal > 0) ? brakeForce : acceleration;
-                speed += engineDeceleration;
-                speed += speedChange * pedal;
-                speed = Mathf.Clamp(speed, maxReverse, 0);
-                if (speed == 0)
-                    state = KartState.STOPPED;
-                break;
-
-            case KartState.JUMP:
-                speed -= engineDeceleration;
-                speed = Mathf.Clamp(speed, 0, maxSpeed);
-                break;
-
-            default:
-                Debug.LogError("invalid Kart state!");
-                break;
-        }
-
+        state = state.UpdateState();
         checkHitUpdate();
-
-        Vector3 direction = transform.forward;
-        direction -= physicsScript.GetGroundNormal() * 0.15f * Time.deltaTime;
-        if (physicsScript.GetGroundDistance() < 3.0f)
-            transform.Rotate(new Vector3(0, turnSpeed * steer * Time.deltaTime, 0));
-        oldPosition = transform.position;
-        transform.position += speed * Time.deltaTime * direction;
-        trueSpeed = Vector3.Distance(transform.position, oldPosition) / Time.deltaTime;
     }
 
     void LateUpdate()
@@ -129,6 +69,52 @@ public class KartBehaviour : MonoBehaviour
     }
 
     //public
+
+    public void GroundCollision()
+    {
+        RaycastHit relative;
+        if (Physics.Raycast(new Ray(transform.position, -transform.up), out relative))
+        {
+            if (relative.transform.gameObject.tag == "track")
+            {
+                if (Vector3.Angle(transform.position - groundNormal, transform.position - relative.normal) > 2.5f)
+                    transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, Vector3.up), 1.0f * Time.deltaTime);
+                Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.1f);
+            }
+        }
+    }
+
+    public void UpdateTransform()
+    {
+        Vector3 direction = transform.forward;
+        direction -= groundNormal * 0.15f * Time.deltaTime;
+        if (groundDistance < 3.0f)
+            transform.Rotate(new Vector3(0, turnSpeed * steeringWheel * Time.deltaTime, 0));
+        oldPosition = transform.position;
+        transform.position += speed * Time.deltaTime * direction;
+        trueSpeed = Vector3.Distance(transform.position, oldPosition) / Time.deltaTime;
+    }
+
+    public bool UpdateGroundDistance()
+    {
+        RaycastHit directDown;
+        if (Physics.Raycast(new Ray(transform.position, Vector3.down), out directDown))
+        {
+            Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.1f);
+            if (directDown.transform.gameObject.tag == "track")
+            {
+                groundNormal = directDown.normal;
+                groundDistance = directDown.distance;
+                lastTrackPosition = directDown.point + 3.0f * Vector3.up - 16.0f * transform.forward;
+            }
+            return true;
+        }
+        else
+        {
+            groundDistance = float.MaxValue;
+            return false;
+        }
+    }
 
     public void SetPedal(float pedalValue)
     {
@@ -178,7 +164,7 @@ public class KartBehaviour : MonoBehaviour
             if (spinTimer > spinTime)
             {
                 spinTimer = 0;
-                state = KartState.STOPPED;
+                state = new Stopped(this.gameObject);
                 pw.hitState = PlayerNetwork.KartHitState.NORMAL;
             }
         }

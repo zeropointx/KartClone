@@ -511,7 +511,6 @@ GameObject:
   - 114: {fileID: 11481806}
   - 114: {fileID: 11410198}
   - 114: {fileID: 11497526}
-  - 114: {fileID: 11457842}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1646,6 +1645,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58095763a6dcc8b4191c99312f5892c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  steeringWheel: 0
+  pedal: 0
+  speed: 0
   maxSpeed: 0
   maxReverse: 0
   turnSpeed: 0
@@ -1654,8 +1656,14 @@ MonoBehaviour:
   engineDeceleration: 0
   spinSpeed: 250
   jumpLimit: 0
-  state: 1
+  mainCamera: {fileID: 0}
+  rigidbody: {fileID: 0}
+  physicsScript: {fileID: 0}
+  spinTimer: 0
   spinTime: 3
+  groundNormal: {x: 0, y: 0, z: 0}
+  groundDistance: 0
+  lastTrackPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11410198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1726,18 +1734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02081b861f3c431468e2739f18199069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11457842
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac199f35e4c566b4ea9b382ea63d1c4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lastTrackPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11467998
 MonoBehaviour:
   m_ObjectHideFlags: 1
