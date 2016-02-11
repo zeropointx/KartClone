@@ -1281,7 +1281,7 @@ Transform:
   m_GameObject: {fileID: 169864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 482180}
   - {fileID: 416792}
@@ -1442,7 +1442,7 @@ MeshRenderer:
   m_GameObject: {fileID: 178776}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: 479cf3d3b4bd3374e8040fb31a822882, type: 2}
   m_SubsetIndices: 
@@ -1793,7 +1793,7 @@ SkinnedMeshRenderer:
   m_GameObject: {fileID: 174378}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: 3bdd73be1c47173418ce540b8cdc9273, type: 2}
   - {fileID: 2100000, guid: c0ba390475a45f14483ff46f234cca29, type: 2}
@@ -2012,6 +2012,18 @@ Prefab:
       propertyPath: minePrefab
       value: 
       objectReference: {fileID: 172604, guid: 9b0d12ae9da4c2d46bbcfec811931d19, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169864}
