@@ -13,6 +13,9 @@ public class Stopped : KartState {
     public override KartState UpdateState()
     {
         KartBehaviour kb = kart.GetComponent<KartBehaviour>();
+
+        if (kb.pw.hitState == PlayerNetwork.KartHitState.SPINNING)
+            return new Spinning(kart);
         if (!kb.UpdateGroundDistance())
             return new Jumping(kart);
 
