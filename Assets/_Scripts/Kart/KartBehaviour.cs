@@ -56,6 +56,8 @@ public class KartBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.K))
+           pw.hitState = PlayerNetwork.KartHitState.SPINNING;
         Vector3 oldPosition = transform.position;
         KartState tempState = state.UpdateState();
         if (tempState != null)
