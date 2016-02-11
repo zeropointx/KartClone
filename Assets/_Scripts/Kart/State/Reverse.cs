@@ -16,10 +16,7 @@ public class Reverse : KartState {
 
         //physics
         kb.GroundCollision();
-        if (!kb.UpdateGroundDistance())
-            return new Jumping(kart);
-        
-        if (kb.groundDistance >= kb.jumpLimit)
+        if (!kb.UpdateGroundDistance() ||  kb.groundDistance >= kb.jumpLimit)
             return new Jumping(kart);
 
         if (kb.pedal != 0)
@@ -31,6 +28,6 @@ public class Reverse : KartState {
             return new Stopped(kart);
 
         kb.UpdateTransform();
-        return this;
+        return null;
     }
 }

@@ -37,6 +37,6 @@ public class Jumping : KartState {
         airTime += Time.deltaTime;
 
         kb.UpdateTransform();
-        return this;
+        return null;
     }
 }

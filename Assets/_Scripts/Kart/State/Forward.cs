@@ -31,6 +31,6 @@ public class Forward : KartState {
             return new Stopped(kart);
 
         kb.UpdateTransform();
-        return this;
+        return null;
     }
 }

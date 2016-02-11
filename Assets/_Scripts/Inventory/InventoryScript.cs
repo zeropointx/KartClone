@@ -50,25 +50,18 @@ public class InventoryScript : NetworkBehaviour
     {
         currentWeapon = (WEAPON)index;
     }
-    void OnTriggerEnter(Collider other)
-    {
-        if (!isServer)
-            return;
-        if (other.gameObject.tag == "weaponBox")
-        {
-            Debug.Log("Collided with weaponBox!");
 
-            if (currentWeapon == WEAPON.noWeapon)
-            {
-                pickUpRandomWeapon();
-                Destroy(other.gameObject);
-            }
+    public void pickWeapon(GameObject weaponBox)
+    {
+        if (currentWeapon == WEAPON.noWeapon)
+        {
+            pickUpRandomWeapon();
+            Destroy(weaponBox);
         }
     }
-
     public void pickUpRandomWeapon()
     {
-        currentWeapon = ((WEAPON)Random.Range(0, 2));
+        currentWeapon = ((WEAPON)Random.Range(0, (int)WEAPON.Harpoon+1));
     }
 
 }

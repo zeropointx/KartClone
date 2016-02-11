@@ -59,7 +59,9 @@ public class KartBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        state = state.UpdateState();
+        KartState tempState = state.UpdateState();
+        if (tempState != null)
+            state = tempState;
         checkHitUpdate();
     }
 
@@ -116,10 +118,35 @@ public class KartBehaviour : MonoBehaviour
         }
     }
 
-    public void SetPedal(float pedalValue)
+
+
+
+    public void Reset(float speedMultiplier = 0)
     {
-        pedal = pedalValue;
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        rigidbody.velocity *= speedMultiplier;
+        rigidbody.angularVelocity *= speedMultiplier;
+        speed *= speedMultiplier;
     }
+
+   
+
+    void checkHitUpdate()
+    {
+        if (pw.hitState == PlayerNetwork.KartHitState.SPINNING)
+        {
+            speed = 0;
+            spinTimer += Time.deltaTime;
+            transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
+            if (spinTimer > spinTime)
+            {
+                spinTimer = 0;
+                state = new Stopped(this.gameObject);
+                pw.hitState = PlayerNetwork.KartHitState.NORMAL;
+            }
+        }
+    }
+
 
     public void SetSteer(float wheelPosition)
     {
@@ -140,33 +167,12 @@ public class KartBehaviour : MonoBehaviour
     {
         state = _state;
     }
-
-    public void Reset(float speedMultiplier = 0)
-    {
-        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        rigidbody.velocity *= speedMultiplier;
-        rigidbody.angularVelocity *= speedMultiplier;
-        speed *= speedMultiplier;
-    }
-
     public float getJumpLimit()
     {
         return jumpLimit;
     }
-
-    void checkHitUpdate()
+    public void SetPedal(float pedalValue)
     {
-        if (pw.hitState == PlayerNetwork.KartHitState.SPINNING)
-        {
-            speed = 0;
-            spinTimer += Time.deltaTime;
-            transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
-            if (spinTimer > spinTime)
-            {
-                spinTimer = 0;
-                state = new Stopped(this.gameObject);
-                pw.hitState = PlayerNetwork.KartHitState.NORMAL;
-            }
-        }
+        pedal = pedalValue;
     }
 }

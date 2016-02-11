@@ -31,6 +31,6 @@ public class Stopped : KartState {
         }
 
         kb.UpdateTransform();
-        return this;
+        return null;
     }
 }
