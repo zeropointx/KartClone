@@ -4,10 +4,12 @@ using System.Collections;
 public class Stopped : KartState {
 
     private float stopTimer;
+    private float minStop;
 
 	public Stopped(GameObject _kart): base(_kart)
     {
         stopTimer = 0;
+        minStop = 0.25f;
     }
 
     public override KartState UpdateState()
@@ -22,16 +24,8 @@ public class Stopped : KartState {
         stopTimer += Time.deltaTime;
         kb.speed = 0;
         kb.rigidbody.angularVelocity = Vector3.zero;
-        if (stopTimer > 0.25f)
-        {
-            if (kb.pedal != 0)
-            {
-                if (kb.pedal > 0)
-                    return new Forward(kart);
-                else
-                    return new Reverse(kart);
-            }
-        }
+        if (stopTimer > minStop && kb.pedal != 0)
+            return new Drive(kart);
 
         kb.UpdateTransform();
         return null;

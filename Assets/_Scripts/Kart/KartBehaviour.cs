@@ -25,7 +25,6 @@ public class KartBehaviour : MonoBehaviour
     public PlayerNetwork pw;
     
     //private
-    private Vector3 oldPosition = new Vector3(0, 0, 0);
     private float trueSpeed = 0.0f;
 
     //physics
@@ -50,16 +49,18 @@ public class KartBehaviour : MonoBehaviour
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
         rigidbody = transform.GetComponent<Rigidbody>();
-        rigidbody.centerOfMass = new Vector3(0, -2.0f, 0.0f);
+        rigidbody.centerOfMass = new Vector3(0, transform.gameObject.GetComponent<BoxCollider>().size.y * -0.35f, 0.0f);
         pw = gameObject.GetComponent<PlayerNetwork>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 oldPosition = transform.position;
         KartState tempState = state.UpdateState();
         if (tempState != null)
             state = tempState;
+        trueSpeed = Vector3.Distance(transform.position, oldPosition) / Time.deltaTime;
     }
 
     void LateUpdate()
@@ -67,31 +68,14 @@ public class KartBehaviour : MonoBehaviour
         mainCamera.transform.LookAt(transform);
     }
 
-    //public
-
-    public void GroundCollision()
-    {
-        RaycastHit relative;
-        if (Physics.Raycast(new Ray(transform.position, -transform.up), out relative))
-        {
-            if (relative.transform.gameObject.tag == "track")
-            {
-                if (Vector3.Angle(transform.position - groundNormal, transform.position - relative.normal) > 2.5f)
-                    transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.FromToRotation(transform.up, Vector3.up), 1.0f * Time.deltaTime);
-                Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.1f);
-            }
-        }
-    }
-
-    public void UpdateTransform()
+    public void UpdateTransform(float controlMultiplier = 1.0f)
     {
         Vector3 direction = transform.forward;
-        direction -= groundNormal * 0.15f * Time.deltaTime;
-        if (groundDistance < 3.0f)
-            transform.Rotate(new Vector3(0, turnSpeed * steeringWheel * Time.deltaTime, 0));
-        oldPosition = transform.position;
+        direction -= groundNormal * 0.5f * Time.deltaTime;
+        if (groundDistance < 2.0f)
+            transform.Rotate(new Vector3(0, controlMultiplier * turnSpeed * steeringWheel * Time.deltaTime, 0));
+        
         transform.position += speed * Time.deltaTime * direction;
-        trueSpeed = Vector3.Distance(transform.position, oldPosition) / Time.deltaTime;
     }
 
     public bool UpdateGroundDistance()
