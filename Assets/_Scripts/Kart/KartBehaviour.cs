@@ -35,6 +35,9 @@ public class KartBehaviour : MonoBehaviour
     public float groundDistance = 0;
     public Vector3 lastTrackPosition = new Vector3(0, 0, 0);
 
+    public Quaternion originalRotation;
+    public Transform childKart;
+
     // Use this for initialization
     void Start()
     {
@@ -55,6 +58,9 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.centerOfMass = new Vector3(0, transform.gameObject.GetComponent<BoxCollider>().size.y * -0.35f, 0.0f);
         pw = gameObject.GetComponent<PlayerNetwork>();
         oldPosition = transform.position;
+
+        childKart = transform.Find("shoppingcart");
+        originalRotation = childKart.transform.localRotation;
     }
 
     // Update is called once per frame
