@@ -13,7 +13,8 @@ public class PlayerNetwork : NetworkBehaviour
     };
     [SyncVar]
     public KartHitState hitState = KartHitState.NORMAL;
-    // Use this for initialization
+
+    public static GameObject localPlayer = null;
     void Start()
     {
         GetComponent<KartInput>().enabled = false;
@@ -23,7 +24,7 @@ public class PlayerNetwork : NetworkBehaviour
             transform.FindChild("Main Camera").gameObject.active = false;
         }
         else
-           HUD.localPlayer = gameObject;
+           localPlayer = gameObject;
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
       
 
