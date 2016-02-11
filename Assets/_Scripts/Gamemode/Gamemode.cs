@@ -159,7 +159,7 @@ public class Gamemode : NetworkBehaviour {
     [ClientRpc]
     void RpcenableInput()
     {
-        HUD.localPlayer.GetComponent<KartInput>().enabled = true;
+        PlayerNetwork.localPlayer.GetComponent<KartInput>().enabled = true;
     }
     public void setState(State state)
     {
