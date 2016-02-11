@@ -26,6 +26,7 @@ public class KartBehaviour : MonoBehaviour
     
     //private
     private float trueSpeed = 0.0f;
+    private KartState networkState = null;
 
     //physics
     public Vector3 groundNormal = new Vector3(0, 0, 0);
@@ -56,9 +57,15 @@ public class KartBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
-           pw.hitState = PlayerNetwork.KartHitState.SPINNING;
         Vector3 oldPosition = transform.position;
+        if (Input.GetKeyDown(KeyCode.K))
+            pw.Spin();
+
+        if (networkState != null)
+        {
+            state = networkState;
+            networkState = null;
+        }
         KartState tempState = state.UpdateState();
         if (tempState != null)
             state = tempState;
@@ -107,6 +114,11 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.velocity *= speedMultiplier;
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
+    }
+
+    public void Spin()
+    {
+        networkState = new Spinning(this.gameObject);
     }
 
     public void SetSteer(float wheelPosition)

@@ -33,7 +33,6 @@ public class Spinning : KartState
         {
             spinIndex = 0;
             childKart.transform.localRotation = originalRotation;
-            kb.pw.hitState = PlayerNetwork.KartHitState.NORMAL;
             return new Drive(kart);
         }
         kb.UpdateTransform();

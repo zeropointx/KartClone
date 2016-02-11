@@ -50,7 +50,7 @@ public class BowlingBall : NetworkBehaviour
         {
             PN = GG.GetComponent<PlayerNetwork>();
             //Spin2Win
-            PN.hitState = PlayerNetwork.KartHitState.SPINNING;
+            PN.Spin();
             Destroy(gameObject);
         }
     }

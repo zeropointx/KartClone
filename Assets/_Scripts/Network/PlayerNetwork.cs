@@ -7,13 +7,7 @@ public class PlayerNetwork : NetworkBehaviour
     MyNetworkLobbyManager networkManager = null;
     public GameObject uiPrefab = null;
     bool initialized = false;
-    public enum KartHitState
-    {
-        SPINNING, NORMAL
-    };
-    [SyncVar]
-    public KartHitState hitState = KartHitState.NORMAL;
-
+    
     public static GameObject localPlayer = null;
     void Start()
     {
@@ -49,18 +43,9 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
-    public KartHitState hitUpdate()
+    public void Spin()
     {
-        switch (hitState)
-        {
-            case KartHitState.SPINNING:
-                return KartHitState.SPINNING;
-
-        }
-        return KartHitState.NORMAL;
-        
+        transform.GetComponent<KartBehaviour>().Spin();
     }
-
-
 
 }

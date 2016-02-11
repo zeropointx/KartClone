@@ -17,9 +17,6 @@ public class Drive : KartState {
         KartBehaviour kb = kart.GetComponent<KartBehaviour>();
         float steer = kb.steeringWheel;
 
-        if (kb.pw.hitState == PlayerNetwork.KartHitState.SPINNING)
-            return new Spinning(kart);
-
         //physics
         if (!kb.UpdateGroundDistance() || kb.groundDistance >= kb.jumpLimit)
             return new Jumping(kart);
