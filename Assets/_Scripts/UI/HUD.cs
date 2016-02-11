@@ -35,7 +35,9 @@ public class HUD : MonoBehaviour {
         if(currentWeapon != uiweapon)
             updateWeaponTexture(currentWeapon);
         lapText.GetComponent<Text>().text = "Lap: " + localPlayer.GetComponent<Placement>().currentLap + "\\" + track.GetComponent<TrackInformation>().lapAmount;
-        placementText.GetComponent<Text>().text = gamemode.getPlacement(localPlayer) + " th";
+        int placement = gamemode.getPlacement(localPlayer);
+       
+        placementText.GetComponent<Text>().text = placement +" "+ getPlacementString(placement);
         int speed = (int)localPlayer.GetComponent<KartBehaviour>().GetSpeed();
         Vector3 eulerAngles = new Vector3();
         eulerAngles.z = 0.0f;
@@ -46,7 +48,30 @@ public class HUD : MonoBehaviour {
         speedIndicator.transform.eulerAngles = eulerAngles;
         speedy = eulerAngles.z;
 	}
+    public string getPlacementString(int placement)
+    {
+        string placementString = "th";
 
+        switch (placement)
+        {
+            case 1:
+                {
+                    placementString = "st";
+                    break;
+                }
+            case 2:
+                {
+                    placementString = "nd";
+                    break;
+                }
+            case 3:
+                {
+                    placementString = "rd";
+                    break;
+                }
+        }
+        return placementString;
+    }
     public void updateWeaponTexture(InventoryScript.WEAPON currentWeapon)
     {
       

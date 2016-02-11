@@ -51,11 +51,14 @@ public class Weapon : NetworkBehaviour
                     //vähä kovakoodattu shittii
                     speed.transform.position = transform.position;
                     speed.transform.parent = gameObject.transform;
+                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
                     NetworkServer.Spawn(speed);
                     break;
                 }
             case InventoryScript.WEAPON.Harpoon:
                 {
+                    
+
                     GameObject hook = (GameObject)Instantiate(harpoonPrefab, transform.position+transform.forward,transform.rotation);
                     hook.transform.parent = transform;
                     inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
