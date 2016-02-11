@@ -28,4 +28,9 @@ public class Stopped : KartState {
         kb.UpdateTransform();
         return null;
     }
+
+    public override void CollisionEnter(Collision collision)
+    {
+
+    }
 }

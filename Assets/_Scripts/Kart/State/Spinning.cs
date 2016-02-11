@@ -38,4 +38,9 @@ public class Spinning : KartState
         kb.UpdateTransform();
         return null;
     }
+
+    public override void CollisionEnter(Collision collision)
+    {
+
+    }
 }

@@ -42,4 +42,9 @@ public class Jumping : KartState {
         kb.UpdateTransform();
         return null;
     }
+
+    public override void CollisionEnter(Collision collision)
+    {
+        checkFront(collision);
+    }
 }

@@ -26,7 +26,7 @@ public class Drive : KartState {
         {
             if (relative.transform.gameObject.tag == "track")
             {
-                if (Vector3.Dot(kart.transform.up, kb.groundNormal) < 0.975f)
+                if (Vector3.Dot(kart.transform.up, kb.groundNormal) < 0.95f)
                     kart.transform.rotation = Quaternion.SlerpUnclamped(kart.transform.rotation, Quaternion.FromToRotation(kart.transform.up, kb.groundNormal), 1.0f * Time.deltaTime);
                 Debug.DrawRay(kart.transform.position, -kart.transform.up, Color.blue, 0.1f);
             }
@@ -48,5 +48,10 @@ public class Drive : KartState {
             return new Stopped(kart);
         kb.UpdateTransform(onReverse ? -1 : 1);
         return null;
+    }
+
+    public override void CollisionEnter(Collision collision)
+    {
+        checkFront(collision);
     }
 }

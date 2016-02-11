@@ -27,6 +27,8 @@ public class KartBehaviour : MonoBehaviour
     //private
     private float trueSpeed = 0.0f;
     private KartState networkState = null;
+    private float trueSpeedTimer = 0.0f;
+    private Vector3 oldPosition;
 
     //physics
     public Vector3 groundNormal = new Vector3(0, 0, 0);
@@ -52,12 +54,12 @@ public class KartBehaviour : MonoBehaviour
         rigidbody = transform.GetComponent<Rigidbody>();
         rigidbody.centerOfMass = new Vector3(0, transform.gameObject.GetComponent<BoxCollider>().size.y * -0.35f, 0.0f);
         pw = gameObject.GetComponent<PlayerNetwork>();
+        oldPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 oldPosition = transform.position;
         if (Input.GetKeyDown(KeyCode.K))
             pw.Spin();
 
@@ -69,12 +71,28 @@ public class KartBehaviour : MonoBehaviour
         KartState tempState = state.UpdateState();
         if (tempState != null)
             state = tempState;
-        trueSpeed = Vector3.Distance(transform.position, oldPosition) / Time.deltaTime;
+
+        trueSpeedTimer += Time.deltaTime;
+        if (trueSpeedTimer > 0.25f)
+        {
+            trueSpeed = Vector3.Distance(transform.position, oldPosition) / trueSpeedTimer;
+            trueSpeedTimer = 0;
+            oldPosition = transform.position;
+        }
     }
 
     void LateUpdate()
     {
         mainCamera.transform.LookAt(transform);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        state.CollisionEnter(collision);
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            Debug.DrawRay(contact.point, contact.normal, Color.red, 1.0f);
+        }
     }
 
     public void UpdateTransform(float controlMultiplier = 1.0f)
