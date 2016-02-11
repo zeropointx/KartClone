@@ -1,31 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spinning : KartState {
-
-    private float spinTimer;
-    private float spinTime;
-
-	public Spinning(GameObject _kart): base(_kart)
+public class Spinning : KartState
+{
+    Transform childKart;
+    int spinSpeed = 12;
+    float spinDegrees = 1080;
+    float speedReduction = 0.1f;
+    float spinIndex = 0;
+    Quaternion originalRotation;
+    public Spinning(GameObject _kart)
+        : base(_kart)
     {
-        spinTimer = 0;
-        spinTime = 3;
+        childKart = _kart.transform.Find("shoppingcart");
+        originalRotation = childKart.transform.localRotation;
     }
 
     public override KartState UpdateState()
     {
         KartBehaviour kb = kart.GetComponent<KartBehaviour>();
-
-        kb.speed = 0;
-        spinTimer += Time.deltaTime;
-        kart.transform.Rotate(0, kb.spinSpeed * Time.deltaTime, 0);
-        if (spinTimer > spinTime)
+        if (spinDegrees >= spinIndex)
         {
-            spinTimer = 0;
-            kb.pw.hitState = PlayerNetwork.KartHitState.NORMAL;
-            return new Stopped(kart);
+            if (kb.speed > 0)
+            {
+                kb.speed -= speedReduction;
+            }
+            spinIndex += spinSpeed;
+            childKart.transform.Rotate(new Vector3(0, spinSpeed, 0));
         }
 
+        else
+        {
+            spinIndex = 0;
+            childKart.transform.localRotation = originalRotation;
+            kb.pw.hitState = PlayerNetwork.KartHitState.NORMAL;
+            return new Forward(kart);
+        }
         kb.UpdateTransform();
         return null;
     }

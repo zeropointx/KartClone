@@ -7,14 +7,12 @@ public class BoxSpawner : MonoBehaviour
     public GameObject weaponBox;    // weaponBox prefab
     GameObject wBox;
 
-    // Use this for initialization
     void Start()
     {
         // Spawn a weaponBox at the beginning
         wBox = (GameObject)Instantiate(weaponBox, gameObject.transform.position, Quaternion.identity);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (wBox == null)
