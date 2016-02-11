@@ -14,6 +14,9 @@ public class Forward : KartState {
         float speedChange = 0;
         float steer = kb.steeringWheel;
 
+        if (kb.pw.hitState == PlayerNetwork.KartHitState.SPINNING)
+            return new Spinning(kart);
+
         //physics
         kb.GroundCollision();
         if (!kb.UpdateGroundDistance())
