@@ -1658,9 +1658,7 @@ MonoBehaviour:
   jumpLimit: 0
   mainCamera: {fileID: 0}
   rigidbody: {fileID: 0}
-  physicsScript: {fileID: 0}
-  spinTimer: 0
-  spinTime: 3
+  pw: {fileID: 0}
   groundNormal: {x: 0, y: 0, z: 0}
   groundDistance: 0
   lastTrackPosition: {x: 0, y: 0, z: 0}
@@ -1677,7 +1675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bowlingBall: {fileID: 176684, guid: 4999114a78229774db33f98533ff4679, type: 2}
   speedBoost: {fileID: 175662, guid: 757734dfd307d034387727747fbb1134, type: 2}
-  harpoonPrefab: {fileID: 165418, guid: bfb3b72d6700e364c81ccb83f6e42401, type: 2}
+  homingMissilePrefab: {fileID: 138114, guid: 80b3207a6df493641b0f354a585f6b5c, type: 2}
+  minePrefab: {fileID: 172604, guid: 9b0d12ae9da4c2d46bbcfec811931d19, type: 2}
 --- !u!114 &11440818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2005,6 +2004,14 @@ Prefab:
       propertyPath: harpoonPrefab
       value: 
       objectReference: {fileID: 165418, guid: bfb3b72d6700e364c81ccb83f6e42401, type: 2}
+    - target: {fileID: 0}
+      propertyPath: homingMissilePrefab
+      value: 
+      objectReference: {fileID: 138114, guid: 80b3207a6df493641b0f354a585f6b5c, type: 2}
+    - target: {fileID: 0}
+      propertyPath: minePrefab
+      value: 
+      objectReference: {fileID: 172604, guid: 9b0d12ae9da4c2d46bbcfec811931d19, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169864}

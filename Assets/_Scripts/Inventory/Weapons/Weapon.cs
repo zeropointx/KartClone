@@ -9,8 +9,8 @@ public class Weapon : NetworkBehaviour
     //Weapon prefabs
     public GameObject bowlingBall;
     public GameObject speedBoost;
-    public GameObject harpoonPrefab;
-
+    public GameObject homingMissilePrefab;
+    public GameObject minePrefab;
     void Start()
     {
         inventory = gameObject.GetComponent<InventoryScript>();
@@ -47,12 +47,25 @@ public class Weapon : NetworkBehaviour
                 }
             case InventoryScript.WEAPON.SpeedBoost:
                 {
-                    GameObject speed = (GameObject)Instantiate(speedBoost, transform.position - new Vector3(0,0,1), Quaternion.LookRotation(-transform.forward));
+                    GameObject speed = (GameObject)Instantiate(speedBoost, transform.position, Quaternion.LookRotation(-transform.forward));
                     //vähä kovakoodattu shittii
-                    speed.transform.position = transform.position;
                     speed.transform.parent = gameObject.transform;
                     inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
                     NetworkServer.Spawn(speed);
+                    break;
+                }
+            /*case InventoryScript.WEAPON.HomingMissile:
+                {
+                    GameObject homingMissile = (GameObject)Instantiate(homingMissilePrefab, transform.position - transform.forward * 5, transform.rotation);
+                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
+                    NetworkServer.Spawn(homingMissile);
+                    break;
+                }*/
+            case InventoryScript.WEAPON.Mine:
+                {
+                    GameObject mine = (GameObject)Instantiate(minePrefab, transform.position + transform.forward * -4 , transform.rotation);
+                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
+                    NetworkServer.Spawn(mine);
                     break;
                 }
         }

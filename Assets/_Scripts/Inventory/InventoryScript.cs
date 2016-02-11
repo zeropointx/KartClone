@@ -13,6 +13,8 @@ public class InventoryScript : NetworkBehaviour
     { 
         BowlingBall = 0, 
         SpeedBoost = 1, 
+       // HomingMissile = 2,
+        Mine = 3,
         noWeapon  = 8
     };
 

@@ -500,10 +500,10 @@ MonoBehaviour:
   m_OfflineScene: Lobby
   m_OnlineScene: 
   m_SpawnPrefabs:
-  - {fileID: 165418, guid: bfb3b72d6700e364c81ccb83f6e42401, type: 2}
+  - {fileID: 0}
   - {fileID: 175662, guid: 757734dfd307d034387727747fbb1134, type: 2}
   - {fileID: 176684, guid: 4999114a78229774db33f98533ff4679, type: 2}
-  - {fileID: 164506, guid: aa5faa5caa28eea409c46f6e2dae0a7c, type: 2}
+  - {fileID: 172604, guid: 9b0d12ae9da4c2d46bbcfec811931d19, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
