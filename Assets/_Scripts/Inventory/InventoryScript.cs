@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using System;
 
 
-
+// Handles player inventory
 public class InventoryScript : NetworkBehaviour
 {
 
-    //TODO: Better names once we know them
+    // List of possible weapons you can aquire from weaponBoxes
     public enum WEAPON 
     { 
         BowlingBall = 0, 
@@ -16,13 +17,15 @@ public class InventoryScript : NetworkBehaviour
         noWeapon  = 8
     };
 
+    int weaponAmount;               // Amount of different weapons
     [SyncVar]
-    public WEAPON currentWeapon;
-
+    public WEAPON currentWeapon;    // Players current weapon
+    
 
     void Start()
     {
-        currentWeapon = WEAPON.noWeapon;
+        currentWeapon = WEAPON.noWeapon; // Set to not have weapon at the beginning
+        weaponAmount = Enum.GetNames(typeof(WEAPON)).Length - 2;
 
     }
 
@@ -59,9 +62,11 @@ public class InventoryScript : NetworkBehaviour
             Destroy(weaponBox);
         }
     }
+
+    // Pick up a random weapon for player
     public void pickUpRandomWeapon()
     {
-        currentWeapon = ((WEAPON)Random.Range(0, (int)WEAPON.Harpoon+1));
+        currentWeapon = ((WEAPON)UnityEngine.Random.Range(0, weaponAmount));
     }
 
 }

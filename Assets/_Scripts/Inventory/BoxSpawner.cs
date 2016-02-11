@@ -3,16 +3,15 @@ using System.Collections;
 
 public class BoxSpawner : MonoBehaviour
 {
-
-    public float respawnTime = 10;
-    public GameObject weaponBox;
+    public float respawnTime = 10;  // Respawn time for the weaponBox
+    public GameObject weaponBox;    // weaponBox prefab
     GameObject wBox;
 
     // Use this for initialization
     void Start()
     {
+        // Spawn a weaponBox at the beginning
         wBox = (GameObject)Instantiate(weaponBox, gameObject.transform.position, Quaternion.identity);
-       //Instantiate(weaponBox, gameObject.transform.position, Quaternion.identity);
     }
 
     // Update is called once per frame
