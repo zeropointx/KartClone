@@ -14,6 +14,9 @@ public class Jumping : KartState {
     {
         KartBehaviour kb = kart.GetComponent<KartBehaviour>();
 
+        if (kb.pw.hitState == PlayerNetwork.KartHitState.SPINNING)
+            return new Spinning(kart);
+
         kb.speed -= kb.engineDeceleration;
         kb.speed = Mathf.Clamp(kb.speed, 0, kb.maxSpeed);
 

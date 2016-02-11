@@ -22,11 +22,9 @@ public class KartBehaviour : MonoBehaviour
     public KartState state = null;
     public GameObject mainCamera = null;
     public Rigidbody rigidbody = null;
-    public float spinTimer = 0;
-    public float spinTime = 3;
+    public PlayerNetwork pw;
     
     //private
-    private PlayerNetwork pw;
     private Vector3 oldPosition = new Vector3(0, 0, 0);
     private float trueSpeed = 0.0f;
 
@@ -62,7 +60,6 @@ public class KartBehaviour : MonoBehaviour
         KartState tempState = state.UpdateState();
         if (tempState != null)
             state = tempState;
-        checkHitUpdate();
     }
 
     void LateUpdate()
@@ -118,9 +115,6 @@ public class KartBehaviour : MonoBehaviour
         }
     }
 
-
-
-
     public void Reset(float speedMultiplier = 0)
     {
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
@@ -128,25 +122,6 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
     }
-
-   
-
-    void checkHitUpdate()
-    {
-        if (pw.hitState == PlayerNetwork.KartHitState.SPINNING)
-        {
-            speed = 0;
-            spinTimer += Time.deltaTime;
-            transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
-            if (spinTimer > spinTime)
-            {
-                spinTimer = 0;
-                state = new Stopped(this.gameObject);
-                pw.hitState = PlayerNetwork.KartHitState.NORMAL;
-            }
-        }
-    }
-
 
     public void SetSteer(float wheelPosition)
     {
