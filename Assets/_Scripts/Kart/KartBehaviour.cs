@@ -62,7 +62,7 @@ public class KartBehaviour : MonoBehaviour
         oldPosition = transform.position;
         groundNormal = Vector3.up;
 
-        childKart = transform.Find("shoppingcart");
+        childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
     }
 

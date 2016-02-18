@@ -374,7 +374,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 482180}
   m_Layer: 0
-  m_Name: shoppingcart
+  m_Name: Kart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1655,6 +1655,7 @@ MonoBehaviour:
   brakeForce: 0
   engineDeceleration: 0
   spinSpeed: 250
+  tiltLimit: 0
   jumpLimit: 0
   mainCamera: {fileID: 0}
   rigidbody: {fileID: 0}
@@ -1662,6 +1663,8 @@ MonoBehaviour:
   groundNormal: {x: 0, y: 0, z: 0}
   groundDistance: 0
   lastTrackPosition: {x: 0, y: 0, z: 0}
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
+  childKart: {fileID: 0}
 --- !u!114 &11410198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1721,7 +1724,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 0}
-  hitState: 1
 --- !u!114 &11451734
 MonoBehaviour:
   m_ObjectHideFlags: 1
