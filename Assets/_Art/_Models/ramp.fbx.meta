@@ -1,31 +1,15 @@
 fileFormatVersion: 2
-guid: 1b6e2c3d79264004a8a4b5d622e2c2cf
-timeCreated: 1454570195
+guid: 8d2e62026d56ca14ab57a5ff5fc08b3a
+timeCreated: 1455804511
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: BezierCurve
-    100002: Camera
-    100004: Cube
-    100006: //RootNode
-    100008: Sun
-    100010: Cube.001
-    400000: BezierCurve
-    400002: Camera
-    400004: Cube
-    400006: //RootNode
-    400008: Sun
-    400010: Cube.001
-    2300000: BezierCurve
-    2300002: Cube
-    2300004: Cube.001
-    3300000: BezierCurve
-    3300002: Cube
-    3300004: Cube.001
-    4300000: Cube
-    4300002: BezierCurve
-    4300004: Cube.001
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube.001
   materials:
     importMaterials: 1
     materialName: 0
