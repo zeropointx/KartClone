@@ -9,7 +9,7 @@ public class TrackInformation : MonoBehaviour
 
     void Start()
     {
-
+        lapAmount = LobbySettings.lapCount;
     }
 
     void Update()

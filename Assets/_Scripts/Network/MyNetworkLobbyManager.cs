@@ -27,6 +27,16 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
     {
         base.OnClientDisconnect(conn);
     }
+    public override void OnServerReady(NetworkConnection conn)
+    {
+        base.OnServerReady(conn);
+        Debug.Log("OnServerReady");
+    }
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        base.OnServerSceneChanged(sceneName);
+        Debug.Log("SceneChanged: " + sceneName);
+    }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         playerCount++;
