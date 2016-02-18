@@ -11,6 +11,7 @@ GameObject:
   - 198: {fileID: 19841138}
   - 199: {fileID: 19923876}
   - 114: {fileID: 11420040}
+  - 114: {fileID: 11436928}
   m_Layer: 0
   m_Name: SpeedBoost
   m_TagString: Untagged
@@ -62,6 +63,17 @@ MonoBehaviour:
     i15: 52
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &11436928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e026779e42f0704086d948a41bb90ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &19841138
 ParticleSystem:
   m_ObjectHideFlags: 1
