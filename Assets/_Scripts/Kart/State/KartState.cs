@@ -4,10 +4,12 @@ using System.Collections;
 public abstract class KartState {
 
     protected GameObject kart = null;
+    protected KartState lastState = null;
 
-    public KartState(GameObject _kart)
+    public KartState(GameObject _kart, KartState _lastState = null)
     {
         kart = _kart;
+        lastState = _lastState;
     }
 
     /*

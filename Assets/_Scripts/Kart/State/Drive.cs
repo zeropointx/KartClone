@@ -21,16 +21,8 @@ public class Drive : KartState {
         if (!kb.UpdateGroundDistance() || kb.groundDistance >= kb.jumpLimit)
             return new Jumping(kart);
 
-        RaycastHit relative;
-        if (Physics.Raycast(new Ray(kart.transform.position, -kart.transform.up), out relative))
-        {
-            if (relative.transform.gameObject.tag == "track")
-            {
-                if (Vector3.Dot(kart.transform.up, kb.groundNormal) < 0.95f)
-                    kart.transform.rotation = Quaternion.SlerpUnclamped(kart.transform.rotation, Quaternion.FromToRotation(kart.transform.up, kb.groundNormal), 1.0f * Time.deltaTime);
-                Debug.DrawRay(kart.transform.position, -kart.transform.up, Color.blue, 0.1f);
-            }
-        }
+        if (Vector3.Dot(kart.transform.up, kb.groundNormal) < 0.95f)
+            return new GetUp(kart, this);
 
         //pedal
         if (onReverse)

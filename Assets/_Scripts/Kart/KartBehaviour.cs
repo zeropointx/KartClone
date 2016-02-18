@@ -113,6 +113,13 @@ public class KartBehaviour : MonoBehaviour
 
     public bool UpdateGroundDistance()
     {
+        RaycastHit relative;
+        if (Physics.Raycast(new Ray(transform.position, -transform.up), out relative))
+        {
+            if (relative.transform.gameObject.tag == "track")
+                Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.1f);
+        }
+
         RaycastHit directDown;
         if (Physics.Raycast(new Ray(transform.position, Vector3.down), out directDown))
         {
