@@ -61,7 +61,7 @@ public class KartBehaviour : MonoBehaviour
         pw = gameObject.GetComponent<PlayerNetwork>();
         oldPosition = transform.position;
 
-        childKart = transform.Find("shoppingcart");
+        childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
     }
 
