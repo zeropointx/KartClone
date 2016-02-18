@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour {
     GameObject lapText;
-     
+    GameObject stateNameText;
      GameObject weaponImageUI;
     GameObject track;
     GameObject placementText;
@@ -14,6 +14,7 @@ public class HUD : MonoBehaviour {
      InventoryScript.WEAPON uiweapon = InventoryScript.WEAPON.noWeapon;
      GameObject speedIndicator;
      public float speedy = 0.0f;
+     float speedMeter = 0.0f;
 	// Use this for initialization
 	void Start () {
         weaponImageUI = transform.FindChild("weaponImageUI").gameObject;
@@ -22,6 +23,7 @@ public class HUD : MonoBehaviour {
         track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject;
         placementText = transform.FindChild("Placement").gameObject;
         speedIndicator = GameObject.Find("ATJMittari");
+        stateNameText = GameObject.Find("stateNameText");
 	}
 	
 	// Update is called once per frame
@@ -38,7 +40,11 @@ public class HUD : MonoBehaviour {
         int placement = gamemode.getPlacement(PlayerNetwork.localPlayer);
        
         placementText.GetComponent<Text>().text = placement +" "+ getPlacementString(placement);
-        int speed = (int)PlayerNetwork.localPlayer.GetComponent<KartBehaviour>().GetSpeed();
+        stateNameText.GetComponent<Text>().text = PlayerNetwork.localPlayer.GetComponent<KartBehaviour>().state.GetName();
+
+        float tempSpeed = PlayerNetwork.localPlayer.GetComponent<KartBehaviour>().GetSpeed();
+        speedMeter += 0.1f * (tempSpeed - speedMeter);
+        int speed = (int)speedMeter;
         Vector3 eulerAngles = new Vector3();
         eulerAngles.z = 0.0f;
         float eulerMax = -388;

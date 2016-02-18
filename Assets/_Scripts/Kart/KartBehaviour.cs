@@ -16,6 +16,7 @@ public class KartBehaviour : MonoBehaviour
     public float brakeForce;
     public float engineDeceleration;
     public float spinSpeed;
+    public float tiltLimit;
 
     //common
     public float jumpLimit;
@@ -49,6 +50,7 @@ public class KartBehaviour : MonoBehaviour
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
         spinSpeed = 250;
+        tiltLimit = 0.9f;
 
         //common
         jumpLimit = 1.75f;

@@ -10,6 +10,7 @@ public class Stopped : KartState {
     {
         stopTimer = 0;
         minStop = 0.25f;
+        name = "stopped";
     }
 
     public override KartState UpdateState()

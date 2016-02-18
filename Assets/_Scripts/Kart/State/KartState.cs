@@ -5,11 +5,13 @@ public abstract class KartState {
 
     protected GameObject kart = null;
     protected KartState lastState = null;
+    protected string name;
 
     public KartState(GameObject _kart, KartState _lastState = null)
     {
         kart = _kart;
         lastState = _lastState;
+        name = "nameless state";
     }
 
     /*
@@ -21,6 +23,7 @@ public abstract class KartState {
 
     public void checkFront(Collision collision)
     {
+        /*
         //Debug.Log(collision.relativeVelocity.magnitude);
         RaycastHit hit;
         Ray ray = new Ray(kart.transform.position + 2.0f * Vector3.up, kart.transform.forward);
@@ -35,5 +38,11 @@ public abstract class KartState {
                 kart.GetComponent<KartBehaviour>().Reset(0);
             }
         }
+         * */
+    }
+
+    public string GetName()
+    {
+        return name;
     }
 }

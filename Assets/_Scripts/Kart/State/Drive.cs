@@ -10,6 +10,7 @@ public class Drive : KartState {
     {
         onReverse = kart.GetComponent<KartBehaviour>().pedal < 0;
         angleTresshold = 5.0f;
+        name = "drive";
     }
 
     public override KartState UpdateState()
@@ -21,7 +22,7 @@ public class Drive : KartState {
         if (!kb.UpdateGroundDistance() || kb.groundDistance >= kb.jumpLimit)
             return new Jumping(kart);
 
-        if (Vector3.Dot(kart.transform.up, kb.groundNormal) < 0.95f)
+        if (Vector3.Dot(kart.transform.up, kb.groundNormal) < kb.tiltLimit)
             return new GetUp(kart, this);
 
         //pedal

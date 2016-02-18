@@ -10,13 +10,14 @@ public class Jumping : KartState {
     {
         airTime = 0;
         angleTresshold = 10.0f;
+        name = "jumping";
     }
 
     public override KartState UpdateState()
     {
         KartBehaviour kb = kart.GetComponent<KartBehaviour>();
 
-        kb.speed -= kb.engineDeceleration * 4.0f;
+        kb.speed -= kb.engineDeceleration * 2.0f;
         kb.speed = Mathf.Clamp(kb.speed, 0, kb.maxSpeed);
 
         kb.UpdateGroundDistance();
