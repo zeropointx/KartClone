@@ -40,7 +40,10 @@ public class Jumping : KartState {
         }
         airTime += Time.deltaTime;
 
-        kb.UpdateTransform();
+        //kb.UpdateTransform();
+        Vector3 direction = kart.transform.forward;
+        direction -= kb.groundNormal * (kb.speed / kb.maxSpeed) * Time.deltaTime;
+        kart.transform.position += kb.speed * Time.deltaTime * direction;
         return null;
     }
 

@@ -50,16 +50,17 @@ public class KartBehaviour : MonoBehaviour
         brakeForce = 1.25f;
         engineDeceleration = 0.15f;
         spinSpeed = 250;
-        tiltLimit = 0.9f;
+        tiltLimit = 0.8f;
 
         //common
         jumpLimit = 1.75f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
         rigidbody = transform.GetComponent<Rigidbody>();
-        rigidbody.centerOfMass = new Vector3(0, transform.gameObject.GetComponent<BoxCollider>().size.y * -0.35f, 0.0f);
+        rigidbody.centerOfMass = new Vector3(0, transform.gameObject.GetComponent<BoxCollider>().size.y * -0.25f, 0.0f);
         pw = gameObject.GetComponent<PlayerNetwork>();
         oldPosition = transform.position;
+        groundNormal = Vector3.up;
 
         childKart = transform.Find("shoppingcart");
         originalRotation = childKart.transform.localRotation;
@@ -103,10 +104,10 @@ public class KartBehaviour : MonoBehaviour
         }
     }
 
-    public void UpdateTransform(float controlMultiplier = 1.0f)
+    public void UpdateTransform(float controlMultiplier = 1.0f, float downForceMultiplier = 0.0f)
     {
         Vector3 direction = transform.forward;
-        direction -= groundNormal * 0.5f * Time.deltaTime;
+        direction -= groundNormal * downForceMultiplier * Time.deltaTime;
         if (groundDistance < 2.0f)
             transform.Rotate(new Vector3(0, controlMultiplier * turnSpeed * steeringWheel * Time.deltaTime, 0));
         
@@ -128,7 +129,8 @@ public class KartBehaviour : MonoBehaviour
             Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.1f);
             if (directDown.transform.gameObject.tag == "track")
             {
-                groundNormal = directDown.normal;
+                groundNormal = Vector3.Lerp(groundNormal, directDown.normal, 3.0f * Time.deltaTime);
+                Debug.DrawRay(transform.position, -groundNormal, Color.magenta, 0.1f);
                 groundDistance = directDown.distance;
                 lastTrackPosition = directDown.point + 3.0f * Vector3.up - 16.0f * transform.forward;
             }

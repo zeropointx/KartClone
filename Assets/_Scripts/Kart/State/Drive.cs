@@ -39,7 +39,7 @@ public class Drive : KartState {
 
         if (kb.speed == 0)
             return new Stopped(kart);
-        kb.UpdateTransform(onReverse ? -1 : 1);
+        kb.UpdateTransform(onReverse ? -1 : (1.0f - 0.5f * (kb.speed / kb.maxSpeed)), onReverse ? 0 : kb.speed / kb.maxSpeed);
         return null;
     }
 
