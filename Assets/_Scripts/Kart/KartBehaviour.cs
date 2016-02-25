@@ -121,6 +121,9 @@ public class KartBehaviour : MonoBehaviour
             Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.1f);
             if (directDown.transform.gameObject.tag == "track")
             {
+                string texture = GetTexture(directDown);
+                texture = texture.Replace("(Instance)", "");
+                Debug.Log(texture);
                 groundNormal = Vector3.Lerp(groundNormal, directDown.normal, 3.0f * Time.deltaTime);
                 Debug.DrawRay(transform.position, -groundNormal, Color.magenta, 0.1f);
                 groundDistance = directDown.distance;
@@ -134,7 +137,40 @@ public class KartBehaviour : MonoBehaviour
             return false;
         }
     }
+    string GetTexture(RaycastHit hit)
+    {
+   
+       Renderer renderer = hit.collider.GetComponent<Renderer>();
+       var meshCollider = hit.collider as MeshCollider;
+           
+       if (renderer == null || renderer.sharedMaterial == null || renderer.sharedMaterial.mainTexture == null || meshCollider == null)
+          return "";
+ 
+        // now starts my code
+         int triangleIdx  = hit.triangleIndex;
+        Mesh mesh   = hit.collider.gameObject.GetComponent<MeshFilter>().mesh;
+        int subMeshesNr  = mesh.subMeshCount;
+        int materialIdx  = -1;
 
+        for (int i = 0; i < subMeshesNr; i++)
+        {
+            var tr = mesh.GetTriangles(i);
+            for (var j = 0; j < tr.Length; j++)
+            {
+                if (tr[j] == triangleIdx)
+                {
+                    materialIdx = i;
+                    break;
+                }
+            }
+            if (materialIdx != -1)
+                break;
+        }
+ 
+        if (materialIdx != -1)
+         return renderer.materials[materialIdx].name;
+        return "";
+    }
     public void Reset(float speedMultiplier = 0)
     {
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
