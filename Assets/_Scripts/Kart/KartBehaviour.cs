@@ -20,6 +20,7 @@ public class KartBehaviour : MonoBehaviour
 
     //common
     public float jumpLimit;
+    public float speedScale;
     public KartState state = null;
     public GameObject mainCamera = null;
     public Rigidbody rigidbody = null;
@@ -47,13 +48,14 @@ public class KartBehaviour : MonoBehaviour
         maxReverse = -15;
         turnSpeed = 100;
         acceleration = 0.25f;
-        brakeForce = 1.25f;
+        brakeForce = 0.95f;
         engineDeceleration = 0.15f;
         spinSpeed = 250;
-        tiltLimit = 0.8f;
+        tiltLimit = 0.9f;
 
         //common
         jumpLimit = 1.75f;
+        speedScale = 50.0f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
         rigidbody = transform.GetComponent<Rigidbody>();
@@ -103,17 +105,7 @@ public class KartBehaviour : MonoBehaviour
             Debug.DrawRay(contact.point, contact.normal, Color.red, 1.0f);
         }
     }
-
-    public void UpdateTransform(float controlMultiplier = 1.0f, float downForceMultiplier = 0.0f)
-    {
-        Vector3 direction = transform.forward;
-        direction -= groundNormal * downForceMultiplier * Time.deltaTime;
-        if (groundDistance < 2.0f)
-            transform.Rotate(new Vector3(0, controlMultiplier * turnSpeed * steeringWheel * Time.deltaTime, 0));
-        
-        transform.position += speed * Time.deltaTime * direction;
-    }
-
+    
     public bool UpdateGroundDistance()
     {
         RaycastHit relative;

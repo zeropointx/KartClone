@@ -28,13 +28,6 @@ public class GetUp : KartState
         if (Vector3.Dot(kart.transform.up, kb.groundNormal) > kb.tiltLimit)
             return lastState;
 
-        float dir = (kb.speed < 0) ? 1.0f : -1.0f;
-        kb.speed += dir *  kb.engineDeceleration * Time.deltaTime;
-        if (dir > 0)
-            kb.speed = Mathf.Clamp(kb.speed, 0, kb.maxSpeed);
-        else
-            kb.speed = Mathf.Clamp(kb.speed, kb.maxReverse, 0);
-        kb.UpdateTransform(0);
         timer += Time.deltaTime;
         return null;
     }

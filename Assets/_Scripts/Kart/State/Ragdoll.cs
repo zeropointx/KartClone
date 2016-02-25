@@ -19,9 +19,6 @@ public class Ragdoll : KartState
         timer += Time.deltaTime;
         if (timer > maxTime)
             return lastState;
-        kb.speed -= kb.engineDeceleration * Time.deltaTime;
-        kb.speed = Mathf.Clamp(kb.speed, 0, kb.maxSpeed);
-        kb.UpdateTransform(0);
         return null;
     }
 

@@ -22,11 +22,8 @@ public class Stopped : KartState {
 
         stopTimer += Time.deltaTime;
         kb.speed = 0;
-        kb.rigidbody.angularVelocity = Vector3.zero;
         if (stopTimer > minStop && kb.pedal != 0)
             return new Drive(kart);
-
-        kb.UpdateTransform();
         return null;
     }
 

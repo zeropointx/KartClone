@@ -12,8 +12,7 @@ public class Spinning : KartState
     public Spinning(GameObject _kart)
         : base(_kart)
     {
-        
-        
+        name = "spinning";
     }
 
     public override KartState UpdateState()
@@ -35,7 +34,6 @@ public class Spinning : KartState
             kb.childKart.transform.localRotation = kb.originalRotation;
             return new Drive(kart);
         }
-        kb.UpdateTransform();
         return null;
     }
 

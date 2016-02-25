@@ -24,7 +24,7 @@ public class Drive : KartState {
 
         if (Vector3.Dot(kart.transform.up, kb.groundNormal) < kb.tiltLimit)
             return new GetUp(kart, this);
-
+ 
         //pedal
         if (onReverse)
         {
@@ -39,7 +39,19 @@ public class Drive : KartState {
 
         if (kb.speed == 0)
             return new Stopped(kart);
-        kb.UpdateTransform(onReverse ? -1 : (1.0f - 0.5f * (kb.speed / kb.maxSpeed)), onReverse ? 0 : kb.speed / kb.maxSpeed);
+        
+        //rigidbody
+        Vector3 direction = kb.transform.forward;
+        direction -= kb.groundNormal * Time.deltaTime;
+        float controlMultiplier = onReverse ? -1 : (1.0f - 0.5f * (kb.speed / kb.maxSpeed));
+        if (kb.groundDistance < kb.jumpLimit)
+            kb.transform.Rotate(new Vector3(0, controlMultiplier * kb.turnSpeed * kb.steeringWheel * Time.deltaTime, 0));
+
+        direction = Vector3.ProjectOnPlane(direction, kb.groundNormal).normalized;
+        float x = direction.x * kb.speed * kb.speedScale * Time.deltaTime;
+        float z = direction.z * kb.speed * kb.speedScale * Time.deltaTime;
+        kb.rigidbody.velocity = new Vector3(x, kb.rigidbody.velocity.y, z);
+
         return null;
     }
 
