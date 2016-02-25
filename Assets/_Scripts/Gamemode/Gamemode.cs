@@ -57,9 +57,18 @@ public class Gamemode : NetworkBehaviour {
         if(isServer)
             setState(State.RACING);
 	}
-	
+    GameObject hud = null;
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if(hud == null)
+            hud = GameObject.Find("HUD");
+            Debug.Log(hud.active);
+            hud.active = !hud.active;
+            PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.active = hud.active;
+        }
+
         setState(currentState);
 	    switch(currentState)
         {
