@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class Lobby : MonoBehaviour {
 
 	// Use this for initialization
-    MyNetworkLobbyManager lobby;
+    MyNetworkLobbyManager lobbyManager;
     InputField inputField;
 	void Start () {
-        lobby = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
+        lobbyManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
         inputField.text = "127.0.0.1";
-        lobby.showLobbyGUI = false;
+        lobbyManager.showLobbyGUI = false;
 	}
 	
 	// Update is called once per frame
@@ -21,8 +21,8 @@ public class Lobby : MonoBehaviour {
 	}
     public void StartHost()
     {
-        lobby.GetComponent<NetworkLobbyManager>().StartHost();
-        lobby.showLobbyGUI = true;
+        lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
+        lobbyManager.showLobbyGUI = true;
     }
     public void Connect()
     {
@@ -37,9 +37,9 @@ public class Lobby : MonoBehaviour {
             Debug.Log("Invalid ip!");
             return;
         }
-        lobby.networkAddress = ip;
-        lobby.showLobbyGUI = true;
-        lobby.StartClient();
+        lobbyManager.networkAddress = ip;
+        lobbyManager.showLobbyGUI = true;
+        lobbyManager.StartClient();
         
     }
 }
