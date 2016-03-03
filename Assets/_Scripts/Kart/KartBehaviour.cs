@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Reflection;
 using System.Collections;
 
 public class KartBehaviour : MonoBehaviour
@@ -25,7 +26,7 @@ public class KartBehaviour : MonoBehaviour
     public GameObject mainCamera = null;
     public Rigidbody rigidbody = null;
     public PlayerNetwork pw;
-    
+
     //private
     private float trueSpeed = 0.0f;
     private KartState networkState = null;
@@ -39,10 +40,7 @@ public class KartBehaviour : MonoBehaviour
 
     public Quaternion originalRotation;
     public Transform childKart;
-    Rigidbody GetRigidBody()
-    {
-        return transform.FindChild("Kart").GetComponent<Rigidbody>();
-    }
+
     // Use this for initialization
     void Start()
     {
@@ -61,14 +59,19 @@ public class KartBehaviour : MonoBehaviour
         speedScale = 50.0f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
-        rigidbody = GetRigidBody();
-       // rigidbody.centerOfMass = new Vector3(0, rigidbody.transform.GetComponent<BoxCollider>().size.y * -0.25f, 0.0f);
         pw = gameObject.GetComponent<PlayerNetwork>();
         oldPosition = transform.position;
         groundNormal = Vector3.up;
 
         childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
+
+        CopyComponent(childKart.GetComponent<Rigidbody>());
+        CopyComponent(childKart.GetComponent<BoxCollider>());
+        Destroy(childKart.GetComponent<Rigidbody>());
+        Destroy(childKart.GetComponent<BoxCollider>());
+        rigidbody = gameObject.GetComponent<Rigidbody>();
+        rigidbody.centerOfMass = new Vector3(0, rigidbody.transform.GetComponent<BoxCollider>().size.y * -0.25f, 0.0f);
     }
 
     // Update is called once per frame
@@ -98,6 +101,10 @@ public class KartBehaviour : MonoBehaviour
 
     void LateUpdate()
     {
+        // TODO find better fix
+        childKart.localPosition = new Vector3(0, 0, 0);
+        childKart.localRotation = Quaternion.EulerAngles(0, 0, 0);
+
         mainCamera.transform.LookAt(transform);
     }
 
@@ -109,7 +116,7 @@ public class KartBehaviour : MonoBehaviour
             Debug.DrawRay(contact.point, contact.normal, Color.red, 1.0f);
         }
     }
-    
+
     public bool UpdateGroundDistance()
     {
         RaycastHit relative;
@@ -127,7 +134,7 @@ public class KartBehaviour : MonoBehaviour
             {
                 string texture = GetTexture(directDown);
                 texture = texture.Replace("(Instance)", "");
-                Debug.Log(texture);
+                //Debug.Log(texture);
                 groundNormal = Vector3.Lerp(groundNormal, directDown.normal, 3.0f * Time.deltaTime);
                 Debug.DrawRay(transform.position, -groundNormal, Color.magenta, 0.1f);
                 groundDistance = directDown.distance;
@@ -143,18 +150,18 @@ public class KartBehaviour : MonoBehaviour
     }
     string GetTexture(RaycastHit hit)
     {
-   
-       Renderer renderer = hit.collider.GetComponent<Renderer>();
-       var meshCollider = hit.collider as MeshCollider;
-           
-       if (renderer == null || renderer.sharedMaterial == null || renderer.sharedMaterial.mainTexture == null || meshCollider == null)
-          return "";
- 
+
+        Renderer renderer = hit.collider.GetComponent<Renderer>();
+        var meshCollider = hit.collider as MeshCollider;
+
+        if (renderer == null || renderer.sharedMaterial == null || renderer.sharedMaterial.mainTexture == null || meshCollider == null)
+            return "";
+
         // now starts my code
-         int triangleIdx  = hit.triangleIndex;
-        Mesh mesh   = hit.collider.gameObject.GetComponent<MeshFilter>().mesh;
-        int subMeshesNr  = mesh.subMeshCount;
-        int materialIdx  = -1;
+        int triangleIdx = hit.triangleIndex;
+        Mesh mesh = hit.collider.gameObject.GetComponent<MeshFilter>().mesh;
+        int subMeshesNr = mesh.subMeshCount;
+        int materialIdx = -1;
 
         for (int i = 0; i < subMeshesNr; i++)
         {
@@ -170,9 +177,9 @@ public class KartBehaviour : MonoBehaviour
             if (materialIdx != -1)
                 break;
         }
- 
+
         if (materialIdx != -1)
-         return renderer.materials[materialIdx].name;
+            return renderer.materials[materialIdx].name;
         return "";
     }
     public void Reset(float speedMultiplier = 0)
@@ -181,6 +188,21 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.velocity *= speedMultiplier;
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
+    }
+
+    private void CopyComponent(Component original)
+    {
+        System.Type type = original.GetType();
+        Component copy = gameObject.AddComponent(type);
+        BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Default | BindingFlags.DeclaredOnly;
+        PropertyInfo[] pinfos = type.GetProperties(flags);
+        foreach (var pinfo in pinfos)
+        {
+            if (pinfo.CanWrite)
+            {
+                pinfo.SetValue(copy, pinfo.GetValue(original, null), null);
+            }
+        }
     }
 
     public void Spin()
