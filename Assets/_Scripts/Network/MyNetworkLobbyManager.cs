@@ -54,4 +54,6 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
         Debug.Log("Player added! Current players " + playerCount);
         base.OnServerAddPlayer(conn, playerControllerId);
     }
+
+
 }

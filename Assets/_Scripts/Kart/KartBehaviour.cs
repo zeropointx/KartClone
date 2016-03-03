@@ -39,7 +39,10 @@ public class KartBehaviour : MonoBehaviour
 
     public Quaternion originalRotation;
     public Transform childKart;
-
+    Rigidbody GetRigidBody()
+    {
+        return transform.FindChild("Kart").GetComponent<Rigidbody>();
+    }
     // Use this for initialization
     void Start()
     {
@@ -58,8 +61,8 @@ public class KartBehaviour : MonoBehaviour
         speedScale = 50.0f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
-        rigidbody = transform.GetComponent<Rigidbody>();
-        rigidbody.centerOfMass = new Vector3(0, transform.gameObject.GetComponent<BoxCollider>().size.y * -0.25f, 0.0f);
+        rigidbody = GetRigidBody();
+       // rigidbody.centerOfMass = new Vector3(0, rigidbody.transform.GetComponent<BoxCollider>().size.y * -0.25f, 0.0f);
         pw = gameObject.GetComponent<PlayerNetwork>();
         oldPosition = transform.position;
         groundNormal = Vector3.up;
@@ -71,6 +74,7 @@ public class KartBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.K))
             pw.Spin();
 

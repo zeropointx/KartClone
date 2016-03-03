@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KartScript: MonoBehaviour
+public class KartBase : MonoBehaviour 
 {
     KartBehaviour KB;
-    public GameObject kartModel;
+    GameObject kartModel;
+    PlayerNetwork PN;
     //public float kartMaxSpeed;
     //public float kartAcceleration;
     //public float kartTurnSpeed;
 
-	void Start () 
+    void Start()
     {
+        PN = gameObject.GetComponent<PlayerNetwork>();
         KB = gameObject.GetComponent<KartBehaviour>();
         kartModel = transform.Find("Kart").gameObject;
-	}
-	
-	void Update () 
+    }
+
+    void Update()
     {
-	
-	}
+
+    }
 
     public void updatePlayerComponents(GameObject Model, float MaxSpeed, float Acceleration, float TurnSpeed)
     {

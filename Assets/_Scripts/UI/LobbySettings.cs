@@ -12,7 +12,6 @@ public class LobbySettings : MonoBehaviour {
 	void Start () {
         lobbyManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
         canvas = GameObject.Find("Lobby Settings");
-        
 	}
 	
 	// Update is called once per frame
@@ -42,6 +41,11 @@ public class LobbySettings : MonoBehaviour {
     public void ChangeLapCount(int number)
     {
         lapCount = number+1;
+    }
+
+    public void ChangeCurrentCharacter(int number)
+    {
+         StoredKartInfo.characterID = number;
     }
 
 }
