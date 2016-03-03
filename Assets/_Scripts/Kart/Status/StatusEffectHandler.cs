@@ -13,12 +13,24 @@ public class StatusEffectHandler {
     }
     public void Update()
     {
+        //Update effects
         foreach(StatusEffect effect in statusEffects)
         {
             effect.Update();
-            if (effect.currentStatus == StatusEffect.Status.OFF)
-                statusEffects.Remove(effect);
         }
+
+        //Remove everything that has state OFF
+
+        List<StatusEffect> toRemove = new List<StatusEffect>();
+        foreach (StatusEffect effect in statusEffects)
+        {
+            if (effect.currentStatus == StatusEffect.Status.OFF)
+            {
+                toRemove.Add(effect);
+            }
+        }
+        statusEffects.RemoveAll(x => toRemove.Contains(x));
+
     }
     public void AddStatusEffect(EffectType type)
     {
