@@ -41,17 +41,12 @@ public class Weapon : NetworkBehaviour
                 {
                     // TODO: Fix positioning for network
                     GameObject ball = (GameObject)Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
-                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
                     NetworkServer.Spawn(ball);
                     break;
                 }
             case InventoryScript.WEAPON.SpeedBoost:
                 {
-                    GameObject speed = (GameObject)Instantiate(speedBoost, transform.position, Quaternion.LookRotation(-transform.forward));
-                    //vähä kovakoodattu shittii
-                    speed.transform.parent = gameObject.transform;
-                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
-                    NetworkServer.Spawn(speed);
+                    transform.GetComponent<PlayerNetwork>().GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.BOOST);
                     break;
                 }
             /*case InventoryScript.WEAPON.HomingMissile:
@@ -64,10 +59,10 @@ public class Weapon : NetworkBehaviour
             case InventoryScript.WEAPON.Mine:
                 {
                     GameObject mine = (GameObject)Instantiate(minePrefab, transform.position + transform.forward * -4 , transform.rotation);
-                    inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
                     NetworkServer.Spawn(mine);
                     break;
                 }
         }
+        inventory.currentWeapon = InventoryScript.WEAPON.noWeapon;
     }
 }

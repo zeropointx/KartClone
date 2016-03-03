@@ -7,7 +7,7 @@ public class PlayerNetwork : NetworkBehaviour
     MyNetworkLobbyManager networkManager = null;
     public GameObject uiPrefab = null;
     bool initialized = false;
-    
+    StatusEffectHandler statusEffectHandler = new StatusEffectHandler();
     public static GameObject localPlayer = null;
     void Start()
     {
@@ -42,7 +42,10 @@ public class PlayerNetwork : NetworkBehaviour
             }
         }
     }
-
+    public StatusEffectHandler GetStatusEffectHandler()
+    {
+        return statusEffectHandler;
+    }
     public void Spin()
     {
         transform.GetComponent<KartBehaviour>().Spin();

@@ -16,9 +16,8 @@ public class StatusEffect {
     public Status currentStatus = Status.OFF;
     public StatusEffect()
     {
-        Start();
     }
-	protected void Start () 
+	public void Start () 
     {
         Kart = PlayerNetwork.localPlayer;
         KB = Kart.GetComponent<KartBehaviour>();
