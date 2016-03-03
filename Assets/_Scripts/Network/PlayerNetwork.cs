@@ -7,7 +7,7 @@ public class PlayerNetwork : NetworkBehaviour
     MyNetworkLobbyManager networkManager = null;
     public GameObject uiPrefab = null;
     bool initialized = false;
-    StatusEffectHandler statusEffectHandler = new StatusEffectHandler();
+    public StatusEffectHandler statusEffectHandler = new StatusEffectHandler();
     public static GameObject localPlayer = null;
     void Start()
     {
@@ -32,6 +32,7 @@ public class PlayerNetwork : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        statusEffectHandler.Update();
         if(!initialized)
         {
             GameObject gamemode = GameObject.Find("Gamemode");

@@ -15,6 +15,7 @@ public class StatusEffectHandler {
     {
         foreach(StatusEffect effect in statusEffects)
         {
+            effect.Update();
             if (effect.currentStatus == StatusEffect.Status.OFF)
                 statusEffects.Remove(effect);
         }
