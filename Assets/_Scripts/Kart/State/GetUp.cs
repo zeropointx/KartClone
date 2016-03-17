@@ -10,7 +10,7 @@ public class GetUp : KartState
     {
         name = "get up";
         timer = 0;
-        tiltSpeed = 3.0f;
+        tiltSpeed = 1.0f;
     }
 
     public override KartState UpdateState()
@@ -24,7 +24,9 @@ public class GetUp : KartState
         KartBehaviour kb = kart.GetComponent<KartBehaviour>();
         kb.UpdateGroundDistance();
 
-        kart.transform.rotation = Quaternion.SlerpUnclamped(kart.transform.rotation, Quaternion.FromToRotation(kart.transform.up, kb.groundNormal), tiltSpeed * Time.deltaTime);
+        //kart.transform.rotation = Quaternion.SlerpUnclamped(kart.transform.rotation, Quaternion.FromToRotation(kart.transform.up, kb.groundNormal), tiltSpeed * Time.deltaTime);
+        Quaternion rotation = Quaternion.FromToRotation(kart.transform.up, kb.groundNormal);
+        kb.rigidbody.angularVelocity = rotation.eulerAngles * tiltSpeed * Time.deltaTime;
         if (Vector3.Dot(kart.transform.up, kb.groundNormal) > kb.tiltLimit)
             return lastState;
 

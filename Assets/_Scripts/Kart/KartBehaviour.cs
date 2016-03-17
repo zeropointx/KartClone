@@ -44,25 +44,6 @@ public class KartBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //stats
-        maxSpeed = 65;
-        maxReverse = -15;
-        turnSpeed = 100;
-        acceleration = 0.25f;
-        brakeForce = 0.95f;
-        engineDeceleration = 0.15f;
-        spinSpeed = 250;
-        tiltLimit = 0.9f;
-
-        //common
-        jumpLimit = 3.0f;
-        speedScale = 50.0f;
-        state = new Stopped(this.gameObject);
-        mainCamera = transform.FindChild("Main Camera").gameObject;
-        pw = gameObject.GetComponent<PlayerNetwork>();
-        oldPosition = transform.position;
-        groundNormal = Vector3.up;
-
         childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
 
@@ -78,9 +59,27 @@ public class KartBehaviour : MonoBehaviour
 
         rigidbody = gameObject.GetComponent<Rigidbody>();
         rigidbody.velocity = Vector3.zero;
-        rigidbody.centerOfMass = new Vector3(0, rigidbody.transform.GetComponent<BoxCollider>().size.y * -0.25f, 0.0f);
+        rigidbody.centerOfMass = new Vector3(0, rigidbody.transform.GetComponent<BoxCollider>().size.y * -0.35f, 0.0f);
         rigidbody.isKinematic = false;
 
+        //stats
+        maxSpeed = 65;
+        maxReverse = -15;
+        turnSpeed = 100;
+        acceleration = 0.25f;
+        brakeForce = 0.95f;
+        engineDeceleration = 0.15f;
+        spinSpeed = 250;
+        tiltLimit = 0.85f;
+
+        //common
+        jumpLimit = 2.5f * childKart.localScale.x;
+        speedScale = 50.0f;
+        state = new Stopped(this.gameObject);
+        mainCamera = transform.FindChild("Main Camera").gameObject;
+        pw = gameObject.GetComponent<PlayerNetwork>();
+        oldPosition = transform.position;
+        groundNormal = Vector3.up;
     }
 
     // Update is called once per frame
