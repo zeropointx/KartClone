@@ -112,7 +112,8 @@ public class KartBehaviour : MonoBehaviour
         // TODO find better fix
         childKart.localPosition = new Vector3(0, 0, 0);
         childKart.localEulerAngles = new Vector3(0, 90, 0);
-        mainCamera.transform.LookAt(transform);
+        if (!(state is Frozen))
+            mainCamera.transform.LookAt(transform);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -215,6 +216,16 @@ public class KartBehaviour : MonoBehaviour
     public void Spin()
     {
         networkState = new Spinning(this.gameObject);
+    }
+
+    public void Freeze()
+    {
+        networkState = new Frozen(this.gameObject);
+    }
+
+    public void UnFreeze()
+    {
+        networkState = new Stopped(this.gameObject);
     }
 
     public void SetSteer(float wheelPosition)
