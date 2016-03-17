@@ -70,8 +70,17 @@ public class KartBehaviour : MonoBehaviour
         CopyComponent(childKart.GetComponent<BoxCollider>());
         Destroy(childKart.GetComponent<Rigidbody>());
         Destroy(childKart.GetComponent<BoxCollider>());
+        BoxCollider bc = transform.GetComponent<BoxCollider>();
+        float x = bc.size.x;
+        float y = bc.size.y;
+        float z = bc.size.z;
+        bc.size = new Vector3(z, y, x) * 2.0f;
+
         rigidbody = gameObject.GetComponent<Rigidbody>();
+        rigidbody.velocity = Vector3.zero;
         rigidbody.centerOfMass = new Vector3(0, rigidbody.transform.GetComponent<BoxCollider>().size.y * -0.25f, 0.0f);
+        rigidbody.isKinematic = false;
+
     }
 
     // Update is called once per frame
@@ -103,8 +112,7 @@ public class KartBehaviour : MonoBehaviour
     {
         // TODO find better fix
         childKart.localPosition = new Vector3(0, 0, 0);
-        childKart.localRotation = Quaternion.EulerAngles(0, 0, 0);
-
+        childKart.localEulerAngles = new Vector3(0, 90, 0);
         mainCamera.transform.LookAt(transform);
     }
 
