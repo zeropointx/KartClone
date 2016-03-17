@@ -10,19 +10,26 @@ public class Placement : MonoBehaviour
     // These are fetched from the track information
     int checkpointAmount;
     int lapAmount;
+    bool gameFinished = false;
+
+    GameObject camera;
 
     GameObject track;
     TrackInformation trackInformation;
+    KartBehaviour KB;
 
     void Start()
     {
         track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject;
-        trackInformation = track.GetComponent<TrackInformation>();       
+        trackInformation = track.GetComponent<TrackInformation>();
+        camera = transform.Find("Main Camera").gameObject;
+        KB = gameObject.GetComponent<KartBehaviour>();
     }
 
     void Update()
     {
-
+        if (gameFinished)
+            Finish();
     }
 
     void OnTriggerEnter(Collider col)
@@ -38,14 +45,18 @@ public class Placement : MonoBehaviour
                     {
                         currentCheckPointIndex++;
                         if (currentCheckPointIndex == (trackInformation.checkPoints.Count - 1))
-                        {
-                            Debug.Log("Doge");
+                        {                
                             currentLap++;
                             currentCheckPointIndex = 0;
 
                             if (currentLap == trackInformation.lapAmount)
                             {
-                                //Wonnered
+                                // INSERT KART LOCKSTATE HERE
+                                KB.Freeze();
+
+                                // Finished the final lap
+                                Debug.Log("Wonnered");
+                                gameFinished = true;
                             }
                         }
                     }
@@ -53,5 +64,12 @@ public class Placement : MonoBehaviour
                 }
             }
         }
+    }
+
+    void Finish()
+    {
+        camera.transform.LookAt(gameObject.transform);
+        camera.transform.Translate(Vector3.right * Time.deltaTime);
+        //camera.transform.Rotate(new Vector3(0, 1, 0));
     }
 }
