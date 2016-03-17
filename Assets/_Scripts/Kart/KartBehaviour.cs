@@ -55,7 +55,7 @@ public class KartBehaviour : MonoBehaviour
         tiltLimit = 0.9f;
 
         //common
-        jumpLimit = 1.75f;
+        jumpLimit = 3.25f;
         speedScale = 50.0f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
