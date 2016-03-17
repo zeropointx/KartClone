@@ -55,7 +55,7 @@ public class KartBehaviour : MonoBehaviour
         tiltLimit = 0.9f;
 
         //common
-        jumpLimit = 3.25f;
+        jumpLimit = 3.0f;
         speedScale = 50.0f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
@@ -74,7 +74,7 @@ public class KartBehaviour : MonoBehaviour
         float x = bc.size.x;
         float y = bc.size.y;
         float z = bc.size.z;
-        bc.size = new Vector3(z, y, x) * 2.0f;
+        bc.size = new Vector3(z, y, x) * childKart.localScale.x * 0.75f;
 
         rigidbody = gameObject.GetComponent<Rigidbody>();
         rigidbody.velocity = Vector3.zero;
