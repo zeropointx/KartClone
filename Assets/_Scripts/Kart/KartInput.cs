@@ -21,6 +21,6 @@ public class KartInput : MonoBehaviour {
         kartScript.SetSteer(steer);
         
         if (Input.GetKeyDown(KeyCode.R))
-            kartScript.Reset();
+            kartScript.Reset(0, (Input.GetKey(KeyCode.LeftShift)));
 	}
 }

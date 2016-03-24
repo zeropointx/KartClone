@@ -20,11 +20,12 @@ public class Drive : KartState {
 
         //physics
         if (!kb.UpdateGroundDistance() || kb.groundDistance >= kb.jumpLimit)
-            return new Jumping(kart);
-
+            return new Ragdoll(kart, this, 1);
+        /*
         if (Vector3.Dot(kart.transform.up, kb.groundNormal) < kb.tiltLimit)
             return new GetUp(kart, this);
- 
+         */
+
         //pedal
         if (onReverse)
         {

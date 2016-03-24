@@ -56,7 +56,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 442382}
   - 65: {fileID: 6578030}
-  - 54: {fileID: 5485674}
   m_Layer: 0
   m_Name: ShoppingKart
   m_TagString: Untagged
@@ -1446,21 +1445,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177760}
   m_Mesh: {fileID: 4300000, guid: b28c3243d652239489160a9e5182af2d, type: 3}
---- !u!54 &5485674
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102352}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &6578030
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1468,7 +1452,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102352}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.1447682, y: 4.1753674, z: 2.4062529}

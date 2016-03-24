@@ -46,19 +46,7 @@ public class KartBehaviour : MonoBehaviour
     {
         childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
-
-        kc.Utility.MoveComponent(gameObject, childKart.GetComponent<Rigidbody>());
-        kc.Utility.MoveComponent(gameObject, childKart.GetComponent<BoxCollider>());
-        BoxCollider bc = transform.GetComponent<BoxCollider>();
-        float x = bc.size.x;
-        float y = bc.size.y;
-        float z = bc.size.z;
-        bc.size = new Vector3(z, y, x) * childKart.localScale.x * 0.75f;
-
         rigidbody = gameObject.GetComponent<Rigidbody>();
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.centerOfMass = new Vector3(0, rigidbody.transform.GetComponent<BoxCollider>().size.y * -0.35f, 0.0f);
-        rigidbody.isKinematic = false;
 
         //stats
         maxSpeed = 65;
@@ -71,7 +59,7 @@ public class KartBehaviour : MonoBehaviour
         tiltLimit = 0.85f;
 
         //common
-        jumpLimit = 2.5f * childKart.localScale.x;
+        jumpLimit = 2.5f;
         speedScale = 50.0f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
@@ -188,12 +176,16 @@ public class KartBehaviour : MonoBehaviour
             return renderer.materials[materialIdx].name;
         return "";
     }
-    public void Reset(float speedMultiplier = 0)
+    public void Reset(float speedMultiplier = 0, bool resetPosition = false)
     {
+        if (resetPosition)
+            transform.position = Vector3.zero;
+        transform.position += new Vector3(0, 7.5f, 0);
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         rigidbody.velocity *= speedMultiplier;
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
+        groundDistance = 0;
     }
 
     public void Spin()

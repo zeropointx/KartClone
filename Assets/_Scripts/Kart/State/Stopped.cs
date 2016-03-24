@@ -18,8 +18,7 @@ public class Stopped : KartState {
         KartBehaviour kb = kart.GetComponent<KartBehaviour>();
 
         if (!kb.UpdateGroundDistance())
-            return new Jumping(kart);
-
+            return new Ragdoll(kart, this, 1);
         stopTimer += Time.deltaTime;
         kb.speed = 0;
         if (stopTimer > minStop && kb.pedal != 0)
