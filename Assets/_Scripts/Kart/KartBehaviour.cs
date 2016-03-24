@@ -69,6 +69,9 @@ public class KartBehaviour : MonoBehaviour
         pw = gameObject.GetComponent<PlayerNetwork>();
         oldPosition = transform.position;
         groundNormal = Vector3.up;
+
+        childKart.localPosition = new Vector3(0, 0, 0);
+        childKart.localEulerAngles = new Vector3(0, -90, 0);
     }
 
     // Update is called once per frame
@@ -99,11 +102,7 @@ public class KartBehaviour : MonoBehaviour
     }
 
     void LateUpdate()
-    {
-        // TODO find better fix
-        childKart.localPosition = new Vector3(0, 0, 0);
-        childKart.localEulerAngles = new Vector3(0, 90, 0);
-        
+    {   
         if (!(state is Frozen))
             mainCamera.transform.LookAt(transform);
     }
