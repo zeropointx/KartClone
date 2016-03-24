@@ -15,6 +15,7 @@ public class GetUp : KartState
 
     public override KartState UpdateState()
     {
+        /*
         if (timer == 0)
         {
             timer += Time.deltaTime;
@@ -31,7 +32,8 @@ public class GetUp : KartState
             return lastState;
 
         timer += Time.deltaTime;
-        return null;
+        */
+        return lastState;
     }
 
     public override void CollisionEnter(Collision collision)
