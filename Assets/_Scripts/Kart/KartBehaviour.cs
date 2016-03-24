@@ -104,7 +104,7 @@ public class KartBehaviour : MonoBehaviour
     void LateUpdate()
     {   
         if (!(state is Frozen))
-            mainCamera.transform.LookAt(transform);
+            mainCamera.transform.LookAt(childKart.transform);
     }
 
     void FixedUpdate()

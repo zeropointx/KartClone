@@ -10,7 +10,7 @@ public class Placement : MonoBehaviour
     // These are fetched from the track information
     int checkpointAmount;
     int lapAmount;
-    bool gameFinished = false;
+    public bool gameFinished = false;
 
     GameObject camera;
 

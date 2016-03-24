@@ -53,6 +53,8 @@ public class HUD : MonoBehaviour {
         eulerAngles.z = -(Mathf.Abs(eulerMax - eulerMin) / maxSpeed * speed) + eulerMin;
         speedIndicator.transform.eulerAngles = eulerAngles;
         speedy = eulerAngles.z;
+
+        gamemode.checkGameFinish();
 	}
     public string getPlacementString(int placement)
     {

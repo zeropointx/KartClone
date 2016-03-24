@@ -9,6 +9,7 @@ public class Gamemode : NetworkBehaviour {
     public GameObject statusText;
     private List<Player> players = new List<Player>();
     public int playerCount = 0;
+    int finishedPlayers = 0;
     public enum State
     {
         WAITING_FOR_PLAYERS,
@@ -230,5 +231,28 @@ public class Gamemode : NetworkBehaviour {
                 }
           
         }
+    }
+
+    // Checks if enough players have finished the track to end it
+    public void checkGameFinish()
+    {
+        for (int i = 0; i < playerCount; i++) // Search through all players
+        {
+            Placement placement = players[i].gameObject.GetComponent<Placement>();
+            if (placement.gameFinished == true) // If the player has finished the game, add it to the index
+            {
+                finishedPlayers++;
+            }
+        }
+        Debug.Log("Players that have finished the game so far: " + finishedPlayers);
+
+        //If enough players have finished the track to end it, do the following
+        if (playerCount == finishedPlayers)
+        {
+            Debug.Log("All players have finished the track!");
+            // Do something
+        }
+
+        finishedPlayers = 0;
     }
 }
