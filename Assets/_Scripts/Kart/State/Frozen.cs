@@ -10,8 +10,12 @@ public class Frozen : KartState {
 
     public override KartState UpdateState()
     {
-        KartBehaviour kb = kart.GetComponent<KartBehaviour>();
         return null;
+    }
+
+    public override void UpdatePhysicsState()
+    {
+        
     }
 
     public override void CollisionEnter(Collision collision)

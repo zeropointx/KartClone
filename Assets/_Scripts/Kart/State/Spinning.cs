@@ -17,7 +17,6 @@ public class Spinning : KartState
 
     public override KartState UpdateState()
     {
-        KartBehaviour kb = kart.GetComponent<KartBehaviour>();
         if (spinDegrees >= spinIndex)
         {
             if (kb.speed > 0)
@@ -35,6 +34,11 @@ public class Spinning : KartState
             return new Drive(kart);
         }
         return null;
+    }
+
+    public override void UpdatePhysicsState()
+    {
+
     }
 
     public override void CollisionEnter(Collision collision)

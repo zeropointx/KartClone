@@ -18,6 +18,7 @@ public class KartBehaviour : MonoBehaviour
     public float engineDeceleration;
     public float spinSpeed;
     public float tiltLimit;
+    public float stabilizeTorqueForce;
 
     //common
     public float jumpLimit;
@@ -25,6 +26,7 @@ public class KartBehaviour : MonoBehaviour
     public KartState state = null;
     public GameObject mainCamera = null;
     public Rigidbody rigidbody = null;
+    public BoxCollider boxCollider = null;
     public PlayerNetwork pw;
 
     //private
@@ -47,6 +49,7 @@ public class KartBehaviour : MonoBehaviour
         childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
         rigidbody = gameObject.GetComponent<Rigidbody>();
+        boxCollider = gameObject.GetComponent<BoxCollider>();
 
         //stats
         maxSpeed = 65;
@@ -56,7 +59,7 @@ public class KartBehaviour : MonoBehaviour
         brakeForce = 0.95f;
         engineDeceleration = 0.15f;
         spinSpeed = 250;
-        tiltLimit = 0.85f;
+        stabilizeTorqueForce = 1000.0f;
 
         //common
         jumpLimit = 2.5f;
@@ -66,12 +69,14 @@ public class KartBehaviour : MonoBehaviour
         pw = gameObject.GetComponent<PlayerNetwork>();
         oldPosition = transform.position;
         groundNormal = Vector3.up;
+
+        childKart.localPosition = new Vector3(0, 0, 0);
+        childKart.localEulerAngles = new Vector3(0, -90, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.K))
             pw.Spin();
 
@@ -80,10 +85,13 @@ public class KartBehaviour : MonoBehaviour
             state = networkState;
             networkState = null;
         }
+
+        //state
         KartState tempState = state.UpdateState();
         if (tempState != null)
             state = tempState;
 
+        //speedometer
         trueSpeedTimer += Time.deltaTime;
         if (trueSpeedTimer > 0.25f)
         {
@@ -94,12 +102,15 @@ public class KartBehaviour : MonoBehaviour
     }
 
     void LateUpdate()
-    {
-        // TODO find better fix
-        childKart.localPosition = new Vector3(0, 0, 0);
-        childKart.localEulerAngles = new Vector3(0, 90, 0);
+    {   
         if (!(state is Frozen))
             mainCamera.transform.LookAt(transform);
+    }
+
+    void FixedUpdate()
+    {
+        UpdateGroundDistance();
+        state.UpdatePhysicsState();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -111,35 +122,39 @@ public class KartBehaviour : MonoBehaviour
         }
     }
 
-    public bool UpdateGroundDistance()
+    /*
+     * Aligns rigidbody with ground normal
+     */
+    public void Stabilize()
     {
+        Vector3 torque = Vector3.Cross(transform.up, groundNormal) * (1.01f - Vector3.Dot(transform.up, groundNormal));
+        rigidbody.AddTorque(torque * stabilizeTorqueForce * Time.deltaTime);
+    }
+
+    private void UpdateGroundDistance()
+    {
+        Vector3 rayOrigin = transform.position - new Vector3(0, 2.0f, 0);
         RaycastHit relative;
-        if (Physics.Raycast(new Ray(transform.position, -transform.up), out relative))
+        if (Physics.Raycast(new Ray(rayOrigin, -transform.up), out relative))
         {
             if (relative.transform.gameObject.tag == "track")
-                Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.1f);
+                Debug.DrawRay(rayOrigin, -transform.up, Color.blue, 0.1f);
         }
 
         RaycastHit directDown;
-        if (Physics.Raycast(new Ray(transform.position, Vector3.down), out directDown))
+        if (Physics.Raycast(new Ray(rayOrigin, Vector3.down), out directDown))
         {
-            Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.1f);
             if (directDown.transform.gameObject.tag == "track")
             {
-                string texture = GetTexture(directDown);
-                texture = texture.Replace("(Instance)", "");
-                //Debug.Log(texture);
+                Debug.DrawRay(rayOrigin, Vector3.down, Color.green, 0.1f);
                 groundNormal = Vector3.Lerp(groundNormal, directDown.normal, 3.0f * Time.deltaTime);
-                Debug.DrawRay(transform.position, -groundNormal, Color.magenta, 0.1f);
+                Debug.DrawRay(rayOrigin, -groundNormal, Color.magenta, 0.1f);
                 groundDistance = directDown.distance;
                 lastTrackPosition = directDown.point + 3.0f * Vector3.up - 16.0f * transform.forward;
+                
+                string texture = GetTexture(directDown);
+                texture = texture.Replace("(Instance)", "");
             }
-            return true;
-        }
-        else
-        {
-            groundDistance = float.MaxValue;
-            return false;
         }
     }
     string GetTexture(RaycastHit hit)

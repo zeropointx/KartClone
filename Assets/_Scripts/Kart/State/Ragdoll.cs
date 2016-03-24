@@ -15,11 +15,15 @@ public class Ragdoll : KartState
 
     public override KartState UpdateState()
     {
-        KartBehaviour kb = kart.GetComponent<KartBehaviour>();
         timer += Time.deltaTime;
         if (timer > maxTime)
             return lastState;
         return null;
+    }
+
+    public override void UpdatePhysicsState()
+    {
+        
     }
 
     public override void CollisionEnter(Collision collision)
