@@ -4,18 +4,7 @@ using UnityEngine.UI;
 
 public class weaponImageScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () 
-    {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-	
-	}
-
+    // Changes the Image component of this gameObject to the given sprite (Image of the weapon)
     public void updateSprite(Sprite sprite)
     {
         gameObject.GetComponent<Image>().sprite = sprite;

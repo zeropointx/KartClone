@@ -26,7 +26,7 @@ public class InventoryScript : NetworkBehaviour
     void Start()
     {
         currentWeapon = WEAPON.noWeapon; // Set to not have weapon at the beginning
-        weaponAmount = Enum.GetNames(typeof(WEAPON)).Length;
+        weaponAmount = Enum.GetNames(typeof(WEAPON)).Length; // Initialize the amount of weapons
 
     }
 
@@ -51,6 +51,7 @@ public class InventoryScript : NetworkBehaviour
         currentWeapon = (WEAPON)index;
     }
 
+    // Picks up a weapon. This is called when player hits a weaponBox
     public void pickWeapon(GameObject weaponBox)
     {
         if (currentWeapon == WEAPON.noWeapon)

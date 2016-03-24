@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Class made for spawning the weaponBox
 public class BoxSpawner : MonoBehaviour
 {
     public float respawnTime = 10;  // Respawn time for the weaponBox
@@ -15,8 +16,10 @@ public class BoxSpawner : MonoBehaviour
 
     void Update()
     {
+        // If there isnt a weabonBox on the spawner
         if (wBox == null)
         {
+            // Spawn it in the given respawn time on the spawner
             respawnTime -= Time.deltaTime;
             if(respawnTime <= 0.0f)
             {

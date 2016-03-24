@@ -2,27 +2,14 @@
 using System.Collections;
 using UnityEngine.Networking;
 
+// Script used when a player hits the weapon box
 public class WeaponBoxScript : NetworkBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-    void OnCollisionEnter(Collision collision)
-    {
-  
-    }
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player") // When players collider hits weapon box collider...
         {
             Debug.Log("Collided with Player!");
-            other.transform.root.GetComponent<InventoryScript>().pickWeapon(gameObject);
+            other.transform.root.GetComponent<InventoryScript>().pickWeapon(gameObject);    // Call pickWeapon script from InventoryScript which picks up a random weapon.
 
         }
     }
