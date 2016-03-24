@@ -113,6 +113,11 @@ public class Gamemode : NetworkBehaviour {
                     List<DebugPlayer> tempPlayerList = new List<DebugPlayer>();
                     for (int i = 0; i < players.Count; i++ )
                     {
+                        if(players[i].conn == null)
+                        {
+                            players.Remove(players[i]);
+                            continue;
+                        }
                         DebugPlayer dp = new DebugPlayer();
                         Player p = players[i];
                         Placement placement = p.gameObject.GetComponent<Placement>();

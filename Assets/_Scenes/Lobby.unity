@@ -41,7 +41,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 6
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_LightmapsMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -3286,7 +3286,7 @@ MonoBehaviour:
   m_PlayerPrefab: {fileID: 169864, guid: 85284be269366a04eabb512b5e86f4b3, type: 2}
   m_AutoCreatePlayer: 0
   m_PlayerSpawnMethod: 1
-  m_OfflineScene: Lobby
+  m_OfflineScene: RealLobby
   m_OnlineScene: 
   m_SpawnPrefabs:
   - {fileID: 0}
@@ -3339,7 +3339,7 @@ MonoBehaviour:
   m_LobbyPlayerPrefab: {fileID: 11432682, guid: d36b30c25f3a9f841a0cd97027a7c7b0,
     type: 2}
   m_GamePlayerPrefab: {fileID: 169864, guid: 85284be269366a04eabb512b5e86f4b3, type: 2}
-  m_LobbyScene: Lobby
+  m_LobbyScene: RealLobby
   m_PlayScene: defaultscene
   lobbySlots: []
   showEpicUI: 0
