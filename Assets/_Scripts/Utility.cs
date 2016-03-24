@@ -6,7 +6,7 @@ namespace kc
 {
     public class Utility : MonoBehaviour
     {
-        static void CopyComponent(GameObject target, Component original)
+        public static void CopyComponent(GameObject target, Component original)
         {
             System.Type type = original.GetType();
             Component copy = target.AddComponent(type);
@@ -21,7 +21,7 @@ namespace kc
             }
         }
 
-        static void MoveComponent(GameObject target, Component original)
+        public static void MoveComponent(GameObject target, Component original)
         {
             CopyComponent(target, original);
             Destroy(original);

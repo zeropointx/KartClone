@@ -47,10 +47,8 @@ public class KartBehaviour : MonoBehaviour
         childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
 
-        CopyComponent(childKart.GetComponent<Rigidbody>());
-        CopyComponent(childKart.GetComponent<BoxCollider>());
-        Destroy(childKart.GetComponent<Rigidbody>());
-        Destroy(childKart.GetComponent<BoxCollider>());
+        kc.Utility.MoveComponent(gameObject, childKart.GetComponent<Rigidbody>());
+        kc.Utility.MoveComponent(gameObject, childKart.GetComponent<BoxCollider>());
         BoxCollider bc = transform.GetComponent<BoxCollider>();
         float x = bc.size.x;
         float y = bc.size.y;
@@ -196,21 +194,6 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.velocity *= speedMultiplier;
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
-    }
-
-    private void CopyComponent(Component original)
-    {
-        System.Type type = original.GetType();
-        Component copy = gameObject.AddComponent(type);
-        BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Default | BindingFlags.DeclaredOnly;
-        PropertyInfo[] pinfos = type.GetProperties(flags);
-        foreach (var pinfo in pinfos)
-        {
-            if (pinfo.CanWrite)
-            {
-                pinfo.SetValue(copy, pinfo.GetValue(original, null), null);
-            }
-        }
     }
 
     public void Spin()
