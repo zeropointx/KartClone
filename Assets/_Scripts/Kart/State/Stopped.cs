@@ -15,15 +15,17 @@ public class Stopped : KartState {
 
     public override KartState UpdateState()
     {
-        KartBehaviour kb = kart.GetComponent<KartBehaviour>();
-
-        if (!kb.UpdateGroundDistance())
-            return new Ragdoll(kart, this, 1);
         stopTimer += Time.deltaTime;
         kb.speed = 0;
         if (stopTimer > minStop && kb.pedal != 0)
             return new Drive(kart);
         return null;
+    }
+
+    public override void UpdatePhysicsState()
+    {
+        Vector3 torque = Vector3.Cross(kart.transform.up, Vector3.up);
+        kb.rigidbody.AddTorque(torque * 10.0f *  kb.stabilizeTorqueForce * Time.deltaTime);
     }
 
     public override void CollisionEnter(Collision collision)
