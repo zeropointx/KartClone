@@ -59,7 +59,7 @@ public class KartBehaviour : MonoBehaviour
         brakeForce = 0.95f;
         engineDeceleration = 0.15f;
         spinSpeed = 250;
-        stabilizeTorqueForce = 500.0f;
+        stabilizeTorqueForce = 1000.0f;
 
         //common
         jumpLimit = 2.5f;
@@ -123,9 +123,18 @@ public class KartBehaviour : MonoBehaviour
         }
     }
 
+    /*
+     * Aligns rigidbody with ground normal
+     */
+    public void Stabilize()
+    {
+        Vector3 torque = Vector3.Cross(transform.up, groundNormal) * (1.01f - Vector3.Dot(transform.up, groundNormal));
+        rigidbody.AddTorque(torque * stabilizeTorqueForce * Time.deltaTime);
+    }
+
     private void UpdateGroundDistance()
     {
-        Vector3 rayOrigin = transform.position - new Vector3(0, 1.0f, 0);
+        Vector3 rayOrigin = transform.position - new Vector3(0, 2.0f, 0);
         RaycastHit relative;
         if (Physics.Raycast(new Ray(rayOrigin, -transform.up), out relative))
         {

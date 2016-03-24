@@ -48,9 +48,7 @@ public class Drive : KartState {
             kb.rigidbody.velocity = new Vector3(x, kb.rigidbody.velocity.y, z);
         }
 
-        //stabilize
-        Vector3 torque = Vector3.Cross(kart.transform.up, kb.groundNormal);
-        kb.rigidbody.AddTorque(torque * kb.stabilizeTorqueForce * Time.deltaTime);
+        kb.Stabilize();
     }
 
     public override void CollisionEnter(Collision collision)

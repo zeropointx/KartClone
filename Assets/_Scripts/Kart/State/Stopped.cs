@@ -25,7 +25,7 @@ public class Stopped : KartState {
     public override void UpdatePhysicsState()
     {
         Vector3 torque = Vector3.Cross(kart.transform.up, Vector3.up);
-        kb.rigidbody.AddTorque(torque * 10.0f *  kb.stabilizeTorqueForce * Time.deltaTime);
+        kb.Stabilize();
     }
 
     public override void CollisionEnter(Collision collision)
