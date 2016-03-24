@@ -20,10 +20,11 @@ public class LobbySettings : MonoBehaviour {
 	}
     void OnGUI()
     {
-        if (lobbyManager.showLobbyGUI)
-            canvas.active = true;
+       // if (lobbyManager.showLobbyGUI)
+        if (lobbyManager.showEpicUI)
+            canvas.SetActive(true);
         else
-            canvas.active = false;
+            canvas.SetActive(false);
     }
     public void ChangePlayerCount(int number)
     {

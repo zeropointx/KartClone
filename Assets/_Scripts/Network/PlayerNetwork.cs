@@ -15,7 +15,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (!isLocalPlayer)
         {
             GetComponent<KartBehaviour>().enabled = false;
-            transform.FindChild("Main Camera").gameObject.active = false;
+            transform.FindChild("Main Camera").gameObject.SetActive(false);
         }
         else
            localPlayer = gameObject;

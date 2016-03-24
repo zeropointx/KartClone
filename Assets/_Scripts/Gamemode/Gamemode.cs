@@ -83,9 +83,9 @@ public class Gamemode : NetworkBehaviour {
         {
             if(hud == null)
             hud = GameObject.Find("HUD");
-            Debug.Log(hud.active);
-            hud.active = !hud.active;
-            PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.active = hud.active;
+            Debug.Log(hud.activeSelf);
+            hud.SetActive(!hud.activeSelf);
+            PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);
         }
 
         setState(currentState);
@@ -205,16 +205,16 @@ public class Gamemode : NetworkBehaviour {
                 }
             case State.STARTING:
                 {
-                    statusText.active = false;
-                    startTimerText.active = true;
+                    statusText.SetActive(false);
+                    startTimerText.SetActive(true);
            
                     break;
                 }
             case State.RACING:
                 {
-                    statusText.active = false;
-                    if (startTimerText.active == true)
-                        startTimerText.active = false;
+                    statusText.SetActive(false);
+                    if (startTimerText.activeSelf)
+                        startTimerText.SetActive(false);
                     if(isServer)
                     RpcenableInput();
                     break;

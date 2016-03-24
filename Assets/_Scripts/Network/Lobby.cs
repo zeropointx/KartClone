@@ -23,7 +23,8 @@ public class Lobby : MonoBehaviour {
     public void StartHost()
     {
         lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
-        lobbyManager.showLobbyGUI = true;
+        //lobbyManager.showLobbyGUI = true;
+        lobbyManager.showEpicUI = true;
     }
     public void Connect()
     {
@@ -39,7 +40,7 @@ public class Lobby : MonoBehaviour {
             return;
         }
         lobbyManager.networkAddress = ip;
-        lobbyManager.showLobbyGUI = true;
+        lobbyManager.showEpicUI = true;
         lobbyManager.StartClient();
         
     }
