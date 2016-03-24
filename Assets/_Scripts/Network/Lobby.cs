@@ -10,6 +10,7 @@ public class Lobby : MonoBehaviour {
     InputField inputField;
 	void Start () {
         lobbyManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
+        MyNetworkLobbyManager.networkLobbyManagerInstance = lobbyManager;
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
         inputField.text = "127.0.0.1";
         lobbyManager.showLobbyGUI = false;

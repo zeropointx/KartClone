@@ -55,7 +55,7 @@ public class Gamemode : NetworkBehaviour {
 	// Use this for initialization
 	void Start () {
         if(isServer)
-            setState(State.RACING);
+            setState(State.WAITING_FOR_PLAYERS);
 	}
     GameObject hud = null;
 	// Update is called once per frame
@@ -74,6 +74,11 @@ public class Gamemode : NetworkBehaviour {
         {
             case State.WAITING_FOR_PLAYERS:
                 {
+                    if (MyNetworkLobbyManager.networkLobbyManagerInstance.playerCount >= MyNetworkLobbyManager.networkLobbyManagerInstance.minPlayerCountToStart)
+                    {
+
+                        setState(Gamemode.State.STARTING);
+                    }
                     break;
                 }
             case State.STARTING:

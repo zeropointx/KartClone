@@ -3,29 +3,32 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class MyNetworkLobbyManager : NetworkLobbyManager {
-    public bool ready = false;
+    public static MyNetworkLobbyManager networkLobbyManagerInstance = null;
     public int playerCount = 0;
-    int minPlayerCountToStart = 4;
+    public int minPlayerCountToStart = 1;
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
-        // Debug.Log("Player connected! Current players " + playerCount);
+         Debug.Log("Player connected! Current players " + playerCount);
+
+         Debug.Log("Player added! Current players " + ++playerCount);
 
     }
     public override void OnServerDisconnect(NetworkConnection conn)
     {
         base.OnServerDisconnect(conn);
-        playerCount--;
-        Debug.Log("Player disconnected! Current players " + playerCount);
+        Debug.Log("Player disconnected! Current players " + --playerCount);
 
     }
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
+        Debug.Log("Client connected! Current players " + playerCount);
     }
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         base.OnClientDisconnect(conn);
+        Debug.Log("Client disconnected! Current players " + playerCount);
     }
     public override void OnServerReady(NetworkConnection conn)
     {
@@ -39,20 +42,16 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        playerCount++;
-        if (playerCount >= minPlayerCountToStart)
-        {
-            ready = true;
-            GameObject gamemode = GameObject.Find("Gamemode");
-            if (gamemode == null)
-            {
-                Debug.Log("Gamemode object doesn´t exist, ERROR!!!");
-                return;
-            }
-            gamemode.GetComponent<Gamemode>().setState(Gamemode.State.STARTING);
-        }
-        Debug.Log("Player added! Current players " + playerCount);
         base.OnServerAddPlayer(conn, playerControllerId);
+
+
+
+    }
+    public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
+    {
+        base.OnServerRemovePlayer(conn, player);
+
+        Debug.Log("Player removed! Current players " + playerCount);
     }
 
 
