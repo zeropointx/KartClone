@@ -58,7 +58,7 @@ GameObject:
   - 65: {fileID: 6578030}
   m_Layer: 0
   m_Name: ShoppingKart
-  m_TagString: Untagged
+  m_TagString: kartModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

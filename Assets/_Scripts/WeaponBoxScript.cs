@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class WeaponBoxScript : NetworkBehaviour {
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player") // When players collider hits weapon box collider...
+        if (other.gameObject.tag == "kartModel") // When players collider hits weapon box collider...
         {
             Debug.Log("Collided with Player!");
             other.transform.root.GetComponent<InventoryScript>().pickWeapon(gameObject);    // Call pickWeapon script from InventoryScript which picks up a random weapon.

@@ -14,7 +14,7 @@ public class InventoryScript : NetworkBehaviour
         BowlingBall = 0, 
         SpeedBoost = 1, 
        // HomingMissile = 2,
-        Mine = 3,
+        Mine = 2,
         noWeapon  = 8
     };
 
@@ -42,7 +42,10 @@ public class InventoryScript : NetworkBehaviour
             }
         }
 
-
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            pickUpRandomWeapon();
+        }
            
     }
     [Command]
@@ -65,6 +68,7 @@ public class InventoryScript : NetworkBehaviour
     public void pickUpRandomWeapon()
     {
         currentWeapon = ((WEAPON)UnityEngine.Random.Range(0, weaponAmount-1));
+        Debug.Log(currentWeapon + " is current weapon");
     }
 
 }
