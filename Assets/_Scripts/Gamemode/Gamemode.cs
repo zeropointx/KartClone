@@ -20,10 +20,12 @@ public class Gamemode : NetworkBehaviour {
     {
         public int placement;
         public GameObject gameObject;
-        public Player(int placement, GameObject gameObject)
+        public NetworkConnection conn;
+        public Player(int placement, GameObject gameObject, NetworkConnection conn)
         {
             this.placement = placement;
             this.gameObject = gameObject;
+            this.conn = conn;
         }
     }
     private struct DebugPlayer
@@ -45,8 +47,25 @@ public class Gamemode : NetworkBehaviour {
     public void AddPlayer(Player p)
     {
         if (!players.Contains(p))
+        {
             players.Add(p);
-        playerCount++;
+            playerCount++;
+        }
+    }
+    public Player GetPlayerFromGameObject(GameObject g)
+    {
+        for(int i = 0; i < players.Count; i++)
+        {
+            if (players[i].gameObject == g)
+                return players[i];
+        }
+        return new Player(-1,null,null);
+    }
+    public void RemovePlayer(GameObject g)
+    {
+        Player p = GetPlayerFromGameObject(g);
+        if (p.gameObject != null)
+            players.Remove(p);
     }
     [SyncVar]
     public State currentState;
@@ -140,7 +159,7 @@ public class Gamemode : NetworkBehaviour {
                             }
                         }
 
-                       Player p = new Player(players.Count+1,currentBest.gameObject);
+                        Player p = new Player(players.Count + 1, currentBest.gameObject, MyNetworkLobbyManager.GetConnectionFromGameObject(currentBest.gameObject));
                        players.Add(p);
 
                     }

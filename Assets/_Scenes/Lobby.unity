@@ -3342,8 +3342,7 @@ MonoBehaviour:
   m_LobbyScene: Lobby
   m_PlayScene: defaultscene
   lobbySlots: []
-  ready: 0
-  playerCount: 0
+  minPlayerCountToStart: 1
 --- !u!114 &1059956786
 MonoBehaviour:
   m_ObjectHideFlags: 0

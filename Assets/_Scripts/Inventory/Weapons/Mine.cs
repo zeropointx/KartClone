@@ -12,7 +12,7 @@ public class Mine : MonoBehaviour {
 	void Update () {
 	
 	}
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         if(other.gameObject.tag == "Player")
         {

@@ -38,7 +38,8 @@ public class PlayerNetwork : NetworkBehaviour
             GameObject gamemode = GameObject.Find("Gamemode");
             if (gamemode != null)
             {
-                gamemode.GetComponent<Gamemode>().AddPlayer(new Gamemode.Player(-1, gameObject));
+                NetworkConnection conn = MyNetworkLobbyManager.GetConnectionFromGameObject(gameObject);
+                gamemode.GetComponent<Gamemode>().AddPlayer(new Gamemode.Player(-1, gameObject,conn));
                 initialized = true;
             }
         }

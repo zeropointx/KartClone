@@ -1,24 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class MyNetworkLobbyManager : NetworkLobbyManager {
     public static MyNetworkLobbyManager networkLobbyManagerInstance = null;
-    public int playerCount = 0;
+    public int playerCount
+    {
+        get
+        {
+            return GetPlayerCount();
+        }
+    }
     public int minPlayerCountToStart = 1;
+    List<NetworkConnection> connections = new List<NetworkConnection>();
+    public static NetworkConnection GetConnectionFromGameObject(GameObject g)
+    {
+        for(int i = 0; i <networkLobbyManagerInstance.connections.Count; i++ )
+        {
+            if (networkLobbyManagerInstance.connections[i].playerControllers[0].gameObject == g)
+                return networkLobbyManagerInstance.connections[i];
+        }
+        return null;
+    }
+    public List<NetworkConnection> GetConnections()
+    {
+        return connections;
+    }
+    public int GetPlayerCount()
+    {
+        return connections.Count;
+    }
+    void AddPlayer(NetworkConnection conn)
+    {
+        connections.Add(conn);
+    }
+    void RemovePlayer(NetworkConnection conn)
+    {
+        connections.Remove(conn);
+
+        GameObject g = GameObject.Find("Gamemode");
+        if (g == null)
+            return;
+        Gamemode gameMode= g.GetComponent<Gamemode>();
+        gameMode.RemovePlayer(conn.playerControllers[0].gameObject);
+    }
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
          Debug.Log("Player connected! Current players " + playerCount);
-
-         Debug.Log("Player added! Current players " + ++playerCount);
-
+         AddPlayer(conn);
+         Debug.Log("Player added! Current players " + playerCount);
     }
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        base.OnServerDisconnect(conn);
-        Debug.Log("Player disconnected! Current players " + --playerCount);
 
+        RemovePlayer(conn);
+        Debug.Log("Player disconnected! Current players " + playerCount);
+        
+        base.OnServerDisconnect(conn);
     }
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -43,14 +83,10 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         base.OnServerAddPlayer(conn, playerControllerId);
-
-
-
     }
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
     {
         base.OnServerRemovePlayer(conn, player);
-
         Debug.Log("Player removed! Current players " + playerCount);
     }
 
