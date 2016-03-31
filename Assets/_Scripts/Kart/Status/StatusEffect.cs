@@ -32,7 +32,7 @@ public class StatusEffect {
     {
         currentStatus = Status.OFF;
     }
-	public void Update () 
+    public virtual void Update() 
     {
         effectTimerCurrent += Time.deltaTime;
 
