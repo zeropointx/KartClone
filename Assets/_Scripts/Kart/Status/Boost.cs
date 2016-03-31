@@ -27,7 +27,7 @@ public class Boost : StatusEffect
     public override void RemoveEffect()
     {
         base.RemoveEffect();
-        KB.maxSpeed -= boostAmount;
+        KB.maxSpeed = KB.defaultMaxSpeed;
         GameObject.Destroy(FLAMES);
         if(KB.speed > KB.maxSpeed)
         {
@@ -36,7 +36,7 @@ public class Boost : StatusEffect
     }
     public Boost()
     {
-        effectTimerDelay = 2.0f;
+        effectTimerDelay = 5.0f;
 
     }
     public override void Update()

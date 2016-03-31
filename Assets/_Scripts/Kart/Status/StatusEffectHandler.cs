@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 [System.Serializable]
 public class StatusEffectHandler {
     public enum EffectType
@@ -35,21 +36,26 @@ public class StatusEffectHandler {
     }
     public void AddStatusEffect(EffectType type)
     {
-        switch(type)
+        StatusEffect effect = GetEffectFromEnum(type);
+        if (effect == null)
+            return;
+        AddStatusEffect(effect);
+    }
+    public StatusEffect GetEffectFromEnum(EffectType type)
+    {
+        switch (type)
         {
             case EffectType.BOOST:
                 {
-                    AddStatusEffect(new Boost());
-                    break;
+                    return new Boost();
                 }
             case EffectType.HIT:
                 {
-                    AddStatusEffect(new HitStatus());
-                    break;
+                    return new HitStatus();
                 }
             default:
                 {
-                    break;
+                    return null;
                 }
         }
     }
@@ -58,5 +64,25 @@ public class StatusEffectHandler {
         statusEffects.Add(effect);
         effect.Start();
     }
+    public bool HasEffect(EffectType type)
+    {
+        foreach(StatusEffect effect in statusEffects)
+        {
+            Type t = effect.GetType();
+            Type TT = GetEffectFromEnum(type).GetType();
+           if(t.Equals(TT))
+           {
+               Debug.Log("EQUALS!");
+               return true;
+           }
+           else
+           {
+               Debug.Log("DOESNT EQUAL!");
+               
+           }
 
+        }
+        return false;
+       
+    }
 }

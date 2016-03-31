@@ -5,20 +5,12 @@ using System.Collections;
 public class KartBehaviour : MonoBehaviour
 {
     //controls
-    public float steeringWheel = 0;
-    public float pedal = 0;
-    public float speed = 0;
+    public float steeringWheel = 0, pedal = 0, speed = 0;
 
     //stats
-    public float maxSpeed;
-    public float maxReverse;
-    public float turnSpeed;
-    public float acceleration;
-    public float brakeForce;
-    public float engineDeceleration;
-    public float spinSpeed;
-    public float stabilizeTorqueForce;
+    public float currentTextureSpeedModifier, defaultMaxSpeed, maxSpeed, maxReverse, turnSpeed, acceleration, brakeForce, engineDeceleration, spinSpeed, stabilizeTorqueForce;
 
+    public string lastTextureName = "";
     //common
     public float jumpLimit;
     public KartState state = null;
@@ -44,13 +36,15 @@ public class KartBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        currentTextureSpeedModifier = 1.0f;
         childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
         rigidbody = gameObject.GetComponent<Rigidbody>();
         boxCollider = gameObject.GetComponent<BoxCollider>();
 
         //stats
-        maxSpeed = 65;
+        defaultMaxSpeed = 65;
+        maxSpeed = defaultMaxSpeed;
         maxReverse = -15;
         turnSpeed = 100;
         acceleration = 0.25f;
@@ -146,8 +140,12 @@ public class KartBehaviour : MonoBehaviour
                 groundDistance = directDown.distance;
                 lastTrackPosition = directDown.point + 3.0f * Vector3.up - 16.0f * transform.forward;
                 
+                //Get texture right below player
                 string texture = GetTexture(directDown);
-                texture = texture.Replace("(Instance)", "");
+                //Parse that string
+                texture = texture.Replace("(Instance)", "").Replace(" ","");
+                //
+                lastTextureName = texture;
             }
         }
     }

@@ -21,19 +21,11 @@ public class BowlingBall : NetworkBehaviour
     void FixedUpdate()
     {
         oldVel = rb.velocity;
-
-        //  if (isServer)
-        //   {
-        
-        //rb.AddForce(new Vector3(0, -0.1f, 0) * thrust, ForceMode.VelocityChange);
-        //  }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //  if (!isServer)
-        //      return;
         destroyTimer += Time.deltaTime;
         if (destroyTimer > 3.0f)
             Destroy(gameObject);
@@ -52,8 +44,6 @@ public class BowlingBall : NetworkBehaviour
         if(GG.tag == "Player")
         {
             PN = GG.GetComponent<PlayerNetwork>();
-            //Spin2Win
-           // PN.Spin();
             PN.GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.HIT);
             Destroy(gameObject);
         }

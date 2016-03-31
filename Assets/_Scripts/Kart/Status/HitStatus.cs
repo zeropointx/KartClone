@@ -12,7 +12,7 @@ public class HitStatus : StatusEffect
         //It returns as higher (like 100 default, 110 while boosted and boost decreases it but when hit status wears off maxspeed is 110)
         base.ApplyEffect();
         baseMaxSpeed = KB.maxSpeed;
-        KB.maxSpeed = 0;
+        KB.maxSpeed = 0.01f;
 
         //  KB.speed = KB.maxSpeed;
         KB.rigidbody.velocity = Vector3.zero;
