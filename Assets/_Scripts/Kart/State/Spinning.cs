@@ -13,35 +13,23 @@ public class Spinning : KartState
         : base(_kart)
     {
         name = "spinning";
-
-        kb.childKart.GetComponent<Animator>().Play("ShoppingKartAnimation");
+       kb.childKart.GetComponent<Animator>().SetTrigger("Hit");
+        
     }
 
     public override KartState UpdateState()
     {
-        //if (spinDegrees >= spinIndex)
-        //{
-        //    if (kb.speed > 0)
-        //    {
-        //        kb.speed -= speedReduction;
-        //    }
-        //    spinIndex += spinSpeed;
-        //    kb.childKart.transform.Rotate(new Vector3(0, spinSpeed, 0));
-        //}
-
-        //else
-        //{
-        //    spinIndex = 0;
-        //    kb.childKart.transform.localRotation = kb.originalRotation;
-        if (kb.childKart.GetComponent<Animator>().GetTime() > 3)
-        {
-            kb.childKart.GetComponent<Animator>().Stop();
+        /*var animator = kb.childKart.GetComponent<Animator>();
+        var x = animator.GetCurrentAnimatorStateInfo(0);
+        Debug.Log(x.length + "," + x.normalizedTime);
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("ShoppingKartAnimation"))
             return new Drive(kart);
-        }
-
-  //  }
+        //animator.
+       // if (!.IsPlaying("YourAnimation"))
+     //       print("Animation Done");
         else
-            return null;
+            return null;*/
+        return new Drive(kart);
     }
 
     public override void UpdatePhysicsState()
