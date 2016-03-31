@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 public class BowlingBall : NetworkBehaviour
 {
-    public float thrust = 10000;
+    public float thrust = 50000;
 
     public Rigidbody rb;
     Vector3 oldVel;
