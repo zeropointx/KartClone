@@ -29,9 +29,7 @@ public class Lobby : MonoBehaviour {
 
     public void StartHost()
     {
-        //SceneManager.LoadScene("RealLobby");
         lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
-        //lobbyManager.showLobbyGUI = true;
         lobbyManager.showEpicUI = true;
     }
 
@@ -40,11 +38,5 @@ public class Lobby : MonoBehaviour {
         lobbyManager.networkAddress = ServerInfo.ip;
         lobbyManager.showEpicUI = true;
         lobbyManager.StartClient();
-        //SceneManager.LoadScene("RealLobby");   
-    }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene("RealLobby");
     }
 }

@@ -58,7 +58,8 @@ public class MainMenu : MonoBehaviour {
             return;
         }
         ServerInfo.ip = ip;
-        Ping ping = new Ping(ServerInfo.ip);
+        ping = new Ping(ServerInfo.ip);
         pinging = true;
+        Debug.Log("started pinging " + ServerInfo.ip);
     }
 }
