@@ -53,7 +53,8 @@ public class BowlingBall : NetworkBehaviour
         {
             PN = GG.GetComponent<PlayerNetwork>();
             //Spin2Win
-            PN.Spin();
+           // PN.Spin();
+            PN.GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.HIT);
             Destroy(gameObject);
         }
     }

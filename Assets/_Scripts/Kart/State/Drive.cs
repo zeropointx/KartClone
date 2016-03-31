@@ -33,7 +33,7 @@ public class Drive : KartState {
         {
             Vector3 direction = kb.transform.forward;
             direction -= kb.groundNormal;
-            float controlMultiplier = onReverse ? -1 : (1.0f - 0.5f * (kb.speed / kb.maxSpeed));
+            float controlMultiplier = 1.0f;//onReverse ? -1 : (1.0f - 0.5f * (kb.speed / kb.maxSpeed));
             kb.transform.Rotate(new Vector3(0, controlMultiplier * kb.turnSpeed * kb.steeringWheel * Time.fixedDeltaTime, 0));
 
             direction = Vector3.ProjectOnPlane(direction, kb.groundNormal).normalized;

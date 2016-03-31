@@ -12,7 +12,6 @@ public class Gamemode : NetworkBehaviour {
     int finishedPlayers = 0;
     public enum State
     {
-        WAITING_FOR_PLAYERS,
         STARTING,
         RACING,
         DONE_RACING
@@ -75,7 +74,7 @@ public class Gamemode : NetworkBehaviour {
 	// Use this for initialization
 	void Start () {
         if(isServer)
-            setState(State.WAITING_FOR_PLAYERS);
+            setState(State.STARTING);
 	}
     GameObject hud = null;
 	// Update is called once per frame
@@ -89,23 +88,13 @@ public class Gamemode : NetworkBehaviour {
             PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);
         }
 
-        setState(currentState);
 	    switch(currentState)
         {
-            case State.WAITING_FOR_PLAYERS:
-                {
-                    if (MyNetworkLobbyManager.networkLobbyManagerInstance.playerCount >= MyNetworkLobbyManager.networkLobbyManagerInstance.minPlayerCountToStart)
-                    {
-
-                        setState(Gamemode.State.STARTING);
-                    }
-                    break;
-                }
             case State.STARTING:
                 {
                     startTimer += Time.deltaTime;
                     if (startTimer >= startDelay)
-                        currentState = State.RACING;
+                        setState(State.RACING);
                     startTimerText.GetComponent<Text>().text = ((int)(startDelay - startTimer)).ToString(); 
                     break;
                 }
@@ -199,17 +188,13 @@ public class Gamemode : NetworkBehaviour {
     [ClientRpc]
     void RpcenableInput()
     {
-        PlayerNetwork.localPlayer.GetComponent<KartInput>().enabled = true;
+        PlayerNetwork.localPlayer.GetComponent<KartInput>().EnableInput();
     }
     public void setState(State state)
     {
         currentState = state;
         switch(state)
         {
-            case State.WAITING_FOR_PLAYERS:
-                {
-                    break;
-                }
             case State.STARTING:
                 {
                     statusText.SetActive(false);

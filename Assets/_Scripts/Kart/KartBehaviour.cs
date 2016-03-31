@@ -203,10 +203,6 @@ public class KartBehaviour : MonoBehaviour
         transform.position = lastTrackPosition;
     }
 
-    public void Spin()
-    {
-        networkState = new Spinning(this.gameObject);
-    }
 
     public void Freeze()
     {

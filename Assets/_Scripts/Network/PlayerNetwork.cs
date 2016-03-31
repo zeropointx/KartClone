@@ -11,14 +11,17 @@ public class PlayerNetwork : NetworkBehaviour
     public static GameObject localPlayer = null;
     void Start()
     {
-        GetComponent<KartInput>().enabled = false;
+       
         if (!isLocalPlayer)
         {
             GetComponent<KartBehaviour>().enabled = false;
             transform.FindChild("Main Camera").gameObject.SetActive(false);
+            GetComponent<KartInput>().enabled = false;
         }
         else
-           localPlayer = gameObject;
+        {
+            localPlayer = gameObject;
+        }
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
       
 
@@ -47,10 +50,6 @@ public class PlayerNetwork : NetworkBehaviour
     public StatusEffectHandler GetStatusEffectHandler()
     {
         return statusEffectHandler;
-    }
-    public void Spin()
-    {
-        transform.GetComponent<KartBehaviour>().Spin();
     }
 
 }

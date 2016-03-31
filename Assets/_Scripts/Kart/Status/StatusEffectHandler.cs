@@ -6,6 +6,7 @@ public class StatusEffectHandler {
     public enum EffectType
     {
         BOOST = 0,
+        HIT = 1,
     }
     public List<StatusEffect> statusEffects = new List<StatusEffect>();
 	public StatusEffectHandler()
@@ -39,6 +40,11 @@ public class StatusEffectHandler {
             case EffectType.BOOST:
                 {
                     AddStatusEffect(new Boost());
+                    break;
+                }
+            case EffectType.HIT:
+                {
+                    AddStatusEffect(new HitStatus());
                     break;
                 }
             default:

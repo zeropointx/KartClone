@@ -10,10 +10,10 @@ public class Boost : StatusEffect
     {
         base.ApplyEffect();
         baseMaxSpeed = KB.maxSpeed;
-
         KB.maxSpeed += boostAmount;
-        KB.speed = baseMaxSpeed;
-       
+         
+      //  KB.speed = KB.maxSpeed;
+        KB.rigidbody.velocity = KB.transform.forward * KB.maxSpeed;
     }
     public override void RemoveEffect()
     {
@@ -22,7 +22,7 @@ public class Boost : StatusEffect
         
         if(KB.speed > KB.maxSpeed)
         {
-            KB.speed = KB.maxSpeed;
+            KB.rigidbody.velocity = KB.transform.forward * KB.maxSpeed;
         }
     }
     public Boost()
