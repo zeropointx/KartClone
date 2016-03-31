@@ -71,7 +71,7 @@ public class Gamemode : NetworkBehaviour {
     [SyncVar]
     public State currentState;
     float startTimer = 0.0f;
-    float startDelay = 5.0f;
+    float startDelay = 2.0f;
 	// Use this for initialization
 	void Start () {
         if(isServer)

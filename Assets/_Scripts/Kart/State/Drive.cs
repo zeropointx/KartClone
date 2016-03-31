@@ -16,16 +16,9 @@ public class Drive : KartState {
     public override KartState UpdateState()
     {   
         //pedal
-        if (onReverse)
-        {
-            kb.speed += ((kb.pedal > 0) ? kb.brakeForce : kb.acceleration) * kb.pedal + kb.engineDeceleration;
-            kb.speed = Mathf.Clamp(kb.speed, kb.maxReverse, 0);
-        }
-        else
-        {
-            kb.speed += ((kb.pedal > 0) ? kb.acceleration : kb.brakeForce) * kb.pedal - kb.engineDeceleration;
-            kb.speed = Mathf.Clamp(kb.speed, 0, kb.maxSpeed);
-        }
+
+        kb.speed = kb.rigidbody.velocity.magnitude;
+      
 
         if (kb.speed == 0)
             return new Stopped(kart);
@@ -35,7 +28,7 @@ public class Drive : KartState {
 
     public override void UpdatePhysicsState()
     {
-        kb.Stabilize();
+        
         if (kb.groundDistance < kb.jumpLimit)
         {
             Vector3 direction = kb.transform.forward;
@@ -44,8 +37,16 @@ public class Drive : KartState {
             kb.transform.Rotate(new Vector3(0, controlMultiplier * kb.turnSpeed * kb.steeringWheel * Time.fixedDeltaTime, 0));
 
             direction = Vector3.ProjectOnPlane(direction, kb.groundNormal).normalized;
-            kb.rigidbody.velocity = new Vector3(direction.x * kb.speed, kb.rigidbody.velocity.y, direction.z * kb.speed);
+
+            var forwardSpeed = kb.speed >= kb.maxSpeed ? 0 : 1;//kb.speed / kb.maxSpeed;
+          //  forwardSpeed = 1 - forwardSpeed;
+            Vector3 forwardVector = kb.pedal * kb.transform.forward;
+            Vector3 sideVector = kb.steeringWheel * kb.transform.right;
+            kb.rigidbody.AddForce(forwardVector * forwardSpeed * 40.0f); 
+            kb.rigidbody.AddForce(sideVector * 30.0f);
+           // kb.rigidbody.velocity = new Vector3(direction.x * kb.speed, kb.rigidbody.velocity.y, direction.z * kb.speed);
         }
+        kb.Stabilize();
     }
 
     public override void CollisionEnter(Collision collision)
