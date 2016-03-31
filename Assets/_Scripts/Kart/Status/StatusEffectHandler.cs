@@ -72,13 +72,7 @@ public class StatusEffectHandler {
             Type TT = GetEffectFromEnum(type).GetType();
            if(t.Equals(TT))
            {
-               Debug.Log("EQUALS!");
                return true;
-           }
-           else
-           {
-               Debug.Log("DOESNT EQUAL!");
-               
            }
 
         }

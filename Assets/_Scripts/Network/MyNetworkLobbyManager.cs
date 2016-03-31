@@ -6,6 +6,12 @@ using UnityEngine.Networking;
 public class MyNetworkLobbyManager : NetworkLobbyManager {
     public static MyNetworkLobbyManager networkLobbyManagerInstance = null;
     public bool showEpicUI = true;
+    public bool debugMessages = false;
+    void DebugMessage(string message)
+    {
+        if(debugMessages)
+        Debug.Log(message);
+    }
     public int playerCount
     {
         get
@@ -50,7 +56,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
-         Debug.Log("Player connected! Current players " + playerCount);
+         DebugMessage("Player connected! Current players " + playerCount);
          
 
     }
@@ -58,33 +64,33 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
     {
 
         
-        Debug.Log("Player disconnected! Current players " + playerCount);
+        DebugMessage("Player disconnected! Current players " + playerCount);
         
         base.OnServerDisconnect(conn);
     }
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
-        Debug.Log("Client connected! Current players " + playerCount);
+        DebugMessage("Client connected! Current players " + playerCount);
         AddPlayer(conn);
 
-        Debug.Log("Player added! Current players " + playerCount);
+        DebugMessage("Player added! Current players " + playerCount);
     }
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         base.OnClientDisconnect(conn);
         RemovePlayer(conn);
-        Debug.Log("Client disconnected! Current players " + playerCount);
+        DebugMessage("Client disconnected! Current players " + playerCount);
     }
     public override void OnServerReady(NetworkConnection conn)
     {
         base.OnServerReady(conn);
-        Debug.Log("OnServerReady");
+        DebugMessage("OnServerReady");
     }
     public override void OnServerSceneChanged(string sceneName)
     {
         base.OnServerSceneChanged(sceneName);
-        Debug.Log("SceneChanged: " + sceneName);
+        DebugMessage("SceneChanged: " + sceneName);
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
@@ -93,7 +99,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
     {
         base.OnServerRemovePlayer(conn, player);
-        Debug.Log("Player removed! Current players " + playerCount);
+        DebugMessage("Player removed! Current players " + playerCount);
     }
 
     public void OnGUI()
@@ -140,11 +146,11 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
                     }
                 }
             }
-            if (LogFilter.logDebug) { Debug.Log("NetworkLobbyManager TryToAddPlayer controllerId " + controllerId + " ready:" + ClientScene.ready); }
+            if (LogFilter.logDebug) { DebugMessage("NetworkLobbyManager TryToAddPlayer controllerId " + controllerId + " ready:" + ClientScene.ready); }
 
             if (controllerId == -1)
             {
-                if (LogFilter.logDebug) { Debug.Log("NetworkLobbyManager No Space!"); }
+                if (LogFilter.logDebug) { DebugMessage("NetworkLobbyManager No Space!"); }
                 return;
             }
 
@@ -159,7 +165,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
         }
         else
         {
-            if (LogFilter.logDebug) { Debug.Log("NetworkLobbyManager NetworkClient not active!"); }
+            if (LogFilter.logDebug) { DebugMessage("NetworkLobbyManager NetworkClient not active!"); }
         }
 
 

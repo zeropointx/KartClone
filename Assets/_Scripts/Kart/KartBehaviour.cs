@@ -45,7 +45,7 @@ public class KartBehaviour : MonoBehaviour
         //stats
         defaultMaxSpeed = 65;
         maxSpeed = defaultMaxSpeed;
-        maxReverse = -15;
+        maxReverse = 15;
         turnSpeed = 100;
         acceleration = 0.25f;
         brakeForce = 0.95f;

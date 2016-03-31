@@ -27,7 +27,7 @@ public class HitStatus : StatusEffect
     }
     public HitStatus()
     {
-        effectTimerDelay = 2.0f;
+        effectTimerDelay = 1.5f;
 
     }
 }
