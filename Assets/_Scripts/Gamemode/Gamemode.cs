@@ -177,6 +177,7 @@ public class Gamemode : NetworkBehaviour {
                 }
         }
 	}
+
     public int getPlacement(GameObject g)
     {
         for (int i = 0; i < players.Count; i++)
@@ -236,23 +237,26 @@ public class Gamemode : NetworkBehaviour {
     // Checks if enough players have finished the track to end it
     public void checkGameFinish()
     {
-        for (int i = 0; i < playerCount; i++) // Search through all players
+        if (playerCount > 0)
         {
-            Placement placement = players[i].gameObject.GetComponent<Placement>();
-            if (placement.gameFinished == true) // If the player has finished the game, add it to the index
+            for (int i = 0; i < playerCount; i++) // Search through all players
             {
-                finishedPlayers++;
+                Placement placement = players[i].gameObject.GetComponent<Placement>();
+                if (placement.gameFinished == true) // If the player has finished the game, add it to the index
+                {
+                    finishedPlayers++;
+                }
             }
-        }
-        Debug.Log("Players that have finished the game so far: " + finishedPlayers);
+            Debug.Log("Players that have finished the game so far: " + finishedPlayers);
 
-        //If enough players have finished the track to end it, do the following
-        if (playerCount == finishedPlayers)
-        {
-            Debug.Log("All players have finished the track!");
-            // Do something
-        }
+            //If enough players have finished the track to end it, do the following
+            if (playerCount == finishedPlayers)
+            {
+                Debug.Log("All players have finished the track!");
+                // Do something
+            }
 
-        finishedPlayers = 0;
+            finishedPlayers = 0;
+        }
     }
 }
