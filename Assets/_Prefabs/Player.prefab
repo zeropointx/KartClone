@@ -166,10 +166,8 @@ MonoBehaviour:
   brakeForce: 0
   engineDeceleration: 0
   spinSpeed: 250
-  tiltLimit: 0
   stabilizeTorqueForce: 0
   jumpLimit: 0
-  speedScale: 0
   mainCamera: {fileID: 0}
   rigidbody: {fileID: 0}
   boxCollider: {fileID: 0}
@@ -191,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bowlingBall: {fileID: 176684, guid: 4999114a78229774db33f98533ff4679, type: 2}
-  speedBoost: {fileID: 0}
+  speedBoost: {fileID: 197184, guid: 864a44d2c095bd24fbe89c4334e96b03, type: 2}
   homingMissilePrefab: {fileID: 138114, guid: 80b3207a6df493641b0f354a585f6b5c, type: 2}
   minePrefab: {fileID: 172604, guid: 9b0d12ae9da4c2d46bbcfec811931d19, type: 2}
 --- !u!114 &11410372
@@ -264,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02081b861f3c431468e2739f18199069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInputEnabled: 0
 --- !u!114 &11467998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLap: 0
   currentCheckPointIndex: 0
+  gameFinished: 0
 --- !u!124 &12406898
 Behaviour:
   m_ObjectHideFlags: 1
