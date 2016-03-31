@@ -24,7 +24,6 @@ public class Stopped : KartState {
 
     public override void UpdatePhysicsState()
     {
-        Vector3 torque = Vector3.Cross(kart.transform.up, Vector3.up);
         kb.Stabilize();
     }
 

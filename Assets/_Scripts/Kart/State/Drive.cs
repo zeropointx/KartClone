@@ -35,20 +35,17 @@ public class Drive : KartState {
 
     public override void UpdatePhysicsState()
     {
+        kb.Stabilize();
         if (kb.groundDistance < kb.jumpLimit)
         {
             Vector3 direction = kb.transform.forward;
             direction -= kb.groundNormal;
             float controlMultiplier = onReverse ? -1 : (1.0f - 0.5f * (kb.speed / kb.maxSpeed));
-            kb.transform.Rotate(new Vector3(0, controlMultiplier * kb.turnSpeed * kb.steeringWheel * Time.deltaTime, 0));
+            kb.transform.Rotate(new Vector3(0, controlMultiplier * kb.turnSpeed * kb.steeringWheel * Time.fixedDeltaTime, 0));
 
             direction = Vector3.ProjectOnPlane(direction, kb.groundNormal).normalized;
-            float x = direction.x * kb.speed * kb.speedScale * Time.deltaTime;
-            float z = direction.z * kb.speed * kb.speedScale * Time.deltaTime;
-            kb.rigidbody.velocity = new Vector3(x, kb.rigidbody.velocity.y, z);
+            kb.rigidbody.velocity = new Vector3(direction.x * kb.speed, kb.rigidbody.velocity.y, direction.z * kb.speed);
         }
-
-        kb.Stabilize();
     }
 
     public override void CollisionEnter(Collision collision)

@@ -22,5 +22,11 @@ public class KartInput : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.R))
             kartScript.Reset(0, (Input.GetKey(KeyCode.LeftShift)));
+
+        if (Input.GetKeyDown(KeyCode.T))
+            kartScript.BackToTrack();
+
+        if (Input.GetKeyDown(KeyCode.K))
+            kartScript.pw.Spin();
 	}
 }

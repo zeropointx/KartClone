@@ -17,12 +17,10 @@ public class KartBehaviour : MonoBehaviour
     public float brakeForce;
     public float engineDeceleration;
     public float spinSpeed;
-    public float tiltLimit;
     public float stabilizeTorqueForce;
 
     //common
     public float jumpLimit;
-    public float speedScale;
     public KartState state = null;
     public GameObject mainCamera = null;
     public Rigidbody rigidbody = null;
@@ -63,7 +61,6 @@ public class KartBehaviour : MonoBehaviour
 
         //common
         jumpLimit = 2.5f;
-        speedScale = 50.0f;
         state = new Stopped(this.gameObject);
         mainCamera = transform.FindChild("Main Camera").gameObject;
         pw = gameObject.GetComponent<PlayerNetwork>();
@@ -77,9 +74,6 @@ public class KartBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-            pw.Spin();
-
         if (networkState != null)
         {
             state = networkState;
@@ -201,6 +195,12 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
         groundDistance = 0;
+    }
+
+    public void BackToTrack()
+    {
+        Reset();
+        transform.position = lastTrackPosition;
     }
 
     public void Spin()
