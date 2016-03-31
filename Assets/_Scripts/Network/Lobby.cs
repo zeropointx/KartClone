@@ -8,43 +8,43 @@ public class Lobby : MonoBehaviour {
 
 	// Use this for initialization
     MyNetworkLobbyManager lobbyManager;
-    InputField inputField;
-	void Start () {
+    
+    void Start () 
+    {
         lobbyManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
         MyNetworkLobbyManager.networkLobbyManagerInstance = lobbyManager;
-        inputField = GameObject.Find("InputField").GetComponent<InputField>();
-        inputField.text = "127.0.0.1";
-        lobbyManager.showLobbyGUI = false;
+        lobbyManager.showLobbyGUI = true;
+
+        if (ServerInfo.ip == "127.0.0.1")
+            StartHost();
+        else
+            Connect();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 	
 	}
+
     public void StartHost()
     {
-        SceneManager.LoadScene("RealLobby");
+        //SceneManager.LoadScene("RealLobby");
         lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
         //lobbyManager.showLobbyGUI = true;
         lobbyManager.showEpicUI = true;
     }
+
     public void Connect()
     {
-                if(inputField == null)
-        {
-            Debug.Log("Add inputfield to UILogic script!");
-            return;
-        }
-        string ip = inputField.text;
-        if(ip == null || ip == "" || ip.Length > 20)
-        {
-            Debug.Log("Invalid ip!");
-            return;
-        }
-        lobbyManager.networkAddress = ip;
+        lobbyManager.networkAddress = ServerInfo.ip;
         lobbyManager.showEpicUI = true;
         lobbyManager.StartClient();
+        //SceneManager.LoadScene("RealLobby");   
+    }
+
+    public void StartGame()
+    {
         SceneManager.LoadScene("RealLobby");
-        
     }
 }

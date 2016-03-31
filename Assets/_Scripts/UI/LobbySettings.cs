@@ -48,5 +48,4 @@ public class LobbySettings : MonoBehaviour {
     {
          StoredKartInfo.characterID = number;
     }
-
 }

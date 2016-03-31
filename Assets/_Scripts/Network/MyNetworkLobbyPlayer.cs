@@ -14,9 +14,6 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer {
         var lobby = NetworkManager.singleton as MyNetworkLobbyManager;
         if (lobby)
         {
-            if (!lobby.showEpicUI)
-                return;
-
             if (Application.loadedLevelName != lobby.lobbyScene)
                 return;
         }
