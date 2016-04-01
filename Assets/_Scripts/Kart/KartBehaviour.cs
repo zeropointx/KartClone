@@ -34,9 +34,20 @@ public class KartBehaviour : MonoBehaviour
     public Quaternion originalRotation;
     public Transform childKart;
 
+
+    //Camera
+    public Vector3 defaultCameraPos;
+    public Vector3 targetCameraPos;
+    public enum CameraState
+    {
+        DRIFTING_LEFT, MIDDLE,DRIFTING_RIGHT
+    }
+    public CameraState currentCameraState = CameraState.MIDDLE;
     // Use this for initialization
     void Start()
     {
+        defaultCameraPos = transform.Find("Main Camera").localPosition;
+        targetCameraPos = defaultCameraPos;
         currentTextureSpeedModifier = 1.0f;
         childKart = transform.Find("Kart");
         originalRotation = childKart.transform.localRotation;
@@ -89,6 +100,9 @@ public class KartBehaviour : MonoBehaviour
             trueSpeedTimer = 0;
             oldPosition = transform.position;
         }
+        Vector3 cameraPos = transform.Find("Main Camera").localPosition;
+        if(!GetComponent<Placement>().gameFinished)
+        transform.Find("Main Camera").localPosition = Vector3.Lerp(cameraPos, targetCameraPos, Time.deltaTime);
     }
 
     void LateUpdate()
@@ -244,6 +258,37 @@ public class KartBehaviour : MonoBehaviour
     public void OnGUI()
     {
         if (drifting)
-        GUI.Label(new Rect(0, 0, 100, 100),  ""+Vector3.Dot(transform.forward, rigidbody.velocity.normalized));
+        GUI.Label(new Rect(0, 0, 100, 100),  ""+Vector3.Dot(transform.forward, rigidbody.velocity.normalized)+","+
+            Vector3.Dot(transform.right, rigidbody.velocity.normalized));
+    }
+    public void SetCameraState(CameraState state)
+    {
+
+        if(currentCameraState == state)
+            return;
+        currentCameraState = state;
+        switch(state)
+        {
+            case CameraState.MIDDLE:
+                {
+                    targetCameraPos = defaultCameraPos;
+                    break;
+                }
+            case CameraState.DRIFTING_LEFT:
+                {
+                    targetCameraPos = (Vector3.right * 2.0f) + defaultCameraPos;
+                    break;
+                }
+            case CameraState.DRIFTING_RIGHT:
+                {
+                    targetCameraPos = (Vector3.right * -2.0f) + defaultCameraPos;
+                
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
     }
 }

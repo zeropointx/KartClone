@@ -16,11 +16,24 @@ public class Drive : KartState {
     {  
         kb.speed = kb.rigidbody.velocity.magnitude;
 
-        float dot = Vector3.Dot(kb.transform.forward, kb.rigidbody.velocity.normalized);
-        if (dot < 0.95f && dot > 0.6f)
+        float dotForward = Vector3.Dot(kb.transform.forward, kb.rigidbody.velocity.normalized);
+        float dotSideways = Vector3.Dot(kb.transform.right, kb.rigidbody.velocity.normalized);
+
+        if (dotForward < 0.95f && dotForward > 0.6f)
+        {
             kb.drifting = true;
+            if (dotSideways > 0.0f)
+                kb.SetCameraState(KartBehaviour.CameraState.DRIFTING_RIGHT);
+            else
+                kb.SetCameraState(KartBehaviour.CameraState.DRIFTING_LEFT);
+        }
         else
+        {
             kb.drifting = false;
+            kb.SetCameraState(KartBehaviour.CameraState.MIDDLE);
+        }
+
+       
         if (kb.speed <= 0.1f)
             return new Stopped(kart);
         return null;

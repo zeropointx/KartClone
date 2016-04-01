@@ -39,6 +39,8 @@ public class StatusEffectHandler {
         StatusEffect effect = GetEffectFromEnum(type);
         if (effect == null)
             return;
+        if(type == EffectType.HIT)
+            ResetEffects();
         AddStatusEffect(effect);
     }
     public StatusEffect GetEffectFromEnum(EffectType type)
@@ -51,7 +53,6 @@ public class StatusEffectHandler {
                 }
             case EffectType.HIT:
                 {
-                    ResetEffects();
                     return new HitStatus();
                 }
             default:
@@ -62,8 +63,9 @@ public class StatusEffectHandler {
     }
     void AddStatusEffect(StatusEffect effect)
     {
-        statusEffects.Add(effect);
         effect.Start();
+        statusEffects.Add(effect);
+        
     }
     public bool HasEffect(EffectType type)
     {
