@@ -10,6 +10,15 @@ public class Gamemode : NetworkBehaviour {
     private List<Player> players = new List<Player>();
     public int playerCount = 0;
     int finishedPlayers = 0;
+
+    public GameObject HUDPrefab = null;
+    void Awake()
+    {
+       GameObject hud =  GameObject.Instantiate(HUDPrefab);
+       startTimerText = hud.transform.Find("StartTimerText").gameObject;
+       statusText = hud.transform.Find("StatusText").gameObject;
+
+    }
     public enum State
     {
         STARTING,
@@ -78,6 +87,8 @@ public class Gamemode : NetworkBehaviour {
 	}
     GameObject hud = null;
 	// Update is called once per frame
+
+
 	void Update () {
         if (Input.GetKeyDown(KeyCode.O))
         {

@@ -24,10 +24,19 @@ public class HUD : MonoBehaviour {
         placementText = transform.FindChild("Placement").gameObject;
         speedIndicator = GameObject.Find("ATJMittari");
         stateNameText = GameObject.Find("stateNameText");
+     
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (gamemode == null)
+        {
+            var dump = GameObject.Find("Gamemode");
+            if(dump != null)
+            gamemode = dump.GetComponent<Gamemode>();
+            return;
+        }
           if (PlayerNetwork.localPlayer == null)
           {
               updateWeaponTexture(InventoryScript.WEAPON.noWeapon);

@@ -159,6 +159,9 @@ MonoBehaviour:
   steeringWheel: 0
   pedal: 0
   speed: 0
+  currentTextureSpeedModifier: 0
+  defaultMaxSpeed: 0
+  maxSpeedChange: 0
   maxSpeed: 0
   maxReverse: 0
   turnSpeed: 0
@@ -167,6 +170,8 @@ MonoBehaviour:
   engineDeceleration: 0
   spinSpeed: 250
   stabilizeTorqueForce: 0
+  drifting: 0
+  lastTextureName: 
   jumpLimit: 0
   mainCamera: {fileID: 0}
   rigidbody: {fileID: 0}
@@ -177,6 +182,9 @@ MonoBehaviour:
   lastTrackPosition: {x: 0, y: 0, z: 0}
   originalRotation: {x: 0, y: 0, z: 0, w: 0}
   childKart: {fileID: 0}
+  defaultCameraPos: {x: 0, y: 0, z: 0}
+  targetCameraPos: {x: 0, y: 0, z: 0}
+  currentCameraState: 1
 --- !u!114 &11410198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,7 +256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9e19c106683884faf1ddea5edd590d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiPrefab: {fileID: 0}
   statusEffectHandler:
     statusEffects: []
 --- !u!114 &11451734
@@ -511,6 +518,14 @@ Prefab:
       propertyPath: m_TransformSyncMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hudPrefab
+      value: 
+      objectReference: {fileID: 141386, guid: d2299aade36abfa40bd232824f3c6f9b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: HUDPrefab
+      value: 
+      objectReference: {fileID: 141386, guid: d2299aade36abfa40bd232824f3c6f9b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169864}

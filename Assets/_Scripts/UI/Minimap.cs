@@ -14,13 +14,13 @@ public class Minimap : MonoBehaviour {
     {
         middle = GameObject.Find("track").transform.position;
         marker = transform.FindChild("MinimapMarker").gameObject;
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
+        player = PlayerNetwork.localPlayer;
     }
 	
 	// Update is called once per frame
 	void Update () 
     {
-        Vector3 dist = (player.transform.position - middle) * coordinateScale;
+        Vector3 dist = (PlayerNetwork.localPlayer.transform.position - middle) * coordinateScale;
         marker.GetComponent<RectTransform>().anchoredPosition = new Vector3(dist.x, dist.z, 0);
     }
 }

@@ -327,6 +327,7 @@ MonoBehaviour:
   startTimerText: {fileID: 0}
   statusText: {fileID: 0}
   playerCount: 0
+  HUDPrefab: {fileID: 141386, guid: d2299aade36abfa40bd232824f3c6f9b, type: 2}
   currentState: 0
 --- !u!114 &143866645
 MonoBehaviour:

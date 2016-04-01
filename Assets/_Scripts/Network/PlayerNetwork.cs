@@ -5,10 +5,12 @@ using UnityEngine.Networking;
 public class PlayerNetwork : NetworkBehaviour
 {
     MyNetworkLobbyManager networkManager = null;
-    public GameObject HUDPrefab = null;
+
     bool initialized = false;
     public StatusEffectHandler statusEffectHandler = new StatusEffectHandler();
     public static GameObject localPlayer = null;
+
+    //minimap
     void Start()
     {
        
@@ -21,15 +23,12 @@ public class PlayerNetwork : NetworkBehaviour
         else
         {
             localPlayer = gameObject;
+         
         }
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
       
 
 
-    }
-    void Awake()
-    {
-        Instantiate(HUDPrefab);
     }
     // Update is called once per frame
     void Update()
