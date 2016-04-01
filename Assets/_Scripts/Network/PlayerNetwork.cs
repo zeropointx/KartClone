@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class PlayerNetwork : NetworkBehaviour
 {
     MyNetworkLobbyManager networkManager = null;
-    public GameObject uiPrefab = null;
+    public GameObject HUDPrefab = null;
     bool initialized = false;
     public StatusEffectHandler statusEffectHandler = new StatusEffectHandler();
     public static GameObject localPlayer = null;
@@ -29,8 +29,7 @@ public class PlayerNetwork : NetworkBehaviour
     }
     void Awake()
     {
-
-
+        Instantiate(HUDPrefab);
     }
     // Update is called once per frame
     void Update()
