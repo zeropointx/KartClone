@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8d32f84b5e8cc47af229609204f92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 5000
+  impulseThrust: 0
+  forceThrust: 0
   rb: {fileID: 5422926}
 --- !u!114 &11495678
 MonoBehaviour:
@@ -225,6 +226,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_UseGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: impulseThrust
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: forceThrust
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

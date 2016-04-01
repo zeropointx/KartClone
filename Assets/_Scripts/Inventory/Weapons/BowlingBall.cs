@@ -4,7 +4,8 @@ using UnityEngine.Networking;
 
 public class BowlingBall : NetworkBehaviour
 {
-    public float thrust = 50000;
+    public float impulseThrust = 100;
+    public float forceThrust = 100;
 
     public Rigidbody rb;
     Vector3 oldVel;
@@ -15,7 +16,7 @@ public class BowlingBall : NetworkBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * thrust, ForceMode.Force);
+        rb.AddForce(transform.forward * impulseThrust, ForceMode.Impulse);
     }
 
     void FixedUpdate()
@@ -26,6 +27,7 @@ public class BowlingBall : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        rb.AddForce(transform.forward * forceThrust, ForceMode.Force);
         destroyTimer += Time.deltaTime;
         if (destroyTimer > 3.0f)
             Destroy(gameObject);
