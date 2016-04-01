@@ -16,6 +16,8 @@ ModelImporter:
     100016: Torus
     100018: Torus.001
     100020: Torus.002
+    100022: Cylinder.004
+    100024: Cylinder.003
     400000: Camera
     400002: Cylinder
     400004: Cylinder.000
@@ -27,6 +29,8 @@ ModelImporter:
     400016: Torus
     400018: Torus.001
     400020: Torus.002
+    400022: Cylinder.004
+    400024: Cylinder.003
     2300000: Cylinder
     2300002: Cylinder.000
     2300004: Cylinder.001
@@ -35,6 +39,8 @@ ModelImporter:
     2300010: Torus
     2300012: Torus.001
     2300014: Torus.002
+    2300016: Cylinder.004
+    2300018: Cylinder.003
     3300000: Cylinder
     3300002: Cylinder.000
     3300004: Cylinder.001
@@ -43,6 +49,8 @@ ModelImporter:
     3300010: Torus
     3300012: Torus.001
     3300014: Torus.002
+    3300016: Cylinder.004
+    3300018: Cylinder.003
     4300000: Cylinder.001
     4300002: Cylinder
     4300004: Torus.002
@@ -51,6 +59,8 @@ ModelImporter:
     4300010: Cylinder.000
     4300012: Plane
     4300014: Cylinder.002
+    4300016: Cylinder.004
+    4300018: Cylinder.003
   materials:
     importMaterials: 1
     materialName: 0
