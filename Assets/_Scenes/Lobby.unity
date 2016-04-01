@@ -764,6 +764,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: karttest
       m_Image: {fileID: 0}
+    - m_Text: sewers
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1021,6 +1023,7 @@ MonoBehaviour:
   scenes:
   - defaultscene
   - kartTest
+  - sewerscene
 --- !u!1 &227067250
 GameObject:
   m_ObjectHideFlags: 0
@@ -3061,6 +3064,7 @@ MonoBehaviour:
   m_PlayScene: defaultscene
   lobbySlots: []
   showEpicUI: 0
+  debugMessages: 0
   minPlayerCountToStart: 1
 --- !u!114 &1059956786
 MonoBehaviour:
