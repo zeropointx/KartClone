@@ -8,8 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Lobby.unity
   - enabled: 1
-    path: Assets/_Scenes/defaultscene.unity
+    path: Assets/_Scenes/sewerscene.unity
   - enabled: 1
     path: Assets/_Scenes/kartTest.unity
   - enabled: 1
-    path: Assets/_Scenes/RealLobby.unity
+    path: Assets/_Scenes/defaultscene.unity
