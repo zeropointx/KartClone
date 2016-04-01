@@ -3,7 +3,7 @@ using System.Collections;
 [System.Serializable]
 public class HitStatus : StatusEffect
 {
-    float baseMaxSpeed;
+    float originalMaxSpeed;
     float boostAmount = 10;
     // niin hyvää hermannia
     public override void ApplyEffect()
@@ -11,8 +11,9 @@ public class HitStatus : StatusEffect
         //TODO if maxspeed is higher than normal (like being boosted)
         //It returns as higher (like 100 default, 110 while boosted and boost decreases it but when hit status wears off maxspeed is 110)
         base.ApplyEffect();
-        baseMaxSpeed = KB.maxSpeed;
-        KB.maxSpeed = 0.01f;
+        originalMaxSpeed = -KB.defaultMaxSpeed + 0.001f;
+        KB.maxSpeedChange = originalMaxSpeed;
+        KB.maxSpeed = KB.defaultMaxSpeed + KB.maxSpeedChange;
 
         //  KB.speed = KB.maxSpeed;
         KB.rigidbody.velocity = Vector3.zero;
@@ -22,7 +23,8 @@ public class HitStatus : StatusEffect
     public override void RemoveEffect()
     {
         base.RemoveEffect();
-        KB.maxSpeed = baseMaxSpeed;
+        KB.maxSpeedChange = KB.defaultMaxSpeed;
+        KB.maxSpeed = KB.defaultMaxSpeed;
         KB.GetComponent<KartInput>().EnableInput();
     }
     public HitStatus()

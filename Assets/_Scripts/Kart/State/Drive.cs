@@ -15,6 +15,12 @@ public class Drive : KartState {
     public override KartState UpdateState()
     {  
         kb.speed = kb.rigidbody.velocity.magnitude;
+
+        float dot = Vector3.Dot(kb.transform.forward, kb.rigidbody.velocity.normalized);
+        if (dot < 0.95f && dot > 0.6f)
+            kb.drifting = true;
+        else
+            kb.drifting = false;
         if (kb.speed <= 0.1f)
             return new Stopped(kart);
         return null;
@@ -25,13 +31,10 @@ public class Drive : KartState {
         
         if (kb.groundDistance < kb.jumpLimit)
         {
-
-
             /*
              * Texture based speed
              * 
              */
-            
             //If we are on land and player isn't using boost slow him down
                 if (kb.lastTextureName == "Land" && !kb.GetComponent<PlayerNetwork>().GetStatusEffectHandler().HasEffect(StatusEffectHandler.EffectType.BOOST))
                 {
@@ -43,24 +46,20 @@ public class Drive : KartState {
                     kb.currentTextureSpeedModifier = 1.0f;
                     
                 }
-
             /*
              * Forward
              * 
              */
-            //If speed is too fast don't accelerate
 
             //Vector directly forward from player (or backwards)
             Vector3 forwardVector = kb.pedal * kb.transform.forward;
 
+            //Boolean, true if going backwards, false if going forward
             onReverse = Vector3.Dot(kb.transform.forward, kb.rigidbody.velocity.normalized) <= 0.0f;
-
-          
             //Speed which we go forward
             var forwardSpeed = 40.0f;
 
-            Debug.Log(kb.lastTextureName);
-            //If we are going too fast don't add force
+            //If speed is too fast don't accelerate
             bool goingForwardTooFast;
 
             if(!onReverse)
@@ -71,9 +70,8 @@ public class Drive : KartState {
             if (!goingForwardTooFast)
             kb.rigidbody.AddForce(forwardVector * forwardSpeed );
 
-
             /*
-             * Sideways
+             * Sideways speed and angle
              * 
              */
             float curveValue = GetCurveValue(kb.maxSpeed,kb.speed);
@@ -89,9 +87,9 @@ public class Drive : KartState {
                 sideVector *= -1f;
 
             var sideMultiplier = 30.0f * curveValue;
-
-                kb.rigidbody.AddForce(sideVector * sideMultiplier);
-                kb.transform.Rotate(new Vector3(0, controlMultiplier * kb.turnSpeed * kb.steeringWheel * Time.fixedDeltaTime, 0));
+            //Add sideway force and angle
+            kb.rigidbody.AddForce(sideVector * sideMultiplier);
+            kb.transform.Rotate(new Vector3(0, controlMultiplier * kb.turnSpeed * kb.steeringWheel * Time.fixedDeltaTime, 0));
             
         }
         kb.Stabilize();

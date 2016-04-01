@@ -232,7 +232,6 @@ public class Gamemode : NetworkBehaviour {
                     finishedPlayers++;
                 }
             }
-            Debug.Log("Players that have finished the game so far: " + finishedPlayers);
 
             //If enough players have finished the track to end it, do the following
             if (playerCount == finishedPlayers)

@@ -8,8 +8,9 @@ public class KartBehaviour : MonoBehaviour
     public float steeringWheel = 0, pedal = 0, speed = 0;
 
     //stats
-    public float currentTextureSpeedModifier, defaultMaxSpeed, maxSpeed, maxReverse, turnSpeed, acceleration, brakeForce, engineDeceleration, spinSpeed, stabilizeTorqueForce;
-
+    public float currentTextureSpeedModifier, defaultMaxSpeed, maxSpeedChange, maxSpeed, maxReverse, turnSpeed, acceleration, brakeForce, engineDeceleration, spinSpeed, stabilizeTorqueForce;
+    
+    public bool drifting = false;
     public string lastTextureName = "";
     //common
     public float jumpLimit;
@@ -45,6 +46,7 @@ public class KartBehaviour : MonoBehaviour
         //stats
         defaultMaxSpeed = 65;
         maxSpeed = defaultMaxSpeed;
+        maxSpeedChange = 0;
         maxReverse = 15;
         turnSpeed = 100;
         acceleration = 0.25f;
@@ -238,5 +240,10 @@ public class KartBehaviour : MonoBehaviour
     public void SetPedal(float pedalValue)
     {
         pedal = pedalValue;
+    }
+    public void OnGUI()
+    {
+        if (drifting)
+        GUI.Label(new Rect(0, 0, 100, 100),  ""+Vector3.Dot(transform.forward, rigidbody.velocity.normalized));
     }
 }

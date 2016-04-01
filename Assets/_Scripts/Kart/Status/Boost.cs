@@ -4,7 +4,6 @@ using System.Collections;
 [System.Serializable]
 public class Boost : StatusEffect
 {
-    float baseMaxSpeed;
     float boostAmount = 10;
     GameObject FLAMES;
     Weapon weaponScript;
@@ -12,8 +11,8 @@ public class Boost : StatusEffect
     public override void ApplyEffect()
     {
         base.ApplyEffect();
-        baseMaxSpeed = KB.maxSpeed;
-        KB.maxSpeed += boostAmount;
+        KB.maxSpeedChange += boostAmount;
+        KB.maxSpeed = KB.maxSpeedChange + KB.defaultMaxSpeed;
 
         
         weaponScript = Kart.GetComponent<Weapon>();
@@ -27,7 +26,8 @@ public class Boost : StatusEffect
     public override void RemoveEffect()
     {
         base.RemoveEffect();
-        KB.maxSpeed = KB.defaultMaxSpeed;
+        KB.maxSpeedChange -= boostAmount;
+        KB.maxSpeed = KB.defaultMaxSpeed + KB.maxSpeedChange;
         GameObject.Destroy(FLAMES);
         if(KB.speed > KB.maxSpeed)
         {

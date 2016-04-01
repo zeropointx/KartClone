@@ -51,6 +51,7 @@ public class StatusEffectHandler {
                 }
             case EffectType.HIT:
                 {
+                    ResetEffects();
                     return new HitStatus();
                 }
             default:
@@ -66,9 +67,9 @@ public class StatusEffectHandler {
     }
     public bool HasEffect(EffectType type)
     {
-        foreach(StatusEffect effect in statusEffects)
+        for(int i = 0; i< statusEffects.Count; i++)
         {
-            Type t = effect.GetType();
+            Type t = statusEffects[i].GetType();
             Type TT = GetEffectFromEnum(type).GetType();
            if(t.Equals(TT))
            {
@@ -78,5 +79,13 @@ public class StatusEffectHandler {
         }
         return false;
        
+    }
+    public void ResetEffects()
+    {
+        foreach (StatusEffect effect in statusEffects)
+        {
+            effect.RemoveEffect();
+        }
+        statusEffects.Clear();
     }
 }

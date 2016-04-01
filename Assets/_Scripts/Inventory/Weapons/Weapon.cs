@@ -46,7 +46,10 @@ public class Weapon : NetworkBehaviour
                 }
             case InventoryScript.WEAPON.SpeedBoost:
                 {
-                    transform.GetComponent<PlayerNetwork>().GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.BOOST);
+                    if (!transform.GetComponent<PlayerNetwork>().GetStatusEffectHandler().HasEffect(StatusEffectHandler.EffectType.HIT))
+                    {
+                        transform.GetComponent<PlayerNetwork>().GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.BOOST);
+                    }
                     break;
                 }
             /*case InventoryScript.WEAPON.HomingMissile:
