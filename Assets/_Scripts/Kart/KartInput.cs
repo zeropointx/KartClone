@@ -30,6 +30,18 @@ public class KartInput : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.K))
             kartScript.pw.GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.HIT);
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GameObject hud = Gamemode.hud;
+            Debug.Log(hud.activeSelf);
+            hud.SetActive(!hud.activeSelf);
+            PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);
+        }
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            SettingsInterface.OpenSettings();
+        }
 	}
 
     public void DisableInput()

@@ -10,11 +10,11 @@ public class Gamemode : NetworkBehaviour {
     private List<Player> players = new List<Player>();
     public int playerCount = 0;
     int finishedPlayers = 0;
-
+   public static GameObject hud = null;
     public GameObject HUDPrefab = null;
     void Awake()
     {
-       GameObject hud =  GameObject.Instantiate(HUDPrefab);
+       hud =  GameObject.Instantiate(HUDPrefab);
        startTimerText = hud.transform.Find("StartTimerText").gameObject;
        statusText = hud.transform.Find("StatusText").gameObject;
 
@@ -85,19 +85,11 @@ public class Gamemode : NetworkBehaviour {
         if(isServer)
             setState(State.STARTING);
 	}
-    GameObject hud = null;
+
 	// Update is called once per frame
 
 
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            if(hud == null)
-            hud = GameObject.Find("HUD(Clone)");
-            Debug.Log(hud.activeSelf);
-            hud.SetActive(!hud.activeSelf);
-            PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);
-        }
 
 	    switch(currentState)
         {
