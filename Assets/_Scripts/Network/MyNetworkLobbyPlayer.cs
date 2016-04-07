@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 public class MyNetworkLobbyPlayer : NetworkLobbyPlayer 
 {
     [SerializeField]
-    public bool showPlayerUI = true;
+    //public bool showPlayerUI = true;
 
     void OnGUI()
     {
+        /*
         if (!showPlayerUI)
             return;
-
+        */ 
         var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
         if (lobbyManager)
         {
@@ -21,10 +22,10 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         }
         Rect rec = new Rect(100 + slot * 100, 200, 90, 20);
 
-        if (isLocalPlayer)
+        if (base.isLocalPlayer)
         {
-            GUI.Label(rec, " [ You ]");
-
+            //GUI.Label(rec, " [ You ]");
+            /*
             if (base.readyToBegin)
             {
                 rec.y += 25;
@@ -47,12 +48,52 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
                     ClientScene.RemovePlayer(GetComponent<NetworkIdentity>().playerControllerId);
                 }
             }
+             */
+            /*
+            if (lobbyManager.readyTostart)
+            {
+                base.SendReadyToBeginMessage();
+                lobbyManager.readyTostart = false;
+            }
+             */
         }
         else
         {
+            /*
             GUI.Label(rec, "Player [" + netId + "]");
             rec.y += 25;
             GUI.Label(rec, "Ready [" + base.readyToBegin + "]");
+            */
         }
+    }
+
+    public void StartGame()
+    {
+        var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
+        if (base.isLocalPlayer)
+        {
+            base.SendReadyToBeginMessage();
+            lobbyManager.showLobbyGUI = false;
+        }
+        else
+            Debug.Log("Only host can start the game!");
+    }
+
+    public void ToggleReady()
+    {
+        if (base.readyToBegin)
+            base.SendReadyToBeginMessage();
+        else
+            base.SendReadyToBeginMessage();
+    }
+
+    public void KickPlayer()
+    {
+        if (base.isLocalPlayer)
+        {
+            ClientScene.RemovePlayer(GetComponent<NetworkIdentity>().playerControllerId);
+        }
+        else
+            Debug.Log("Only host can kick players!");
     }
 }

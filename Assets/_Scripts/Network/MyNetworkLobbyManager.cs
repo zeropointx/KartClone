@@ -11,9 +11,9 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
     public bool debugMessages = false;
     private bool playerUIAdded = false;
     //private bool m_ShowServer;
-    //public int minPlayerCountToStart = 1;
+    public int minPlayerCountToStart = 1;
     public List<NetworkConnection> connections = new List<NetworkConnection>();
-
+    
     void DebugMessage(string message)
     {
         if (debugMessages)
@@ -57,7 +57,6 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
     void RemovePlayer(NetworkConnection conn)
     {
         connections.Remove(conn);
-
         GameObject g = GameObject.Find("Gamemode");
         if (g == null)
             return;
@@ -123,8 +122,8 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
         if (SceneManager.GetActiveScene().name != lobbyScene)
             return;
 
-        Rect backgroundRec = new Rect(90, 180, 500, 150);
-        GUI.Box(backgroundRec, "Players:");
+        //Rect backgroundRec = new Rect(90, 180, 500, 150);
+        //GUI.Box(backgroundRec, "Players:");
 
         if (!playerUIAdded)
         {

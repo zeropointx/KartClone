@@ -7,9 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : MonoBehaviour {
 
-    MyNetworkLobbyManager lobbyManager;
-    MyNetworkLobbyPlayer lobbyPlayer;
-    private Dropdown PlayersInLobby = null;
+    MyNetworkLobbyManager lobbyManager = null;
+    MyNetworkLobbyPlayer lobbyPlayer = null;
+    private Dropdown playersInLobby = null;
+    private GameObject toggleReadyText = null;
 
 	// Use this for initialization
     void Start () 
@@ -18,40 +19,87 @@ public class Lobby : MonoBehaviour {
 
         MyNetworkLobbyManager.networkLobbyManagerInstance = lobbyManager;
         lobbyManager.showLobbyGUI = true;
-        PlayersInLobby = GameObject.Find("PlayersInLobby").GetComponent<Dropdown>();
+        playersInLobby = GameObject.Find("PlayersInLobby").GetComponent<Dropdown>();
+        toggleReadyText = GameObject.Find("ToggleReadyText");
 
+        lobbyManager.showLobbyUI = true;
         if (ServerInfo.ip == "127.0.0.1")
-            StartHost();
+        {
+            //toggleReadyText.GetComponent<Button>().interactable = false;
+            //toggleReadyText.SetActive(false);
+            lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
+        }
         else
-            Connect();
+        {
+            //GameObject.Find("StartGameButton").GetComponent<Button>().interactable = false;
+            //GameObject.Find("StartGameButton").SetActive(false);
+            lobbyManager.networkAddress = ServerInfo.ip;
+            lobbyManager.StartClient();
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-	
+	    
 	}
 
-    public void StartHost()
+    public void OnGUI()
     {
-        lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
-        lobbyManager.showLobbyUI = true;
-    }
+        if (!lobbyManager.showLobbyGUI)
+            return;
 
-    public void Connect()
-    {
-        lobbyManager.networkAddress = ServerInfo.ip;
-        lobbyManager.showLobbyUI = true;
-        lobbyManager.StartClient();
+        if (lobbyPlayer == null)
+        {
+            var temp = GameObject.Find("LobbyPlayer(Clone)");
+            if (temp != null)
+                lobbyPlayer = temp.GetComponent<MyNetworkLobbyPlayer>();
+        }
+        else
+        {
+            if (lobbyPlayer.isLocalPlayer)
+            {
+                var connections = lobbyManager.connections;
+                if (connections.Count != playersInLobby.options.Count)
+                {
+                    playersInLobby.ClearOptions();
+                    foreach (NetworkConnection client in connections)
+                    {
+                        string ready = client.isReady ? " | Ready!" : " | Not ready!";
+                        playersInLobby.options.Add(new Dropdown.OptionData(client.address + ready));
+                        playersInLobby.RefreshShownValue();
+                    }
+                }
+            }
+            else
+            {
+                if (lobbyPlayer.readyToBegin)
+                    toggleReadyText.GetComponent<Text>().text = "Ready!";
+                else
+                    toggleReadyText.GetComponent<Text>().text = "Not ready yet!";
+            }
+        }
     }
 
     public void KickPlayer()
     {
-        Debug.Log("kicked " + PlayersInLobby.options[PlayersInLobby.value].text);
+        Debug.Log("kicked " + playersInLobby.options[playersInLobby.value].text);
     }
 
     public void StartGame()
     {
         Debug.Log("start");
+        lobbyPlayer.StartGame();
+    }
+
+    public void ToggleReady()
+    {
+        Debug.Log("toggle ready");
+        lobbyPlayer.ToggleReady();
+    }
+
+    public void UpdatePlayerList(int selection)
+    {
+        //playersInLobby.
     }
 }
