@@ -841,7 +841,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 461752, guid: 5a7e009d4aae34a469c0d73dfbab4f92, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a7e009d4aae34a469c0d73dfbab4f92, type: 2}
@@ -3781,6 +3781,7 @@ MonoBehaviour:
   - {fileID: 823684429}
   - {fileID: 823684428}
   lapAmount: 3
+  miniMapTexture: {fileID: 21300000, guid: 74cec8de36647644a80b591069d64da7, type: 3}
 --- !u!4 &1821279104
 Transform:
   m_ObjectHideFlags: 0
