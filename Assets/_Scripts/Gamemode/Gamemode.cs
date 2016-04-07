@@ -93,7 +93,7 @@ public class Gamemode : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.O))
         {
             if(hud == null)
-            hud = GameObject.Find("HUD");
+            hud = GameObject.Find("HUD(Clone)");
             Debug.Log(hud.activeSelf);
             hud.SetActive(!hud.activeSelf);
             PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);

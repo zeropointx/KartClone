@@ -70,7 +70,7 @@ public class Drive : KartState {
             //Boolean, true if going backwards, false if going forward
             onReverse = Vector3.Dot(kb.transform.forward, kb.rigidbody.velocity.normalized) <= 0.0f;
             //Speed which we go forward
-            var forwardSpeed = 40.0f;
+            var forwardSpeed = 50.0f;
 
             //If speed is too fast don't accelerate
             bool goingForwardTooFast;
@@ -111,7 +111,7 @@ public class Drive : KartState {
     float GetCurveValue(float max, float value)
     {
         value = Mathf.Pow(value,1.5f);
-        float finalValue = Mathf.Abs(value / Mathf.Pow(max, 1.5f));
+        float finalValue = Mathf.Abs(value / Mathf.Pow(max, 1.0f));
         float clampedValue = Mathf.Clamp(finalValue, 0.0f, 1.0f);
         return clampedValue;
     }
