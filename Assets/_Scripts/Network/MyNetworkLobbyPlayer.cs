@@ -1,35 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
-public class MyNetworkLobbyPlayer : NetworkLobbyPlayer {
+public class MyNetworkLobbyPlayer : NetworkLobbyPlayer 
+{
     [SerializeField]
-    public bool ShowMahGUI = true;
+    public bool showPlayerUI = true;
 
     void OnGUI()
     {
-        if (!ShowMahGUI)
+        if (!showPlayerUI)
             return;
 
-        var lobby = NetworkManager.singleton as MyNetworkLobbyManager;
-        if (lobby)
+        var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
+        if (lobbyManager)
         {
-            if (Application.loadedLevelName != lobby.lobbyScene)
+            if (SceneManager.GetActiveScene().name != lobbyManager.lobbyScene)
                 return;
         }
-
         Rect rec = new Rect(100 + slot * 100, 200, 90, 20);
 
         if (isLocalPlayer)
         {
             GUI.Label(rec, " [ You ]");
 
-            if (readyToBegin)
+            if (base.readyToBegin)
             {
                 rec.y += 25;
                 if (GUI.Button(rec, "Ready"))
                 {
-                    SendNotReadyToBeginMessage();
+                    base.SendNotReadyToBeginMessage();
                 }
             }
             else
@@ -37,7 +38,7 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer {
                 rec.y += 25;
                 if (GUI.Button(rec, "Not Ready"))
                 {
-                    SendReadyToBeginMessage();
+                    base.SendReadyToBeginMessage();
                 }
 
                 rec.y += 25;
@@ -51,7 +52,7 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer {
         {
             GUI.Label(rec, "Player [" + netId + "]");
             rec.y += 25;
-            GUI.Label(rec, "Ready [" + readyToBegin + "]");
+            GUI.Label(rec, "Ready [" + base.readyToBegin + "]");
         }
     }
 }

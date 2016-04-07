@@ -21,7 +21,7 @@ public class LobbySettings : MonoBehaviour {
     void OnGUI()
     {
        // if (lobbyManager.showLobbyGUI)
-        if (lobbyManager.showEpicUI)
+        if (lobbyManager.showLobbyUI)
             canvas.SetActive(true);
         else
             canvas.SetActive(false);

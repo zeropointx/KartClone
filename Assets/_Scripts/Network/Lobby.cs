@@ -35,13 +35,13 @@ public class Lobby : MonoBehaviour {
     public void StartHost()
     {
         lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
-        lobbyManager.showEpicUI = true;
+        lobbyManager.showLobbyUI = true;
     }
 
     public void Connect()
     {
         lobbyManager.networkAddress = ServerInfo.ip;
-        lobbyManager.showEpicUI = true;
+        lobbyManager.showLobbyUI = true;
         lobbyManager.StartClient();
     }
 

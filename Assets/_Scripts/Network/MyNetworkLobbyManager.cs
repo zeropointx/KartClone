@@ -2,16 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
-public class MyNetworkLobbyManager : NetworkLobbyManager {
+public class MyNetworkLobbyManager : NetworkLobbyManager
+{
     public static MyNetworkLobbyManager networkLobbyManagerInstance = null;
-    public bool showEpicUI = true;
+    public bool showLobbyUI = true;
     public bool debugMessages = false;
+    private bool playerUIAdded = false;
+    //private bool m_ShowServer;
+    //public int minPlayerCountToStart = 1;
+    public List<NetworkConnection> connections = new List<NetworkConnection>();
+
     void DebugMessage(string message)
     {
-        if(debugMessages)
-        Debug.Log(message);
+        if (debugMessages)
+            Debug.Log(message);
     }
+
     public int playerCount
     {
         get
@@ -19,30 +27,33 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
             return GetPlayerCount();
         }
     }
-    public int minPlayerCountToStart = 1;
-    public List<NetworkConnection> connections = new List<NetworkConnection>();
+
     public static NetworkConnection GetConnectionFromGameObject(GameObject g)
     {
-        for(int i = 0; i <networkLobbyManagerInstance.connections.Count; i++ )
+        for (int i = 0; i < networkLobbyManagerInstance.connections.Count; i++)
         {
             if (networkLobbyManagerInstance.connections[i].playerControllers[0].gameObject == g)
                 return networkLobbyManagerInstance.connections[i];
         }
         return null;
     }
+
     public List<NetworkConnection> GetConnections()
     {
         return connections;
     }
+
     public int GetPlayerCount()
     {
         return connections.Count;
     }
+
     void AddPlayer(NetworkConnection conn)
     {
-        if(!connections.Contains(conn))
-        connections.Add(conn);
+        if (!connections.Contains(conn))
+            connections.Add(conn);
     }
+
     void RemovePlayer(NetworkConnection conn)
     {
         connections.Remove(conn);
@@ -50,52 +61,54 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
         GameObject g = GameObject.Find("Gamemode");
         if (g == null)
             return;
-        Gamemode gameMode= g.GetComponent<Gamemode>();
+        Gamemode gameMode = g.GetComponent<Gamemode>();
         gameMode.RemovePlayer(conn.playerControllers[0].gameObject);
     }
+
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
-         DebugMessage("Player connected! Current players " + playerCount);
-         
-
+        DebugMessage("Player connected! Current players " + playerCount);
     }
+
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-
-        
         DebugMessage("Player disconnected! Current players " + playerCount);
-        
         base.OnServerDisconnect(conn);
     }
+
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
         DebugMessage("Client connected! Current players " + playerCount);
         AddPlayer(conn);
-
         DebugMessage("Player added! Current players " + playerCount);
     }
+
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         base.OnClientDisconnect(conn);
         RemovePlayer(conn);
         DebugMessage("Client disconnected! Current players " + playerCount);
     }
+
     public override void OnServerReady(NetworkConnection conn)
     {
         base.OnServerReady(conn);
         DebugMessage("OnServerReady");
     }
+
     public override void OnServerSceneChanged(string sceneName)
     {
         base.OnServerSceneChanged(sceneName);
         DebugMessage("SceneChanged: " + sceneName);
     }
+
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         base.OnServerAddPlayer(conn, playerControllerId);
     }
+
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
     {
         base.OnServerRemovePlayer(conn, player);
@@ -104,26 +117,29 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
 
     public void OnGUI()
     {
-        if (!showEpicUI)
+        if (!showLobbyUI)
             return;
 
-        if (Application.loadedLevelName != lobbyScene)
+        if (SceneManager.GetActiveScene().name != lobbyScene)
             return;
 
         Rect backgroundRec = new Rect(90, 180, 500, 150);
         GUI.Box(backgroundRec, "Players:");
 
-        if (NetworkClient.active)
+        if (!playerUIAdded)
         {
+            AddPlayerUI();
+            playerUIAdded = true;
+            /*
             Rect addRec = new Rect(100, 300, 120, 20);
             if (GUI.Button(addRec, "Add Player"))
             {
                 AddPlayerUI();
             }
+             * */
         }
     }
 
-    bool m_ShowServer;
     public void AddPlayerUI()
     {
         if (NetworkClient.active)
@@ -169,10 +185,12 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
         }
 
 
+        /*
         int xpos = 10 + 0;
         int ypos = 40 + 0;
         const int spacing = 24;
 
+        
         if (!IsClientConnected() && !NetworkServer.active && matchMaker == null)
         {
             if (GUI.Button(new Rect(xpos, ypos, 200, 20), "LAN Host(H)"))
@@ -320,7 +338,6 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
                 ypos += spacing;
             }
         }
-
-
+        */
     }
 }
