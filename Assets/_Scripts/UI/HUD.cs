@@ -10,7 +10,7 @@ public class HUD : MonoBehaviour {
     GameObject placementText;
      weaponImageScript imageScript;
      public Gamemode gamemode;
-     public Sprite bowlingBallSprite, speedBoostSprite, weapon3Sprite, noWeaponSprite;
+     public Sprite[] weaponSprites;
      InventoryScript.WEAPON uiweapon = InventoryScript.WEAPON.noWeapon;
      GameObject speedIndicator;
      public float speedy = 0.0f;
@@ -91,23 +91,13 @@ public class HUD : MonoBehaviour {
     }
     public void updateWeaponTexture(InventoryScript.WEAPON currentWeapon)
     {
-      
-            imageScript.updateSprite(noWeaponSprite);
-       
-        if (currentWeapon == InventoryScript.WEAPON.noWeapon)
-        {
-            imageScript.updateSprite(noWeaponSprite);
-        }
+        int index = (int)currentWeapon;
+        Sprite weaponSprite = weaponSprites[index];
+        if (weaponSprite == null)
+            return;
 
-        if (currentWeapon == InventoryScript.WEAPON.BowlingBall)
-        {
-            imageScript.updateSprite(bowlingBallSprite);
-        }
+        imageScript.updateSprite(weaponSprite);
 
-        if (currentWeapon == InventoryScript.WEAPON.SpeedBoost)
-        {
-            imageScript.updateSprite(speedBoostSprite);
-        }
         uiweapon = currentWeapon;
     }
 }

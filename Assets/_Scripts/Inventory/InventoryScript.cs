@@ -15,7 +15,7 @@ public class InventoryScript : NetworkBehaviour
         SpeedBoost = 1, 
        // HomingMissile = 2,
         Mine = 2,
-        noWeapon  = 8
+        noWeapon  = 3
     };
 
     int weaponAmount;               // Amount of different weapons
