@@ -1,41 +1,26 @@
 fileFormatVersion: 2
-guid: 9b59a303d484c584185c1ef5b2c343cf
-timeCreated: 1460104797
+guid: ebcdbe64cec63984cb7fcd6b430b0f98
+timeCreated: 1460103039
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Armature.004
-    100002: Armature.004|Bone.001
-    100004: Armature.004|Bone.002
-    100006: Armature.004|Bone.003
-    100008: Armature.004|Bone.004
-    100010: Armature.004|Bone.005
-    100012: Armature.004|Bone.006
-    100014: Armature.004|Bone.007
-    100016: Armature.004|Bone.008
-    100018: Armature.004|Bone.009
-    100020: Camera
-    100022: Cube
-    100024: //RootNode
-    100026: Lamp
-    400000: Armature.004
-    400002: Armature.004|Bone.001
-    400004: Armature.004|Bone.002
-    400006: Armature.004|Bone.003
-    400008: Armature.004|Bone.004
-    400010: Armature.004|Bone.005
-    400012: Armature.004|Bone.006
-    400014: Armature.004|Bone.007
-    400016: Armature.004|Bone.008
-    400018: Armature.004|Bone.009
-    400020: Camera
-    400022: Cube
-    400024: //RootNode
-    400026: Lamp
-    4300000: Cube
-    9500000: //RootNode
-    13700000: Cube
+    100000: Camera
+    100002: Car
+    100004: Lamp
+    100006: //RootNode
+    100008: Seat
+    400000: Camera
+    400002: Car
+    400004: Lamp
+    400006: //RootNode
+    400008: Seat
+    2300000: Car
+    2300002: Seat
+    3300000: Car
+    3300002: Seat
+    4300000: Seat
+    4300002: Car
   materials:
     importMaterials: 1
     materialName: 0
@@ -94,7 +79,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
