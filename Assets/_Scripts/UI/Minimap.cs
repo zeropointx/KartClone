@@ -11,7 +11,7 @@ public class Minimap : MonoBehaviour {
     //For placing the image of the mini map.
     Sprite miniMapSprite;
 
-    GameObject miniMapObject;
+    //GameObject miniMapObject;
 
     // Empty minimap Icon that will be filled later
    public GameObject defaultIcon;
@@ -46,12 +46,12 @@ public class Minimap : MonoBehaviour {
     void Start() 
     {
         miniMapSprite = GameObject.Find("track").GetComponent<TrackInformation>().miniMapTexture;
-        miniMapObject = transform.Find("Image").gameObject;
-        miniMapObject.GetComponent<Image>().sprite = miniMapSprite;
+        //miniMapObject = transform.Find("Image").gameObject;
+        gameObject.GetComponent<Image>().sprite = miniMapSprite;
 
-        mapWidth = miniMapObject.GetComponent<RectTransform>().rect.width;
+        mapWidth = gameObject.GetComponent<RectTransform>().rect.width;
 
-        mapHeight = miniMapObject.GetComponent<RectTransform>().rect.height;
+        mapHeight = gameObject.GetComponent<RectTransform>().rect.height;
 
         sceneWidth = (int)(mapWidth * 20);
         sceneHeight = (int)(mapHeight * 20);
