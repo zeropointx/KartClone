@@ -10,7 +10,7 @@ public class Lobby : MonoBehaviour {
     MyNetworkLobbyManager lobbyManager = null;
     MyNetworkLobbyPlayer lobbyPlayer = null;
     private Dropdown playersInLobby = null;
-    private GameObject toggleReadyText = null;
+    private GameObject buttonText = null;
 
 	// Use this for initialization
     void Start () 
@@ -20,7 +20,7 @@ public class Lobby : MonoBehaviour {
         MyNetworkLobbyManager.networkLobbyManagerInstance = lobbyManager;
         lobbyManager.showLobbyGUI = true;
         playersInLobby = GameObject.Find("PlayersInLobby").GetComponent<Dropdown>();
-        toggleReadyText = GameObject.Find("ToggleReadyText");
+        buttonText = GameObject.Find("ReadyText");
 
         lobbyManager.showLobbyUI = true;
         if (ServerInfo.hosting)
@@ -57,7 +57,6 @@ public class Lobby : MonoBehaviour {
         }
         else
         {
-            //if (lobbyPlayer.isLocalPlayer)
             if (lobbyManager.playerListUpdated)
             {
                 var connections = lobbyManager.connections;
@@ -70,10 +69,17 @@ public class Lobby : MonoBehaviour {
                 }
                 lobbyManager.playerListUpdated = false;
             }
-            if (lobbyPlayer.readyToBegin)
-                toggleReadyText.GetComponent<Text>().text = "Ready!";
+            if (!lobbyPlayer.isLocalPlayer)
+            {
+                if (lobbyPlayer.readyToBegin)
+                    buttonText.GetComponent<Text>().text = "Ready!";
+                else
+                    buttonText.GetComponent<Text>().text = "Not ready yet!";
+            }
             else
-                toggleReadyText.GetComponent<Text>().text = "Not ready yet!";
+            {
+                buttonText.GetComponent<Text>().text = "Start game";
+            }
         }
     }
 
@@ -82,16 +88,18 @@ public class Lobby : MonoBehaviour {
         Debug.Log("kicked " + playersInLobby.options[playersInLobby.value].text);
     }
 
-    public void StartGame()
-    {
-        Debug.Log("start");
-        lobbyPlayer.StartGame();
-    }
-
     public void ToggleReady()
     {
-        Debug.Log("toggle ready");
-        lobbyPlayer.ToggleReady();
+        if (lobbyPlayer.isLocalPlayer)
+        {
+            Debug.Log("start");
+            lobbyPlayer.StartGame();
+        }
+        else
+        {
+            Debug.Log("toggle ready");
+            lobbyPlayer.ToggleReady();
+        }
     }
 
     public void UpdatePlayerList(int selection)

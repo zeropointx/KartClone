@@ -20,6 +20,10 @@ public class UpdateKartInformation : MonoBehaviour {
         {
             updatePlayerComponents(BananaKart, 65, 0.25f, 100);
         }
+        if (StoredKartInfo.characterID == 2)
+        {
+            updatePlayerComponents(roadwarrior, 65, 0.25f, 100);
+        }
     }
 
     public void updatePlayerComponents(GameObject Model, float MaxSpeed, float Acceleration, float TurnSpeed)
