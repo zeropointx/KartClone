@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
 
 public class Gamemode : NetworkBehaviour {
     public GameObject startTimerText;
@@ -31,12 +32,10 @@ public class Gamemode : NetworkBehaviour {
     {
         public int placement;
         public GameObject gameObject;
-        public NetworkConnection conn;
-        public Player(int placement, GameObject gameObject, NetworkConnection conn)
+        public Player(int placement, GameObject gameObject)
         {
             this.placement = placement;
             this.gameObject = gameObject;
-            this.conn = conn;
         }
     }
     private struct DebugPlayer
@@ -70,7 +69,7 @@ public class Gamemode : NetworkBehaviour {
             if (players[i].gameObject == g)
                 return players[i];
         }
-        return new Player(-1,null,null);
+        return new Player(-1,null);
     }
     public void RemovePlayer(GameObject g)
     {
@@ -150,7 +149,7 @@ public class Gamemode : NetworkBehaviour {
                             }
                         }
 
-                        Player p = new Player(players.Count + 1, currentBest.gameObject, MyNetworkLobbyManager.GetConnectionFromGameObject(currentBest.gameObject));
+                        Player p = new Player(players.Count + 1, currentBest.gameObject);
                        players.Add(p);
 
                     }
@@ -240,6 +239,25 @@ public class Gamemode : NetworkBehaviour {
             }
 
             finishedPlayers = 0;
+        }
+    }
+     [ClientRpc]
+    public void RpcSendPlayerInfo(string playerString)
+    {
+        uint[] players = new uint[playerString.Length / 2];
+
+        for (int i = 0; i < 52; i++)
+        {
+            string crd = playerString.Substring(i * 2, 2); // pulls out "01" "02" ...
+            players[i] = Convert.ToUInt32(crd);
+        }
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            NetworkInstanceId id = new NetworkInstanceId(players[i]);
+            GameObject player = ClientScene.FindLocalObject(id);
+            Gamemode.Player p = new Gamemode.Player(-1, player);
+            AddPlayer(p);
         }
     }
 }

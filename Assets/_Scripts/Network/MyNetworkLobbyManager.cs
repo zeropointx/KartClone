@@ -8,13 +8,16 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
 {
     public static MyNetworkLobbyManager networkLobbyManagerInstance = null;
     public bool showLobbyUI = true;
-    public bool debugMessages = false;
+    public bool debugMessages;
     private bool playerUIAdded = false;
     //private bool m_ShowServer;
     public int minPlayerCountToStart = 1;
     public List<NetworkConnection> connections = new List<NetworkConnection>();
     public bool playerListUpdated = false;
-
+    public void Start()
+    {
+        debugMessages = true;
+    }
     void DebugMessage(string message)
     {
         if (debugMessages)
@@ -28,7 +31,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
             return GetPlayerCount();
         }
     }
-
+    /*
     public static NetworkConnection GetConnectionFromGameObject(GameObject g)
     {
         for (int i = 0; i < networkLobbyManagerInstance.connections.Count; i++)
@@ -37,7 +40,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
                 return networkLobbyManagerInstance.connections[i];
         }
         return null;
-    }
+    }*/
 
     public List<NetworkConnection> GetConnections()
     {
@@ -49,7 +52,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
         return connections.Count;
     }
 
-    void AddPlayer(NetworkConnection conn)
+    public void AddPlayer(NetworkConnection conn)
     {
         if (!connections.Contains(conn))
         {
@@ -73,39 +76,67 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
     {
         base.OnServerConnect(conn);
         DebugMessage("Player connected! Current players " + playerCount);
+        if (conn.address != "localServer")
+        {
+            AddPlayer(conn);
+        }
+        DebugMessage("Player added! Current players " + playerCount);
     }
 
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        DebugMessage("Player disconnected! Current players " + playerCount);
+       
         base.OnServerDisconnect(conn);
+        DebugMessage("Player disconnected! Current players " + playerCount);
+        RemovePlayer(conn);
+        DebugMessage("Client disconnected! Current players " + playerCount);
     }
 
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
         DebugMessage("Client connected! Current players " + playerCount);
-        AddPlayer(conn);
-        DebugMessage("Player added! Current players " + playerCount);
+
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         base.OnClientDisconnect(conn);
-        RemovePlayer(conn);
-        DebugMessage("Client disconnected! Current players " + playerCount);
+
     }
 
     public override void OnServerReady(NetworkConnection conn)
     {
         base.OnServerReady(conn);
         DebugMessage("OnServerReady");
+
     }
 
     public override void OnServerSceneChanged(string sceneName)
     {
         base.OnServerSceneChanged(sceneName);
         DebugMessage("SceneChanged: " + sceneName);
+
+        uint[] players = new uint[connections.Count];
+        for (int i = 0; i < connections.Count; i++)
+        {
+            players[i] = connections[i].playerControllers[0].gameObject.GetComponent<NetworkIdentity>().netId.Value;
+        }
+        Lobby lobby = transform.GetComponent<Lobby>();
+        string playerString = "";
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            string crd = "" + players[i];
+            if (players[i] < 10) 
+                crd = "0" + crd; // leading 0 so each uses exactly 2 chars
+            playerString += crd;
+        }
+
+        //lobby.SendPlayerInfo(playerString);
+        GameObject gg = GameObject.Find("Gamemode");
+        gg.GetComponent<Gamemode>().RpcSendPlayerInfo(playerString);
+        DebugMessage("Players updated for clients");
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
