@@ -13,7 +13,8 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
     //private bool m_ShowServer;
     public int minPlayerCountToStart = 1;
     public List<NetworkConnection> connections = new List<NetworkConnection>();
-    
+    public bool playerListUpdated = false;
+
     void DebugMessage(string message)
     {
         if (debugMessages)
@@ -51,7 +52,10 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
     void AddPlayer(NetworkConnection conn)
     {
         if (!connections.Contains(conn))
+        {
+            playerListUpdated = true;
             connections.Add(conn);
+        }
     }
 
     void RemovePlayer(NetworkConnection conn)
@@ -61,6 +65,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
         if (g == null)
             return;
         Gamemode gameMode = g.GetComponent<Gamemode>();
+        playerListUpdated = true;
         gameMode.RemovePlayer(conn.playerControllers[0].gameObject);
     }
 

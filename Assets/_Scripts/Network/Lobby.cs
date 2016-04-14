@@ -23,7 +23,7 @@ public class Lobby : MonoBehaviour {
         toggleReadyText = GameObject.Find("ToggleReadyText");
 
         lobbyManager.showLobbyUI = true;
-        if (ServerInfo.ip == "127.0.0.1")
+        if (ServerInfo.hosting)
         {
             //toggleReadyText.GetComponent<Button>().interactable = false;
             //toggleReadyText.SetActive(false);
@@ -57,27 +57,23 @@ public class Lobby : MonoBehaviour {
         }
         else
         {
-            if (lobbyPlayer.isLocalPlayer)
+            //if (lobbyPlayer.isLocalPlayer)
+            if (lobbyManager.playerListUpdated)
             {
                 var connections = lobbyManager.connections;
-                if (connections.Count != playersInLobby.options.Count)
+                playersInLobby.ClearOptions();
+                foreach (NetworkConnection client in connections)
                 {
-                    playersInLobby.ClearOptions();
-                    foreach (NetworkConnection client in connections)
-                    {
-                        string ready = client.isReady ? " | Ready!" : " | Not ready!";
-                        playersInLobby.options.Add(new Dropdown.OptionData(client.address + ready));
-                        playersInLobby.RefreshShownValue();
-                    }
+                    string ready = client.isReady ? " | Ready!" : " | Not ready!";
+                    playersInLobby.options.Add(new Dropdown.OptionData(client.address + ready));
+                    playersInLobby.RefreshShownValue();
                 }
+                lobbyManager.playerListUpdated = false;
             }
+            if (lobbyPlayer.readyToBegin)
+                toggleReadyText.GetComponent<Text>().text = "Ready!";
             else
-            {
-                if (lobbyPlayer.readyToBegin)
-                    toggleReadyText.GetComponent<Text>().text = "Ready!";
-                else
-                    toggleReadyText.GetComponent<Text>().text = "Not ready yet!";
-            }
+                toggleReadyText.GetComponent<Text>().text = "Not ready yet!";
         }
     }
 

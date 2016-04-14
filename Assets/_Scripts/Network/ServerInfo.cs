@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ServerInfo : MonoBehaviour {
 
+    public static bool hosting;
     public static string ip;
 
 	// Use this for initialization

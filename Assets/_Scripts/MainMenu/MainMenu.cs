@@ -41,6 +41,7 @@ public class MainMenu : MonoBehaviour {
     public void StartHost()
     {
         ServerInfo.ip = "127.0.0.1";
+        ServerInfo.hosting = true;
         SceneManager.LoadScene("Lobby");
     }
 
@@ -58,6 +59,7 @@ public class MainMenu : MonoBehaviour {
             return;
         }
         ServerInfo.ip = ip;
+        ServerInfo.hosting = false;
         ping = new Ping(ServerInfo.ip);
         pinging = true;
         Debug.Log("started pinging " + ServerInfo.ip);
