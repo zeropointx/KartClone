@@ -222,6 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShoppingKart: {fileID: 102352, guid: c5deb6ad58c037f42b9698e91defdf24, type: 2}
   BananaKart: {fileID: 103766, guid: ff84e26a96dbfa3469ff5106dd86c9d7, type: 2}
+  roadwarrior: {fileID: 102352, guid: ebcece82773468a4d8ecbd016f36aaee, type: 2}
 --- !u!114 &11440818
 MonoBehaviour:
   m_ObjectHideFlags: 1
