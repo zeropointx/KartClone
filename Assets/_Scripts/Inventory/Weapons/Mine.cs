@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Mine : MonoBehaviour {
-
+    PlayerNetwork PN;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,12 +12,15 @@ public class Mine : MonoBehaviour {
 	void Update () {
 	
 	}
-    void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision col)
     {
-        if(other.gameObject.tag == "Player")
+        ContactPoint cp = col.contacts[0];
+        GameObject GG = col.gameObject;
+
+        if (GG.tag == "Player")
         {
-            Debug.Log("Hit player!");
-            other.transform.root.GetComponent<Rigidbody>().AddExplosionForce(100000.0f, transform.position, 5.0f);
+            PN = GG.GetComponent<PlayerNetwork>();
+            PN.GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.HIT);
             Destroy(gameObject);
         }
     }

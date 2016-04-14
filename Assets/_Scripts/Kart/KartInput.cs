@@ -13,7 +13,12 @@ public class KartInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (!isInputEnabled)
+        {
+            kartScript.SetPedal(0);
+          kartScript.SetSteer(0);
             return;
+        }
+            
         float gas = Input.GetAxis("Vertical");
         gas = Mathf.Clamp(gas, -1, 1);
         kartScript.SetPedal(gas);
@@ -23,7 +28,7 @@ public class KartInput : MonoBehaviour {
         kartScript.SetSteer(steer);
         
         if (Input.GetKeyDown(KeyCode.R))
-            kartScript.Reset(0, (Input.GetKey(KeyCode.LeftShift)));
+            kartScript.Reset(0, Input.GetKey(KeyCode.LeftShift));
 
         if (Input.GetKeyDown(KeyCode.T))
             kartScript.BackToTrack();
