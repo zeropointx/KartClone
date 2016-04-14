@@ -6,7 +6,7 @@ public class UpdateKartInformation : MonoBehaviour {
     KartBehaviour KB;   // Local KartBehaviour
     GameObject Kart;    // 
 
-    public GameObject ShoppingKart, BananaKart; //Kart models
+    public GameObject ShoppingKart, BananaKart, roadwarrior; //Kart models
     void Awake ()
     {
         KB = gameObject.GetComponent<KartBehaviour>();
