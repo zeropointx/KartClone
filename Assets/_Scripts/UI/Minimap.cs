@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Minimap : MonoBehaviour {
 
-
+    TrackInformation TI;
     GameObject miniMapIcon;
 
     //For placing the image of the mini map.
@@ -34,7 +34,7 @@ public class Minimap : MonoBehaviour {
 
     //Width and Height of your scene, or the resolution of your terrain.
     public int sceneWidth;
-    public int sceneHeight; 
+    public int sceneHeight;
 
 
     // Variables that are needed in update
@@ -43,20 +43,22 @@ public class Minimap : MonoBehaviour {
     public float playerMapX;
     public float playerMapZ;
 
+    public float offSetX;
+    public float offSetZ;
+
     void Start() 
     {
-        miniMapSprite = GameObject.Find("track").GetComponent<TrackInformation>().miniMapTexture;
-        //miniMapObject = transform.Find("Image").gameObject;
-        gameObject.GetComponent<Image>().sprite = miniMapSprite;
-
-        mapWidth = gameObject.GetComponent<RectTransform>().rect.width;
-
-        mapHeight = gameObject.GetComponent<RectTransform>().rect.height;
-
-        sceneWidth = (int)(mapWidth * 20);
-        sceneHeight = (int)(mapHeight * 20);
-        miniMapIcon = Instantiate(defaultIcon);
-        miniMapIcon.transform.parent = transform;
+        TI = GameObject.Find("track").GetComponent<TrackInformation>();                             // Get TrackInformation
+        miniMapSprite = TI.miniMapTexture;                                                          // Get the sprite of the minimap from TrackInformation
+        gameObject.GetComponent<Image>().sprite = miniMapSprite;                                    // Set it to be the current minimap sprite
+        mapWidth = gameObject.GetComponent<RectTransform>().rect.width;                             // Width of the minimap
+        mapHeight = gameObject.GetComponent<RectTransform>().rect.height;                           // Height of the minimap
+        miniMapIcon = Instantiate(defaultIcon);                                                     // Create a minimap marker for a player
+        miniMapIcon.transform.parent = transform;                                                   // Set its parent to be minimap GameObject
+        sceneWidth = TI.trackWidth;                                                                 // Width of the track
+        sceneHeight = TI.trackHeight;                                                               // Height of the track
+        offSetX = TI.miniMapOffSetX;                                                                // Offset if the minimap marker is on the wrong place
+        offSetZ = TI.miniMapOffSetZ;
     }
     void Update()
     {
@@ -71,12 +73,12 @@ public class Minimap : MonoBehaviour {
         }
         //So that the pivot point of the icon is at the middle of the image.
 
-        pX = GetMapPos(player.transform.position.x, mapWidth, sceneWidth);
-        pZ = GetMapPos(player.transform.position.z, mapHeight, sceneHeight);
-        playerMapX = pX ;
-        playerMapZ = pZ  ;
+        pX = GetMapPos(player.transform.position.x - offSetX, mapWidth, sceneWidth);
+        pZ = GetMapPos(player.transform.position.z - offSetZ, mapHeight, sceneHeight);
+        //playerMapX = pX;
+        //playerMapZ = pZ;
 
-        miniMapIcon.GetComponent<RectTransform>().localPosition = new Vector3(playerMapX, playerMapZ, 0);
+        miniMapIcon.GetComponent<RectTransform>().localPosition = new Vector3(pX , pZ , 0);
         
     }
 
