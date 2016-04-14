@@ -15,6 +15,8 @@ public class BowlingBall : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
+        if (!isServer)
+            this.enabled = false;
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * impulseThrust, ForceMode.Impulse);
     }
@@ -46,8 +48,11 @@ public class BowlingBall : NetworkBehaviour
         if(GG.tag == "Player")
         {
             PN = GG.GetComponent<PlayerNetwork>();
+            PN.RpcApplyStatusEffectClient(StatusEffectHandler.EffectType.HIT);
             PN.GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.HIT);
+
             Destroy(gameObject);
         }
     }
+
 }

@@ -7,13 +7,13 @@ public class PlayerNetwork : NetworkBehaviour
     MyNetworkLobbyManager networkManager = null;
 
     bool initialized = false;
-    public StatusEffectHandler statusEffectHandler = new StatusEffectHandler();
+    public StatusEffectHandler statusEffectHandler;
     public static GameObject localPlayer = null;
 
     //minimap
     void Start()
     {
-       
+        statusEffectHandler= new StatusEffectHandler(gameObject);
         if (!isLocalPlayer)
         {
             GetComponent<KartBehaviour>().enabled = false;
@@ -49,5 +49,11 @@ public class PlayerNetwork : NetworkBehaviour
     {
         return statusEffectHandler;
     }
+    [ClientRpc]
+    public void RpcApplyStatusEffectClient(StatusEffectHandler.EffectType type)
+    {
+        if (!isServer)
+            transform.GetComponent<PlayerNetwork>().GetStatusEffectHandler().AddStatusEffect(type);
 
+    }
 }

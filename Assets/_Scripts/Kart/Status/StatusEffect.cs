@@ -19,7 +19,6 @@ public class StatusEffect {
     }
 	public void Start () 
     {
-        Kart = PlayerNetwork.localPlayer;
         KB = Kart.GetComponent<KartBehaviour>();
         effectTimerCurrent = 0.0f;
         ApplyEffect();

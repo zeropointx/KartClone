@@ -10,8 +10,10 @@ public class StatusEffectHandler {
         HIT = 1,
     }
     public List<StatusEffect> statusEffects = new List<StatusEffect>();
-	public StatusEffectHandler()
+    GameObject player;
+	public StatusEffectHandler(GameObject player)
     {
+        this.player = player;
     }
     public void Update()
     {
@@ -63,6 +65,7 @@ public class StatusEffectHandler {
     }
     void AddStatusEffect(StatusEffect effect)
     {
+        effect.Kart = player;
         effect.Start();
         statusEffects.Add(effect);
         

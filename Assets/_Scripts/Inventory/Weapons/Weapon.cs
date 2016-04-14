@@ -28,6 +28,7 @@ public class Weapon : NetworkBehaviour
             }
         
     }
+
     [Command]
     void CmdshootServer()
     {
@@ -49,6 +50,7 @@ public class Weapon : NetworkBehaviour
                     if (!transform.GetComponent<PlayerNetwork>().GetStatusEffectHandler().HasEffect(StatusEffectHandler.EffectType.HIT))
                     {
                         transform.GetComponent<PlayerNetwork>().GetStatusEffectHandler().AddStatusEffect(StatusEffectHandler.EffectType.BOOST);
+                        transform.GetComponent<PlayerNetwork>().RpcApplyStatusEffectClient(StatusEffectHandler.EffectType.BOOST);
                     }
                     break;
                 }
