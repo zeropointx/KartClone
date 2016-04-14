@@ -6,17 +6,19 @@ using UnityEngine.UI;
 
 public class Gamemode : NetworkBehaviour {
     public GameObject startTimerText;
-    public GameObject statusText;
     private List<Player> players = new List<Player>();
     public int playerCount = 0;
     int finishedPlayers = 0;
    public static GameObject hud = null;
     public GameObject HUDPrefab = null;
+    [SyncVar]
+    public State currentState;
+    float startTimer = 0.0f;
+    float startDelay = 2.0f;
     void Awake()
     {
        hud =  GameObject.Instantiate(HUDPrefab);
        startTimerText = hud.transform.Find("StartTimerText").gameObject;
-       statusText = hud.transform.Find("StatusText").gameObject;
 
     }
     public enum State
@@ -76,10 +78,7 @@ public class Gamemode : NetworkBehaviour {
         if (p.gameObject != null)
             players.Remove(p);
     }
-    [SyncVar]
-    public State currentState;
-    float startTimer = 0.0f;
-    float startDelay = 2.0f;
+
 	// Use this for initialization
 	void Start () {
         if(isServer)
@@ -90,7 +89,6 @@ public class Gamemode : NetworkBehaviour {
 
 
 	void Update () {
-
 	    switch(currentState)
         {
             case State.STARTING:
@@ -106,11 +104,6 @@ public class Gamemode : NetworkBehaviour {
                     List<DebugPlayer> tempPlayerList = new List<DebugPlayer>();
                     for (int i = 0; i < players.Count; i++ )
                     {
-                        if(players[i].conn == null)
-                        {
-                            players.Remove(players[i]);
-                            continue;
-                        }
                         DebugPlayer dp = new DebugPlayer();
                         Player p = players[i];
                         Placement placement = p.gameObject.GetComponent<Placement>();
@@ -195,33 +188,35 @@ public class Gamemode : NetworkBehaviour {
     }
     public void setState(State state)
     {
+        CmdSetState(state);
+    }
+    [Command]
+    void CmdSetState(State state)
+    {
         currentState = state;
-        switch(state)
+        switch (state)
         {
             case State.STARTING:
                 {
-                    statusText.SetActive(false);
                     startTimerText.SetActive(true);
-           
+
                     break;
                 }
             case State.RACING:
                 {
-                    statusText.SetActive(false);
                     if (startTimerText.activeSelf)
                         startTimerText.SetActive(false);
-                    if(isServer)
-                    RpcenableInput();
+                    if (isServer)
+                        RpcenableInput();
                     break;
                 }
             case State.DONE_RACING:
                 {
                     break;
                 }
-          
+
         }
     }
-
     // Checks if enough players have finished the track to end it
     public void checkGameFinish()
     {
@@ -229,6 +224,7 @@ public class Gamemode : NetworkBehaviour {
         {
             for (int i = 0; i < playerCount; i++) // Search through all players
             {
+               
                 Placement placement = players[i].gameObject.GetComponent<Placement>();
                 if (placement.gameFinished == true) // If the player has finished the game, add it to the index
                 {
