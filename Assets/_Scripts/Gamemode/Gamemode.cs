@@ -81,12 +81,7 @@ public class Gamemode : NetworkBehaviour {
 	// Use this for initialization
 	void Start () {
             setState(State.STARTING);
-            RequestPlayerList();
 	}
-    public void RequestPlayerList()
-    {
-        GameObject.Find("Blank").GetComponent<PlayerList>().RequestPlayerList();
-    }
 	// Update is called once per frame
 
 

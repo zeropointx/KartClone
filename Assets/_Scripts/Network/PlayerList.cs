@@ -42,14 +42,5 @@ public class PlayerList : NetworkBehaviour {
     }
 
 
-    public void RequestPlayerList()
-    {
-        CmdRequestPlayerList();
-    }
-    [Command]
-    public void CmdRequestPlayerList()
-    {
-        
-        GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>().SendPlayerInfo();
-    }
+
 }
