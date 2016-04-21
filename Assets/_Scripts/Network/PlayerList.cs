@@ -29,7 +29,6 @@ public class PlayerList : NetworkBehaviour {
     }
     public void SendPlayerInfoHärpäke(uint[] players)
     {
-        GameObject[] playerObj = new GameObject[players.Length];
         for (int i = 0; i < players.Length; i++)
         {
             NetworkInstanceId id = new NetworkInstanceId(players[i]);
