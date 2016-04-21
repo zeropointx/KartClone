@@ -8,6 +8,8 @@ public class Minimap : MonoBehaviour {
     TrackInformation TI;
     GameObject miniMapIcon;
 
+    Gamemode gm;
+
     //For placing the image of the mini map.
     Sprite miniMapSprite;
 
@@ -48,7 +50,8 @@ public class Minimap : MonoBehaviour {
 
     void Start() 
     {
-        TI = GameObject.Find("track").GetComponent<TrackInformation>();                             // Get TrackInformation
+        gm = GameObject.Find("GameMode").GetComponent<Gamemode>();
+        TI = GameObject.Find("track").GetComponent<TrackInformation>(); // Get TrackInformation
         miniMapSprite = TI.miniMapTexture;                                                          // Get the sprite of the minimap from TrackInformation
         gameObject.GetComponent<Image>().sprite = miniMapSprite;                                    // Set it to be the current minimap sprite
         mapWidth = gameObject.GetComponent<RectTransform>().rect.width;                             // Width of the minimap
@@ -59,6 +62,11 @@ public class Minimap : MonoBehaviour {
         sceneHeight = TI.trackHeight;                                                               // Height of the track
         offSetX = TI.miniMapOffSetX;                                                                // Offset if the minimap marker is on the wrong place
         offSetZ = TI.miniMapOffSetZ;
+
+        for (int i = 0; i < gm.GetPlayers().Capacity; i++)
+        {
+            
+        }
     }
     void Update()
     {
@@ -71,9 +79,13 @@ public class Minimap : MonoBehaviour {
             playerIcon = player.Find("Kart").GetComponent<KartInformation>().miniMapIcon;
             miniMapIcon.GetComponent<Image>().sprite = playerIcon;
         }
-        //So that the pivot point of the icon is at the middle of the image.
 
-        pX = GetMapPos(player.transform.position.x - offSetX, mapWidth, sceneWidth);
+
+
+
+            //So that the pivot point of the icon is at the middle of the image.
+
+            pX = GetMapPos(player.transform.position.x - offSetX, mapWidth, sceneWidth);
         pZ = GetMapPos(player.transform.position.z - offSetZ, mapHeight, sceneHeight);
         //playerMapX = pX;
         //playerMapZ = pZ;
@@ -87,12 +99,4 @@ public class Minimap : MonoBehaviour {
         return pos * mapSize / sceneSize;
     }
 
-    //void OnGUI()
-    //{
-    //    //GUI.BeginGroup(new Rect(mapOffSetX, mapOffSetY, mapWidth, mapHeight), miniMap);
-
-
-    //    GUI.Box(new Rect(playerMapX, playerMapZ, iconSize, iconSize), playerIcon);
-    //    GUI.EndGroup();
-    //}
 }
