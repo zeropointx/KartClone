@@ -35,13 +35,10 @@ public class PlayerList : NetworkBehaviour {
             NetworkInstanceId id = new NetworkInstanceId(players[i]);
             GameObject player = ClientScene.FindLocalObject(id);
             Gamemode.Player p = new Gamemode.Player(-1, player);
-            if(SceneManager.GetActiveScene().name != "Lobby")
-            GameObject.Find("Gamemode").GetComponent<Gamemode>().AddPlayer(p);
-            else
-            {
-                playerObj[i] = p.gameObject;
-                
-            }
+
+            GameObject gamemode = GameObject.Find("Gamemode");
+            gamemode.GetComponent<Gamemode>().AddPlayer(p);
+
         }
     }
 

@@ -23,7 +23,6 @@ public class PlayerNetwork : NetworkBehaviour
         else
         {
             localPlayer = gameObject;
-            RequestPlayerList();
          
         }
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();

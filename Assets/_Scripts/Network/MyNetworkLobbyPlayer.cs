@@ -5,11 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MyNetworkLobbyPlayer : NetworkLobbyPlayer 
 {
-    void Start()
-    {
-        GameObject.Find("Lobby").GetComponent<Lobby>().AddGameObject(gameObject);
-    }
-  //  [SerializeField]
+ 
+  [SerializeField]
     //public bool showPlayerUI = true;
 
     void OnGUI()
@@ -70,7 +67,10 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
             */
         }
     }
-
+  void Awake()
+  {
+      GameObject.Find("Lobby").GetComponent<Lobby>().AddGameObject(gameObject);
+  }
     public void StartGame()
     {
         var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;

@@ -80,13 +80,13 @@ public class Gamemode : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (isServer)
-        {
             setState(State.STARTING);
-            GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>().SendPlayerInfo();
-        }
+            RequestPlayerList();
 	}
-
+    public void RequestPlayerList()
+    {
+        GameObject.Find("Blank").GetComponent<PlayerList>().RequestPlayerList();
+    }
 	// Update is called once per frame
 
 
