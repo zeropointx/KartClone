@@ -23,12 +23,18 @@ public class PlayerNetwork : NetworkBehaviour
         else
         {
             localPlayer = gameObject;
+            CmdRequestPlayerList();
          
         }
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
       
 
 
+    }
+    [Command]
+    public void CmdRequestPlayerList()
+    {
+        GameObject.Find("Blank").GetComponent<PlayerList>().RequestPlayerList();
     }
     // Update is called once per frame
     void Update()

@@ -81,6 +81,8 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
             AddPlayer(conn);
         }
         DebugMessage("Player added! Current players " + playerCount);
+        if(SceneManager.GetActiveScene().name != "Lobby")
+        SendPlayerInfo();
     }
 
     public override void OnServerDisconnect(NetworkConnection conn)
@@ -116,29 +118,19 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
     {
         base.OnServerSceneChanged(sceneName);
         DebugMessage("SceneChanged: " + sceneName);
-
+    }
+    public void SendPlayerInfo()
+    {
         uint[] players = new uint[connections.Count];
         for (int i = 0; i < connections.Count; i++)
         {
             players[i] = connections[i].playerControllers[0].gameObject.GetComponent<NetworkIdentity>().netId.Value;
         }
         Lobby lobby = transform.GetComponent<Lobby>();
-        string playerString = "";
 
-        for (int i = 0; i < players.Length; i++)
-        {
-            string crd = "" + players[i];
-            if (players[i] < 10) 
-                crd = "0" + crd; // leading 0 so each uses exactly 2 chars
-            playerString += crd;
-        }
-
-        //lobby.SendPlayerInfo(playerString);
-        GameObject gg = GameObject.Find("Gamemode");
-        gg.GetComponent<Gamemode>().RpcSendPlayerInfo(playerString);
+        GameObject.Find("Blank").GetComponent<PlayerList>().SendPlayerInfo(players);
         DebugMessage("Players updated for clients");
     }
-
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         base.OnServerAddPlayer(conn, playerControllerId);

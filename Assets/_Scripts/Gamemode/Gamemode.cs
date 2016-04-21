@@ -80,8 +80,11 @@ public class Gamemode : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if(isServer)
+        if (isServer)
+        {
             setState(State.STARTING);
+            GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>().SendPlayerInfo();
+        }
 	}
 
 	// Update is called once per frame
@@ -239,25 +242,6 @@ public class Gamemode : NetworkBehaviour {
             }
 
             finishedPlayers = 0;
-        }
-    }
-     [ClientRpc]
-    public void RpcSendPlayerInfo(string playerString)
-    {
-        uint[] players = new uint[playerString.Length / 2];
-
-        for (int i = 0; i < 52; i++)
-        {
-            string crd = playerString.Substring(i * 2, 2); // pulls out "01" "02" ...
-            players[i] = Convert.ToUInt32(crd);
-        }
-
-        for (int i = 0; i < players.Length; i++)
-        {
-            NetworkInstanceId id = new NetworkInstanceId(players[i]);
-            GameObject player = ClientScene.FindLocalObject(id);
-            Gamemode.Player p = new Gamemode.Player(-1, player);
-            AddPlayer(p);
         }
     }
 }

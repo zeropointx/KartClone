@@ -96,4 +96,9 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         else
             Debug.Log("Only host can kick players!");
     }
+    public void AddPlayerList(GameObject[] g)
+    {
+        //Add to list
+        //Make sure it doesn't already exist
+    }
 }
