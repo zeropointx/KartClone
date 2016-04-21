@@ -8,6 +8,7 @@ using System;
 public class Gamemode : NetworkBehaviour {
     public GameObject startTimerText;
     private List<Player> players = new List<Player>();
+    public List<Player> GetPlayers() { return players; }
     public int playerCount = 0;
     int finishedPlayers = 0;
    public static GameObject hud = null;
