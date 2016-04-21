@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class PlayerList : NetworkBehaviour {
 
@@ -28,18 +29,31 @@ public class PlayerList : NetworkBehaviour {
     }
     public void SendPlayerInfoHärpäke(uint[] players)
     {
+        GameObject[] playerObj = new GameObject[players.Length];
         for (int i = 0; i < players.Length; i++)
         {
             NetworkInstanceId id = new NetworkInstanceId(players[i]);
             GameObject player = ClientScene.FindLocalObject(id);
             Gamemode.Player p = new Gamemode.Player(-1, player);
+            if(SceneManager.GetActiveScene().name != "Lobby")
             GameObject.Find("Gamemode").GetComponent<Gamemode>().AddPlayer(p);
+            else
+            {
+                playerObj[i] = p.gameObject;
+                
+            }
         }
     }
 
 
     public void RequestPlayerList()
     {
+        CmdRequestPlayerList();
+    }
+    [Command]
+    public void CmdRequestPlayerList()
+    {
+        
         GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>().SendPlayerInfo();
     }
 }

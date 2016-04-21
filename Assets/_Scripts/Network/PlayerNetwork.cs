@@ -23,7 +23,7 @@ public class PlayerNetwork : NetworkBehaviour
         else
         {
             localPlayer = gameObject;
-            CmdRequestPlayerList();
+            RequestPlayerList();
          
         }
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
@@ -31,8 +31,7 @@ public class PlayerNetwork : NetworkBehaviour
 
 
     }
-    [Command]
-    public void CmdRequestPlayerList()
+    public void RequestPlayerList()
     {
         GameObject.Find("Blank").GetComponent<PlayerList>().RequestPlayerList();
     }

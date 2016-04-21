@@ -106,4 +106,8 @@ public class Lobby : MonoBehaviour {
     {
         //playersInLobby.
     }
+    public void AddGameObject(GameObject g)
+    {
+        Debug.Log("HEHHEH");
+    }
 }

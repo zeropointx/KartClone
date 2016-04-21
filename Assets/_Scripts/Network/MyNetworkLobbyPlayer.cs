@@ -5,7 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MyNetworkLobbyPlayer : NetworkLobbyPlayer 
 {
-    [SerializeField]
+    void Start()
+    {
+        GameObject.Find("Lobby").GetComponent<Lobby>().AddGameObject(gameObject);
+    }
+  //  [SerializeField]
     //public bool showPlayerUI = true;
 
     void OnGUI()
@@ -96,9 +100,5 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         else
             Debug.Log("Only host can kick players!");
     }
-    public void AddPlayerList(GameObject[] g)
-    {
-        //Add to list
-        //Make sure it doesn't already exist
-    }
+
 }
