@@ -58,7 +58,7 @@ public class KartInput : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.M))
             {
-                SettingsInterface.OpenSettings();
+                MenuSettings.OpenMenu();
             }
         }
 	}

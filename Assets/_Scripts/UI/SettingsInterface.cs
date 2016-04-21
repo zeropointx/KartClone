@@ -135,5 +135,6 @@ public class SettingsInterface : MonoBehaviour {
     {
         Destroy(settingsMenu);
         settingsMenu = null;
+        MenuSettings.OpenMenu();
     }
 }

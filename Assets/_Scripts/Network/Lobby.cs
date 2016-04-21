@@ -9,6 +9,7 @@ public class Lobby : MonoBehaviour {
 
     MyNetworkLobbyManager lobbyManager = null;
     MyNetworkLobbyPlayer lobbyPlayer = null;
+    private List<GameObject> players = new List<GameObject>();
     private Dropdown playersInLobby = null;
     private GameObject buttonText = null;
 
@@ -20,6 +21,7 @@ public class Lobby : MonoBehaviour {
         MyNetworkLobbyManager.networkLobbyManagerInstance = lobbyManager;
         lobbyManager.showLobbyGUI = true;
         playersInLobby = GameObject.Find("PlayersInLobby").GetComponent<Dropdown>();
+        playersInLobby.ClearOptions();
         buttonText = GameObject.Find("ReadyText");
 
         lobbyManager.showLobbyUI = true;
@@ -41,7 +43,7 @@ public class Lobby : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-	    
+        UpdateList();
 	}
 
     public void OnGUI()
@@ -57,18 +59,6 @@ public class Lobby : MonoBehaviour {
         }
         else
         {
-            if (lobbyManager.playerListUpdated)
-            {
-                var connections = lobbyManager.connections;
-                playersInLobby.ClearOptions();
-                foreach (NetworkConnection client in connections)
-                {
-                    string ready = client.isReady ? " | Ready!" : " | Not ready!";
-                    playersInLobby.options.Add(new Dropdown.OptionData(client.address + ready));
-                    playersInLobby.RefreshShownValue();
-                }
-                lobbyManager.playerListUpdated = false;
-            }
             if (!lobbyPlayer.isLocalPlayer)
             {
                 if (lobbyPlayer.readyToBegin)
@@ -102,12 +92,44 @@ public class Lobby : MonoBehaviour {
         }
     }
 
-    public void UpdatePlayerList(int selection)
+    public void UpdateList()
     {
-        //playersInLobby.
+        playersInLobby.ClearOptions();
+        foreach (var obj in players)
+        {
+            MyNetworkLobbyPlayer mnlb = obj.GetComponent<MyNetworkLobbyPlayer>();
+            string ready = " | ";
+            if (mnlb.isLocalPlayer)
+                ready += "local player | ";
+            ready += mnlb.readyToBegin ? "Ready!" : "Not ready!";
+            playersInLobby.options.Add(new Dropdown.OptionData("id " + mnlb.netId.Value + ready));
+        }
+        playersInLobby.RefreshShownValue();
     }
+
     public void AddGameObject(GameObject g)
     {
-        Debug.Log("HEHHEH");
+        var id = g.GetComponent<MyNetworkLobbyPlayer>().netId.Value;
+        if (players.Count > 0)
+        {
+            int i = 0;
+            foreach (var obj in players)
+            {
+                if (obj == g)
+                {
+                    Debug.Log("lobby: netid " + id + " is already on list!");
+                    break;
+                }
+                i++;
+            }
+            if (i == players.Count)
+            {
+                Debug.Log("lobby: added netid " + id);
+                players.Add(g);
+            }
+        }
+        else
+            players.Add(g);
+        UpdateList();
     }
 }
