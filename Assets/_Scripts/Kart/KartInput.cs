@@ -10,7 +10,7 @@ public class KartInput : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        debugMode = false;
+        debugMode = true;
         kartScript = transform.GetComponent<KartBehaviour>();
 	}
 	
