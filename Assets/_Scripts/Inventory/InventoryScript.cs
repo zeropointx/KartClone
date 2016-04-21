@@ -21,33 +21,36 @@ public class InventoryScript : NetworkBehaviour
     int weaponAmount;               // Amount of different weapons
     [SyncVar]
     public WEAPON currentWeapon;    // Players current weapon
-    
+    private KartInput input;
 
     void Start()
     {
         currentWeapon = WEAPON.noWeapon; // Set to not have weapon at the beginning
         weaponAmount = Enum.GetNames(typeof(WEAPON)).Length; // Initialize the amount of weapons
-
+        input = gameObject.GetComponent<KartInput>();
     }
 
     void Update()
     {
-        int index;
-        for (index = (int)KeyCode.Keypad0; index < (int)KeyCode.Keypad9+1; index++ )
+        if (input.debugMode)
         {
-            if (Input.GetKeyDown((KeyCode)index))
+            int index;
+            for (index = (int)KeyCode.Keypad0; index < (int)KeyCode.Keypad9 + 1; index++)
             {
-                CmdDebugChangeWeapon(index - (int)KeyCode.Keypad0);
-                break;
+                if (Input.GetKeyDown((KeyCode)index))
+                {
+                    CmdDebugChangeWeapon(index - (int)KeyCode.Keypad0);
+                    break;
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            pickUpRandomWeapon();
-        }
-           
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                pickUpRandomWeapon();
+            }
+        }  
     }
+
     [Command]
    void CmdDebugChangeWeapon(int index)
     {

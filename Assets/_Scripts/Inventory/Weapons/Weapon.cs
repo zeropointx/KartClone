@@ -11,9 +11,13 @@ public class Weapon : NetworkBehaviour
     public GameObject speedBoost;
     public GameObject homingMissilePrefab;
     public GameObject minePrefab;
+
+    private KartInput input;
+
     void Start()
     {
         inventory = gameObject.GetComponent<InventoryScript>();
+        input = gameObject.GetComponent<KartInput>();
     }
 
     void Update()
@@ -22,11 +26,11 @@ public class Weapon : NetworkBehaviour
         {
             return;
         }
-            if (Input.GetButtonDown("Shoot"))
-            {
-                CmdshootServer();
-            }
-        
+        if (input.isInputEnabled && Input.GetButtonDown("Shoot"))
+        {
+            CmdshootServer();
+        }
+
     }
 
     [Command]
@@ -63,7 +67,7 @@ public class Weapon : NetworkBehaviour
                 }*/
             case InventoryScript.WEAPON.Mine:
                 {
-                    GameObject mine = (GameObject)Instantiate(minePrefab, transform.position + transform.forward * -4 , transform.rotation);
+                    GameObject mine = (GameObject)Instantiate(minePrefab, transform.position + transform.forward * -4, transform.rotation);
                     NetworkServer.Spawn(mine);
                     break;
                 }
