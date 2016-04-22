@@ -7,11 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : MonoBehaviour {
 
+    public GameObject listEntryObject = null;
+
     MyNetworkLobbyManager lobbyManager = null;
     MyNetworkLobbyPlayer lobbyPlayer = null;
     private List<GameObject> players = new List<GameObject>();
-    private Dropdown playersInLobby = null;
     private GameObject buttonText = null;
+    private GameObject lobbyPlayerList = null;
+    private const int listEntrySpacing = 48;
 
 	// Use this for initialization
     void Start () 
@@ -20,9 +23,8 @@ public class Lobby : MonoBehaviour {
 
         MyNetworkLobbyManager.networkLobbyManagerInstance = lobbyManager;
         lobbyManager.showLobbyGUI = true;
-        playersInLobby = GameObject.Find("PlayersInLobby").GetComponent<Dropdown>();
-        playersInLobby.ClearOptions();
         buttonText = GameObject.Find("ReadyText");
+        lobbyPlayerList = GameObject.Find("LobbyPlayerList");
 
         lobbyManager.showLobbyUI = true;
         if (ServerInfo.hosting)
@@ -43,7 +45,7 @@ public class Lobby : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        UpdateList();
+        //UpdateList();
 	}
 
     public void OnGUI()
@@ -75,7 +77,7 @@ public class Lobby : MonoBehaviour {
 
     public void KickPlayer()
     {
-        Debug.Log("kicked " + playersInLobby.options[playersInLobby.value].text);
+        //Debug.Log("kicked " + playersInLobby.options[playersInLobby.value].text);
     }
 
     public void ToggleReady()
@@ -94,17 +96,26 @@ public class Lobby : MonoBehaviour {
 
     public void UpdateList()
     {
-        playersInLobby.ClearOptions();
+        for(int i = 0; i < lobbyPlayerList.transform.childCount; i++)
+        {
+            Destroy(lobbyPlayerList.transform.GetChild(i).gameObject);
+        }
+
+        int j = -1;
         foreach (var obj in players)
         {
             MyNetworkLobbyPlayer mnlb = obj.GetComponent<MyNetworkLobbyPlayer>();
-            string ready = " | ";
+            string label = "id " + mnlb.netId.Value + " | ";
             if (mnlb.isLocalPlayer)
-                ready += "local player | ";
-            ready += mnlb.readyToBegin ? "Ready!" : "Not ready!";
-            playersInLobby.options.Add(new Dropdown.OptionData("id " + mnlb.netId.Value + ready));
+                label += "local player | ";
+            label += mnlb.readyToBegin ? "Ready!" : "Not ready!";
+            
+            GameObject listEntry = (GameObject)Instantiate(listEntryObject, listEntryObject.transform.position, listEntryObject.transform.rotation);
+            listEntry.transform.SetParent(lobbyPlayerList.transform, false);
+            listEntry.GetComponent<Text>().text = label;
+            listEntry.transform.localPosition += new Vector3(0, j * listEntrySpacing, 0);
+            j--;
         }
-        playersInLobby.RefreshShownValue();
     }
 
     public void AddGameObject(GameObject g)
