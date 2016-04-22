@@ -45,23 +45,11 @@ public class HUD : MonoBehaviour {
           InventoryScript.WEAPON currentWeapon = PlayerNetwork.localPlayer.GetComponent<InventoryScript>().currentWeapon;
         if(currentWeapon != uiweapon)
             updateWeaponTexture(currentWeapon);
-        lapText.GetComponent<Text>().text = "Lap: " + PlayerNetwork.localPlayer.GetComponent<Placement>().currentLap + "\\" + track.GetComponent<TrackInformation>().lapAmount;
+        lapText.GetComponent<Text>().text = "Lap:" + PlayerNetwork.localPlayer.GetComponent<Placement>().currentLap + "\\" + track.GetComponent<TrackInformation>().lapAmount;
         int placement = gamemode.getPlacement(PlayerNetwork.localPlayer);
        
         placementText.GetComponent<Text>().text = placement +" "+ getPlacementString(placement);
         stateNameText.GetComponent<Text>().text = PlayerNetwork.localPlayer.GetComponent<KartBehaviour>().state.GetName();
-
-        float tempSpeed = PlayerNetwork.localPlayer.GetComponent<KartBehaviour>().GetSpeed();
-        speedMeter += 0.1f * (tempSpeed - speedMeter);
-        int speed = (int)speedMeter;
-        Vector3 eulerAngles = new Vector3();
-        eulerAngles.z = 0.0f;
-        float eulerMax = -388;
-        float eulerMin = -149.0f;
-        float maxSpeed = 160.0f;
-        eulerAngles.z = -(Mathf.Abs(eulerMax - eulerMin) / maxSpeed * speed) + eulerMin;
-        speedIndicator.transform.eulerAngles = eulerAngles;
-        speedy = eulerAngles.z;
 
         gamemode.checkGameFinish();
 	}

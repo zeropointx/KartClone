@@ -3896,7 +3896,7 @@ MonoBehaviour:
   - {fileID: 823684429}
   - {fileID: 823684428}
   lapAmount: 3
-  miniMapTexture: {fileID: 21300000, guid: 74cec8de36647644a80b591069d64da7, type: 3}
+  miniMapTexture: {fileID: 21300000, guid: 6559381d6796623468199297e21b920d, type: 3}
   trackWidth: 1380
   trackHeight: 980
   miniMapOffSetX: 44

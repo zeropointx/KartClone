@@ -43,6 +43,8 @@ public class KartBehaviour : MonoBehaviour
         DRIFTING_LEFT, MIDDLE,DRIFTING_RIGHT
     }
     public CameraState currentCameraState = CameraState.MIDDLE;
+    float stabilizeTimer = 0.0f;
+    float stabilizedelay = 1.0f;
     // Use this for initialization
     void Start()
     {
@@ -103,6 +105,10 @@ public class KartBehaviour : MonoBehaviour
         Vector3 cameraPos = transform.Find("Main Camera").localPosition;
         if(!GetComponent<Placement>().gameFinished)
         transform.Find("Main Camera").localPosition = Vector3.Lerp(cameraPos, targetCameraPos, Time.deltaTime);
+        if(transform.position.y <= -200)
+        {
+            Reset(0, true);
+        }
     }
 
     void LateUpdate()
@@ -135,7 +141,13 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.AddTorque(torque * stabilizeTorqueForce * Time.deltaTime);
         if(transform.eulerAngles.z  > 160 && transform.eulerAngles.z < 200)
         {
+            stabilizeTimer += Time.fixedDeltaTime;
+            if(stabilizeTimer >= stabilizedelay)
             Reset();
+        }
+        else
+        {
+            stabilizeTimer = 0.0f;
         }
     }
 
@@ -218,6 +230,7 @@ public class KartBehaviour : MonoBehaviour
         rigidbody.angularVelocity *= speedMultiplier;
         speed *= speedMultiplier;
         groundDistance = 0;
+        stabilizeTimer = 0.0f;
     }
 
     public void BackToTrack()
@@ -263,12 +276,6 @@ public class KartBehaviour : MonoBehaviour
     public void SetPedal(float pedalValue)
     {
         pedal = pedalValue;
-    }
-    public void OnGUI()
-    {
-        if (drifting)
-        GUI.Label(new Rect(0, 0, 100, 100),  ""+Vector3.Dot(transform.forward, rigidbody.velocity.normalized)+","+
-            Vector3.Dot(transform.right, rigidbody.velocity.normalized));
     }
     public void SetCameraState(CameraState state)
     {
