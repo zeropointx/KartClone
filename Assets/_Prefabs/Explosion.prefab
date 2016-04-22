@@ -29,7 +29,7 @@ GameObject:
   - 198: {fileID: 19839826}
   - 199: {fileID: 19998064}
   m_Layer: 0
-  m_Name: SubExplosion
+  m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.1, y: -90.91, z: 155.2}
+  m_LocalPosition: {x: -49.255447, y: -93.463936, z: 163.2441}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 441038}
@@ -125,7 +125,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 3
+      scalar: 2.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -512,14 +512,14 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
+          value: 0.25675672
+          inSlope: 0.4283783
+          outSlope: 0.4283783
           tangentMode: 0
         - time: 1
-          value: 0.91891897
-          inSlope: 0
-          outSlope: 0
+          value: 0.44594598
+          inSlope: -0.11683022
+          outSlope: -0.11683022
           tangentMode: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1129,7 +1129,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     magnitude:
-      scalar: 30
+      scalar: 20
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1138,7 +1138,7 @@ ParticleSystem:
           inSlope: 0
           outSlope: 0
           tangentMode: 0
-        - time: 0.3203988
+        - time: 0.2604619
           value: 0.013513512
           inSlope: -0.80170286
           outSlope: -0.80170286
@@ -1604,7 +1604,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 1.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1991,12 +1991,17 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 1
+          value: 0.9864865
           inSlope: 2
           outSlope: 2
           tangentMode: 0
-        - time: 0.66561514
-          value: 0
+        - time: 0.041009486
+          value: 0.9324323
+          inSlope: -0.52454484
+          outSlope: -0.52454484
+          tangentMode: 0
+        - time: 0.8391167
+          value: 0.013513512
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -2623,7 +2628,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     magnitude:
-      scalar: 20
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2633,9 +2638,9 @@ ParticleSystem:
           outSlope: 0
           tangentMode: 0
         - time: 0.62323785
-          value: 0.08108107
-          inSlope: -0.80170286
-          outSlope: -0.80170286
+          value: 0.47297293
+          inSlope: -0.9729118
+          outSlope: -0.9729118
           tangentMode: 0
         - time: 0.99369085
           value: 0
@@ -3069,7 +3074,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0

@@ -138,8 +138,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 0.25, z: 5}
-  m_Center: {x: 0, y: -2, z: 0}
+  m_Size: {x: 3.5, y: 0.5910444, z: 5}
+  m_Center: {x: 0, y: -1.8294792, z: 0}
 --- !u!81 &8115084
 AudioListener:
   m_ObjectHideFlags: 1
@@ -280,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInputEnabled: 0
+  debugMode: 0
 --- !u!114 &11467998
 MonoBehaviour:
   m_ObjectHideFlags: 1

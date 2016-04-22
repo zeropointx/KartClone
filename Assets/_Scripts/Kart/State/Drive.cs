@@ -19,7 +19,7 @@ public class Drive : KartState {
         float dotForward = Vector3.Dot(kb.transform.forward, kb.rigidbody.velocity.normalized);
         float dotSideways = Vector3.Dot(kb.transform.right, kb.rigidbody.velocity.normalized);
 
-        if (dotForward < 0.95f && dotForward > 0.6f)
+        if (dotForward > 0.6f && dotForward < 0.95f)
         {
             kb.drifting = true;
             if (dotSideways > 0.0f)
@@ -48,7 +48,7 @@ public class Drive : KartState {
              * Texture based speed
              * 
              */
-            //If we are on land and player isn't using boost slow him down
+            //If we are on grassland and player isn't using boost slow him down
                 if (kb.lastTextureName == "Land" && !kb.GetComponent<PlayerNetwork>().GetStatusEffectHandler().HasEffect(StatusEffectHandler.EffectType.BOOST))
                 {
                     kb.currentTextureSpeedModifier = 0.25f; 

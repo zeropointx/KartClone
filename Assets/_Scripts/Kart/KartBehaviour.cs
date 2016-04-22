@@ -64,7 +64,7 @@ public class KartBehaviour : MonoBehaviour
         brakeForce = 0.95f;
         engineDeceleration = 0.15f;
         spinSpeed = 250;
-        stabilizeTorqueForce = 1000.0f;
+        stabilizeTorqueForce = 2000.0f;
 
         //common
         jumpLimit = 2.5f;
@@ -133,6 +133,10 @@ public class KartBehaviour : MonoBehaviour
     {
         Vector3 torque = Vector3.Cross(transform.up, groundNormal) * (1.01f - Vector3.Dot(transform.up, groundNormal));
         rigidbody.AddTorque(torque * stabilizeTorqueForce * Time.deltaTime);
+        if(transform.eulerAngles.z  > 160 && transform.eulerAngles.z < 200)
+        {
+            Reset();
+        }
     }
 
     private void UpdateGroundDistance()
@@ -156,6 +160,11 @@ public class KartBehaviour : MonoBehaviour
                 groundDistance = directDown.distance;
                 lastTrackPosition = directDown.point + 3.0f * Vector3.up - 16.0f * transform.forward;
                 
+                if(GetComponent<PlayerNetwork>().GetStatusEffectHandler().HasEffect(StatusEffectHandler.EffectType.BOOST))
+                {
+                    rigidbody.AddForce(groundNormal * -1 * (groundDistance / 2) * 10);
+                }
+
                 //Get texture right below player
                 string texture = GetTexture(directDown);
                 //Parse that string
