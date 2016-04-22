@@ -56,7 +56,7 @@ public class Lobby : MonoBehaviour {
         if (lobbyPlayer == null)
         {
             var temp = GameObject.Find("LobbyPlayer(Clone)");
-            if (temp != null)
+            if (temp != null)   
                 lobbyPlayer = temp.GetComponent<MyNetworkLobbyPlayer>();
         }
         else
@@ -82,6 +82,10 @@ public class Lobby : MonoBehaviour {
 
     public void ToggleReady()
     {
+        lobbyPlayer.ToggleReady();
+        if (lobbyPlayer.readyToBegin)
+            lobbyManager.showLobbyGUI = false;
+        /*
         if (lobbyPlayer.isLocalPlayer)
         {
             Debug.Log("start");
@@ -92,6 +96,7 @@ public class Lobby : MonoBehaviour {
             Debug.Log("toggle ready");
             lobbyPlayer.ToggleReady();
         }
+         * */
     }
 
     public void UpdateList()

@@ -3,10 +3,10 @@ using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class MyNetworkLobbyPlayer : NetworkLobbyPlayer 
+public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
 {
- 
-  [SerializeField]
+
+    [SerializeField]
     //public bool showPlayerUI = true;
 
     void OnGUI()
@@ -14,7 +14,7 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         /*
         if (!showPlayerUI)
             return;
-        */ 
+        */
         var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
         if (lobbyManager)
         {
@@ -67,10 +67,13 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
             */
         }
     }
-  void Awake()
-  {
-      GameObject.Find("Lobby").GetComponent<Lobby>().AddGameObject(gameObject);
-  }
+
+    void Awake()
+    {
+        GameObject.Find("Lobby").GetComponent<Lobby>().AddGameObject(gameObject);
+    }
+
+    /*
     public void StartGame()
     {
         var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
@@ -82,13 +85,20 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         else
             Debug.Log("Only host can start the game!");
     }
+    */
 
     public void ToggleReady()
     {
-        if (base.readyToBegin)
-            base.SendReadyToBeginMessage();
-        else
-            base.SendReadyToBeginMessage();
+        if (base.isLocalPlayer)
+        {
+            if (base.readyToBegin)
+                base.SendNotReadyToBeginMessage();
+            else
+                base.SendReadyToBeginMessage();
+            string temp = base.readyToBegin ? "true" : "false";
+            Debug.Log("Toggle ready, current value: " + temp);
+        }
+        Debug.Log("Only local player can send readytobeginmessage!");
     }
 
     public void KickPlayer()
