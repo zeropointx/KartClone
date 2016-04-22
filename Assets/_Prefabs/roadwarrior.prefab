@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140960cbafb33084fab9fedbe7b03d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniMapIcon: {fileID: 2800000, guid: f61ad67f2bdca2b4ab1947157a23ebac, type: 3}
+  miniMapIcon: {fileID: 21300000, guid: 23aca18671a7d434a8795f190d5c2d65, type: 3}
 --- !u!137 &13786418
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1143,6 +1143,11 @@ Prefab:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniMapIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 23aca18671a7d434a8795f190d5c2d65,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102352}
