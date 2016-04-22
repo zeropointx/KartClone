@@ -17,7 +17,7 @@ public class HUD : MonoBehaviour {
      float speedMeter = 0.0f;
 	// Use this for initialization
 	void Start () {
-        weaponImageUI = transform.FindChild("weaponImageUI").gameObject;
+        weaponImageUI = GameObject.Find("weaponImageUI").gameObject;
         imageScript = weaponImageUI.GetComponent<weaponImageScript>();
         lapText = GameObject.Find("LapText");
         track = GameObject.FindGameObjectsWithTag("track")[0].transform.root.gameObject;
@@ -83,7 +83,10 @@ public class HUD : MonoBehaviour {
         Sprite weaponSprite = weaponSprites[index];
         if (weaponSprite == null)
             return;
-
+        if (currentWeapon == InventoryScript.WEAPON.noWeapon)
+            imageScript.changeColorAlpha(0.0f);
+        else
+            imageScript.changeColorAlpha(1.0f);
         imageScript.updateSprite(weaponSprite);
 
         uiweapon = currentWeapon;

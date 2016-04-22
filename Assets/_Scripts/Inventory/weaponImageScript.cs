@@ -9,4 +9,10 @@ public class weaponImageScript : MonoBehaviour {
     {
         gameObject.GetComponent<Image>().sprite = sprite;
     }
+    public void changeColorAlpha(float alpha)
+    {
+        Color c = gameObject.GetComponent<Image>().color;
+        c.a = alpha;
+        gameObject.GetComponent<Image>().color = c;
+    }
 }
