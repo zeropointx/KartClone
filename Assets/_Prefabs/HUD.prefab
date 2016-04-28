@@ -198,9 +198,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamemode: {fileID: 0}
   weaponSprites:
-  - {fileID: 21300000, guid: f61ad67f2bdca2b4ab1947157a23ebac, type: 3}
+  - {fileID: 21300000, guid: ceaf2a7fec1f8a949b0874af3e6bf470, type: 3}
   - {fileID: 21300000, guid: 82db58dc39ae49b44a50f04c47b24b29, type: 3}
-  - {fileID: 21300000, guid: 447e318156ad4ab4bbac55f5bad95de6, type: 3}
+  - {fileID: 21300000, guid: df24b4f8990b57c4c988e30f2b9cdc3a, type: 3}
   - {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   speedy: 0
 --- !u!114 &11427158
