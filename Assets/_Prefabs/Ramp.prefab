@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 472052}
   - 33: {fileID: 3311784}
   - 23: {fileID: 2394210}
-  - 64: {fileID: 6448096}
+  - 64: {fileID: 6462802}
   m_Layer: 0
   m_Name: ramp
   m_TagString: Untagged
@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120576}
   m_LocalRotation: {x: -0.05992237, y: 0.7045633, z: -0.7045632, w: -0.059922427}
-  m_LocalPosition: {x: 47.95, y: -0.32, z: 14.49}
+  m_LocalPosition: {x: 47.95, y: -0.4, z: 14.49}
   m_LocalScale: {x: -1, y: -4.218381, z: -1}
   m_Children: []
   m_Father: {fileID: 461752}
@@ -68,7 +68,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: ae008a18a075bb94ca7df3d8c23035a2, type: 2}
+  - {fileID: 2100000, guid: 91af5cce5a09fdf4c82b3df5f9bf41ac, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -91,7 +91,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120576}
   m_Mesh: {fileID: 4300000, guid: 8d2e62026d56ca14ab57a5ff5fc08b3a, type: 3}
---- !u!64 &6448096
+--- !u!64 &6462802
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
