@@ -13,14 +13,14 @@ public class MenuSettings : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-	
+
 	}
 
     public static void OpenMenu()
     {
         if (Menu != null)
         {
-            Menu.GetComponent<MenuSettings>().Back();
+            Menu.GetComponent<MenuSettings>().Exit();
             return;
         }
         if (SettingsInterface.settingsMenu != null)
@@ -60,6 +60,12 @@ public class MenuSettings : MonoBehaviour {
         Destroy(Menu);
         Menu = null;
         MenuSettings.OpenMenu();
+    }
+
+    public void Exit()
+    {
+        Destroy(Menu);
+        Menu = null;
     }
 
 

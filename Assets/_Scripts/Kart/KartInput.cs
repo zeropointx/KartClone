@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KartInput : MonoBehaviour 
+public class KartInput : MonoBehaviour
 {
     private KartBehaviour kartScript;
     public bool isInputEnabled = false;
     public bool debugMode;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start()
     {
         debugMode = true;
         kartScript = transform.GetComponent<KartBehaviour>();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         if (!isInputEnabled)
         {
@@ -23,7 +23,7 @@ public class KartInput : MonoBehaviour
             kartScript.SetSteer(0);
             return;
         }
-        
+
         //controls
         float gas = Input.GetAxis("Vertical");
         gas = Mathf.Clamp(gas, -1, 1);
@@ -32,9 +32,9 @@ public class KartInput : MonoBehaviour
         float steer = Input.GetAxis("Horizontal");
         steer = Mathf.Clamp(steer, -1, 1);
         kartScript.SetSteer(steer);
-        
+
         //weapons
-        
+
 
         //debug
         if (debugMode)
@@ -56,12 +56,12 @@ public class KartInput : MonoBehaviour
                 PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);
             }
 
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetButtonDown("Exit"))
             {
-                MenuSettings.OpenMenu();
+                    MenuSettings.OpenMenu();
             }
         }
-	}
+    }
 
     public void DisableInput()
     {
