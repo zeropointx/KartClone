@@ -21,7 +21,15 @@ public class Gamemode : NetworkBehaviour {
     {
        hud =  GameObject.Instantiate(HUDPrefab);
        startTimerText = hud.transform.Find("StartTimerText").gameObject;
-
+       Lobby lobby = GameObject.Find("Lobby").GetComponent<Lobby>();
+        for(int i = 0; i < lobby.players.Count; i++)
+        {
+            var stuff = lobby.players[i].GetComponent<MyNetworkLobbyPlayer>().netId.Value;
+         //        GameObject player = ClientScene.FindLocalObject(lobby.players[i].n);
+        //    Gamemode.Player p = new Gamemode.Player(-1, player);
+        //    AddPlayer(player);
+        }
+      
     }
     public enum State
     {

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class PlayerList : NetworkBehaviour {
-
+    public List<uint> players = new List<uint>();
 	// Use this for initialization
 	void Start () {
         DontDestroyOnLoad(gameObject);
@@ -17,7 +18,7 @@ public class PlayerList : NetworkBehaviour {
 	}
     public void SendPlayerInfo(uint[] players)
     {
-        if(isServer)
+       // if(isServer)
         RpcSendPlayerInfo(players);
         SendPlayerInfoHärpäke(players);
 
@@ -43,4 +44,9 @@ public class PlayerList : NetworkBehaviour {
 
 
 
+
+    public void SendPlayerInfo()
+    {
+        SendPlayerInfo(GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>().GetPlayers());
+    }
 }

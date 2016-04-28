@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking.NetworkSystem;
 
 public class Lobby : MonoBehaviour {
-
+    NetworkClient client = null;
     public GameObject listEntryObject = null;
 
     public MyNetworkLobbyManager lobbyManager = null;
@@ -17,7 +18,7 @@ public class Lobby : MonoBehaviour {
     public const int listEntrySpacing = 48;
 
     private LobbyMenu menu;
-
+   // const short messageId = 1337;
 	// Use this for initialization
     void Start () 
     {
@@ -41,10 +42,23 @@ public class Lobby : MonoBehaviour {
             //GameObject.Find("StartGameButton").GetComponent<Button>().interactable = false;
             //GameObject.Find("StartGameButton").SetActive(false);
             lobbyManager.networkAddress = ServerInfo.ip;
-            lobbyManager.StartClient();
+            client = lobbyManager.StartClient();
+ //           client.RegisterHandler(messageId, Test);
         }
 	}
-	
+    /*
+    void Test(NetworkMessage netMsg)
+    {
+        var beginMessage = netMsg.ReadMessage<StringMessage>();
+        Debug.Log("RECEIVED:: OnServerReadyToBeginMessageClient " + beginMessage.value);
+        uint[] players = new uint[beginMessage.value.Length];
+        for(int i = 0; i < beginMessage.value.Length; i++)
+        {
+            players[i] = (uint)beginMessage.value[i];
+        }
+        GameObject.Find("PlayerList").GetComponent<PlayerList>().SendPlayerInfoHärpäke(players);
+    }*/
+
 	// Update is called once per frame
 	void Update () 
     {

@@ -80,6 +80,7 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
     public void StartGame()
     {
         base.SendReadyToBeginMessage();
+        GameObject.Find("PlayerList").GetComponent<PlayerList>().SendPlayerInfo();
         /*
         var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
         if (base.isLocalPlayer)

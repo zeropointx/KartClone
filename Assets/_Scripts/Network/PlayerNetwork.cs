@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 
 public class PlayerNetwork : NetworkBehaviour
 {
@@ -26,20 +27,12 @@ public class PlayerNetwork : NetworkBehaviour
          
         }
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
-      
 
 
-    }
-    public void RequestPlayerList()
-    {
-        CmdRequestPlayerList();
-    }
-    [Command]
-    public void CmdRequestPlayerList()
-    {
 
-        GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>().SendPlayerInfo();
+    
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -49,7 +42,6 @@ public class PlayerNetwork : NetworkBehaviour
             GameObject gamemode = GameObject.Find("Gamemode");
             if (gamemode != null)
             {
-                 RequestPlayerList();
               //  NetworkConnection conn = MyNetworkLobbyManager.GetConnectionFromGameObject(gameObject);
               //  gamemode.GetComponent<Gamemode>().AddPlayer(new Gamemode.Player(-1, gameObject));
                 initialized = true;

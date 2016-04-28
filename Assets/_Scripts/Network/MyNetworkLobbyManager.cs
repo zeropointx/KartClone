@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking.NetworkSystem;
 
 public class MyNetworkLobbyManager : NetworkLobbyManager
 {
@@ -14,9 +15,12 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
     public int minPlayerCountToStart = 1;
     public List<NetworkConnection> connections = new List<NetworkConnection>();
     public bool playerListUpdated = false;
+   // const short messageId = 1337;
     public void Start()
     {
         debugMessages = true;
+        
+
     }
     void DebugMessage(string message)
     {
@@ -31,16 +35,6 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
             return GetPlayerCount();
         }
     }
-    /*
-    public static NetworkConnection GetConnectionFromGameObject(GameObject g)
-    {
-        for (int i = 0; i < networkLobbyManagerInstance.connections.Count; i++)
-        {
-            if (networkLobbyManagerInstance.connections[i].playerControllers[0].gameObject == g)
-                return networkLobbyManagerInstance.connections[i];
-        }
-        return null;
-    }*/
 
     public List<NetworkConnection> GetConnections()
     {
@@ -71,19 +65,22 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
         playerListUpdated = true;
         gameMode.RemovePlayer(conn.playerControllers[0].gameObject);
     }
-
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
+
+
+
         DebugMessage("Player connected! Current players " + playerCount);
         if (conn.address != "localServer")
         {
             AddPlayer(conn);
         }
         DebugMessage("Player added! Current players " + playerCount);
-        if(SceneManager.GetActiveScene().name != "Lobby")
-        SendPlayerInfo();
+ 
+     //   SendPlayerInfo(conn);
     }
+
 
     public override void OnServerDisconnect(NetworkConnection conn)
     {
@@ -120,17 +117,26 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
         base.OnServerSceneChanged(sceneName);
         DebugMessage("SceneChanged: " + sceneName);
     }
-    public void SendPlayerInfo()
+   /* public void SendPlayerInfo(NetworkConnection conn)
+    {
+        string playerString = "";
+        for (int i = 0; i < connections.Count; i++)
+        {
+            playerString += (char)connections[i].playerControllers[0].gameObject.GetComponent<NetworkIdentity>().netId.Value;
+        }
+
+        var msg = new StringMessage();
+       // conn.Send(messageId, msg);
+        DebugMessage("Players updated for clients");
+    }*/
+    public uint[] GetPlayers()
     {
         uint[] players = new uint[connections.Count];
         for (int i = 0; i < connections.Count; i++)
         {
-            players[i] = connections[i].playerControllers[0].gameObject.GetComponent<NetworkIdentity>().netId.Value;
+            players[i] += (char)connections[i].playerControllers[0].gameObject.GetComponent<NetworkIdentity>().netId.Value;
         }
-        Lobby lobby = transform.GetComponent<Lobby>();
-
-        GameObject.Find("Blank").GetComponent<PlayerList>().SendPlayerInfo(players);
-        DebugMessage("Players updated for clients");
+        return players;
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
