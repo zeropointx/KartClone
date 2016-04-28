@@ -9,12 +9,14 @@ public class Lobby : MonoBehaviour {
 
     public GameObject listEntryObject = null;
 
-    MyNetworkLobbyManager lobbyManager = null;
-    MyNetworkLobbyPlayer lobbyPlayer = null;
-    private List<GameObject> players = new List<GameObject>();
-    private GameObject buttonText = null;
-    private GameObject lobbyPlayerList = null;
-    private const int listEntrySpacing = 48;
+    public MyNetworkLobbyManager lobbyManager = null;
+    public MyNetworkLobbyPlayer lobbyPlayer = null;
+    public List<GameObject> players = new List<GameObject>();
+    public GameObject buttonText = null;
+    public GameObject lobbyPlayerList = null;
+    public const int listEntrySpacing = 48;
+
+    private LobbyMenu menu;
 
 	// Use this for initialization
     void Start () 
@@ -25,6 +27,7 @@ public class Lobby : MonoBehaviour {
         lobbyManager.showLobbyGUI = true;
         buttonText = GameObject.Find("ReadyText");
         lobbyPlayerList = GameObject.Find("LobbyPlayerList");
+        menu = transform.FindChild("LobbyUI").GetComponent<LobbyMenu>();
 
         lobbyManager.showLobbyUI = true;
         if (ServerInfo.hosting)
@@ -45,22 +48,34 @@ public class Lobby : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        //UpdateList();
+        
 	}
 
     public void OnGUI()
     {
-        if (!lobbyManager.showLobbyGUI)
+        if (menu != null)
+            menu.UpdateList();
+        /*
+        if (lobbyManager != null)
+        {
+            if (!lobbyManager.showLobbyGUI)
+                return;
+        }
+        else
             return;
 
         if (lobbyPlayer == null)
         {
             var temp = GameObject.Find("LobbyPlayer(Clone)");
-            if (temp != null)   
+            if (temp != null)
+            {
                 lobbyPlayer = temp.GetComponent<MyNetworkLobbyPlayer>();
+            }
         }
         else
         {
+            if (!lobbyPlayer.showLobbyGUI)
+                return;
             if (!lobbyPlayer.isLocalPlayer)
             {
                 if (lobbyPlayer.readyToBegin)
@@ -73,6 +88,12 @@ public class Lobby : MonoBehaviour {
                 buttonText.GetComponent<Text>().text = "Start game";
             }
         }
+        */
+    }
+
+    public void DisableUI()
+    {
+        Destroy(transform.FindChild("LobbyUI").gameObject);
     }
 
     public void KickPlayer()
@@ -82,10 +103,11 @@ public class Lobby : MonoBehaviour {
 
     public void ToggleReady()
     {
+        /*
         lobbyPlayer.ToggleReady();
         if (lobbyPlayer.readyToBegin)
             lobbyManager.showLobbyGUI = false;
-        /*
+        */
         if (lobbyPlayer.isLocalPlayer)
         {
             Debug.Log("start");
@@ -94,13 +116,13 @@ public class Lobby : MonoBehaviour {
         else
         {
             Debug.Log("toggle ready");
-            lobbyPlayer.ToggleReady();
+            lobbyPlayer.CmdToggleReady(!lobbyPlayer.readyInLobby);
         }
-         * */
     }
 
     public void UpdateList()
     {
+        /*
         for(int i = 0; i < lobbyPlayerList.transform.childCount; i++)
         {
             Destroy(lobbyPlayerList.transform.GetChild(i).gameObject);
@@ -113,7 +135,7 @@ public class Lobby : MonoBehaviour {
             string label = "id " + mnlb.netId.Value + " | ";
             if (mnlb.isLocalPlayer)
                 label += "local player | ";
-            label += mnlb.readyToBegin ? "Ready!" : "Not ready!";
+            label += mnlb.readyInLobby ? "Ready!" : "Not ready!";
             
             GameObject listEntry = (GameObject)Instantiate(listEntryObject, listEntryObject.transform.position, listEntryObject.transform.rotation);
             listEntry.transform.SetParent(lobbyPlayerList.transform, false);
@@ -121,6 +143,7 @@ public class Lobby : MonoBehaviour {
             listEntry.transform.localPosition += new Vector3(0, j * listEntrySpacing, 0);
             j--;
         }
+         */
     }
 
     public void AddGameObject(GameObject g)

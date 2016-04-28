@@ -60,7 +60,7 @@ MonoBehaviour:
     i14: 199
     i15: 176
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &11432682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowLobbyGUI: 1
-  ShowMahGUI: 1
+  readyInLobby: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

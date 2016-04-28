@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
 {
+    public bool showLobbyGUI = false;
 
-    [SerializeField]
-    //public bool showPlayerUI = true;
+    [SyncVar]
+    public bool readyInLobby = false;
+
+    private MyNetworkLobbyManager lobbyManager;
 
     void OnGUI()
     {
@@ -15,7 +18,7 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         if (!showPlayerUI)
             return;
         */
-        var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
+        lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
         if (lobbyManager)
         {
             if (SceneManager.GetActiveScene().name != lobbyManager.lobbyScene)
@@ -71,11 +74,13 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
     void Awake()
     {
         GameObject.Find("Lobby").GetComponent<Lobby>().AddGameObject(gameObject);
+        readyInLobby = false;
     }
 
-    /*
     public void StartGame()
     {
+        base.SendReadyToBeginMessage();
+        /*
         var lobbyManager = NetworkManager.singleton as MyNetworkLobbyManager;
         if (base.isLocalPlayer)
         {
@@ -84,11 +89,22 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         }
         else
             Debug.Log("Only host can start the game!");
+        */
     }
-    */
 
-    public void ToggleReady()
+    public void Update()
     {
+        if (lobbyManager != null)
+        {
+            showLobbyGUI = lobbyManager.showLobbyGUI;
+        }
+    }
+
+    [Command]
+    public void CmdToggleReady(bool value)
+    {
+        SetReadyInLobby(value);
+        /*
         if (base.isLocalPlayer)
         {
             if (base.readyToBegin)
@@ -99,6 +115,11 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
             Debug.Log("Toggle ready, current value: " + temp);
         }
         Debug.Log("Only local player can send readytobeginmessage!");
+         */
+    }
+    private void SetReadyInLobby(bool value)
+    {
+        readyInLobby = value;
     }
 
     public void KickPlayer()

@@ -96,7 +96,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
 
     public override void OnClientConnect(NetworkConnection conn)
     {
-        base.OnClientConnect(conn);
+        //base.OnClientConnect(conn);
         DebugMessage("Client connected! Current players " + playerCount);
 
     }
@@ -116,6 +116,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager
 
     public override void OnServerSceneChanged(string sceneName)
     {
+        GameObject.Find("Lobby").GetComponent<Lobby>().DisableUI();
         base.OnServerSceneChanged(sceneName);
         DebugMessage("SceneChanged: " + sceneName);
     }
