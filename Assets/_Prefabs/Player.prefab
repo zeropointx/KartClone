@@ -125,7 +125,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!65 &6540910
@@ -309,8 +309,8 @@ MonoBehaviour:
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 2
   m_SyncSpin: 1
-  m_MovementTheshold: 0.001
-  m_SnapThreshold: 5
+  m_MovementTheshold: 0.1
+  m_SnapThreshold: 20
   m_InterpolateRotation: 50
   m_InterpolateMovement: 1
 --- !u!114 &11497526
