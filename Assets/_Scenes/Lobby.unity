@@ -1027,6 +1027,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2351,6 +2352,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -3201,6 +3203,8 @@ MonoBehaviour:
     - m_Text: BananaCart
       m_Image: {fileID: 0}
     - m_Text: roadwarrior
+      m_Image: {fileID: 0}
+    - m_Text: carriage
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4838,7 +4842,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11459290, guid: c39463b7eec1b37459992ae408876b52, type: 2}
       propertyPath: m_Options.m_Options.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 22444042, guid: c39463b7eec1b37459992ae408876b52, type: 2}
       propertyPath: m_LocalPosition.x
@@ -4923,6 +4927,10 @@ Prefab:
     - target: {fileID: 11459290, guid: c39463b7eec1b37459992ae408876b52, type: 2}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
       value: roadwarrior
+      objectReference: {fileID: 0}
+    - target: {fileID: 11459290, guid: c39463b7eec1b37459992ae408876b52, type: 2}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: carriage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c39463b7eec1b37459992ae408876b52, type: 2}
@@ -5753,6 +5761,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

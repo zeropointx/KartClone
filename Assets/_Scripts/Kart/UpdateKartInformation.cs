@@ -6,7 +6,7 @@ public class UpdateKartInformation : MonoBehaviour {
     KartBehaviour KB;   // Local KartBehaviour
     GameObject Kart;    // 
 
-    public GameObject ShoppingKart, BananaKart, roadwarrior; //Kart models
+    public GameObject ShoppingKart, BananaKart, roadwarrior, carriage; //Kart models
     void Awake ()
     {
         KB = gameObject.GetComponent<KartBehaviour>();
@@ -23,6 +23,10 @@ public class UpdateKartInformation : MonoBehaviour {
         if (StoredKartInfo.characterID == 2)
         {
             updatePlayerComponents(roadwarrior, 65, 0.25f, 100);
+        }
+        if (StoredKartInfo.characterID == 3)
+        {
+            updatePlayerComponents(carriage, 65, 0.25f, 100);
         }
     }
 

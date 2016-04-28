@@ -45,7 +45,7 @@ public class Weapon : NetworkBehaviour
             case InventoryScript.WEAPON.BowlingBall:
                 {
                     // TODO: Fix positioning for network
-                    GameObject ball = (GameObject)Instantiate(bowlingBall, transform.position + (transform.forward * 7), transform.rotation);
+                    GameObject ball = (GameObject)Instantiate(bowlingBall, transform.position + (transform.forward * 15), transform.rotation);
                     NetworkServer.Spawn(ball);
                     break;
                 }
