@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking.NetworkSystem;
 
-public class Lobby : MonoBehaviour {
+public class Lobby : MonoBehaviour 
     NetworkClient client = null;
     public GameObject listEntryObject = null;
 
@@ -15,7 +15,6 @@ public class Lobby : MonoBehaviour {
     public List<GameObject> players = new List<GameObject>();
     public GameObject buttonText = null;
     public GameObject lobbyPlayerList = null;
-    public const int listEntrySpacing = 48;
 
     private LobbyMenu menu;
    // const short messageId = 1337;
@@ -32,15 +31,9 @@ public class Lobby : MonoBehaviour {
 
         lobbyManager.showLobbyUI = true;
         if (ServerInfo.hosting)
-        {
-            //toggleReadyText.GetComponent<Button>().interactable = false;
-            //toggleReadyText.SetActive(false);
             lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
-        }
         else
         {
-            //GameObject.Find("StartGameButton").GetComponent<Button>().interactable = false;
-            //GameObject.Find("StartGameButton").SetActive(false);
             lobbyManager.networkAddress = ServerInfo.ip;
             client = lobbyManager.StartClient();
  //           client.RegisterHandler(messageId, Test);
@@ -69,45 +62,14 @@ public class Lobby : MonoBehaviour {
     {
         if (menu != null)
             menu.UpdateList();
-        /*
-        if (lobbyManager != null)
-        {
-            if (!lobbyManager.showLobbyGUI)
-                return;
-        }
-        else
-            return;
-
-        if (lobbyPlayer == null)
-        {
-            var temp = GameObject.Find("LobbyPlayer(Clone)");
-            if (temp != null)
-            {
-                lobbyPlayer = temp.GetComponent<MyNetworkLobbyPlayer>();
-            }
-        }
-        else
-        {
-            if (!lobbyPlayer.showLobbyGUI)
-                return;
-            if (!lobbyPlayer.isLocalPlayer)
-            {
-                if (lobbyPlayer.readyToBegin)
-                    buttonText.GetComponent<Text>().text = "Ready!";
-                else
-                    buttonText.GetComponent<Text>().text = "Not ready yet!";
-            }
-            else
-            {
-                buttonText.GetComponent<Text>().text = "Start game";
-            }
-        }
-        */
     }
 
     public void DisableUI()
     {
-        Destroy(transform.FindChild("LobbyUI").gameObject);
+        if (menu != null)
+            Destroy(transform.FindChild("LobbyUI").gameObject);
+        else
+            Debug.Log("Lobby UI has already been disabled!");
     }
 
     public void KickPlayer()
@@ -117,11 +79,6 @@ public class Lobby : MonoBehaviour {
 
     public void ToggleReady()
     {
-        /*
-        lobbyPlayer.ToggleReady();
-        if (lobbyPlayer.readyToBegin)
-            lobbyManager.showLobbyGUI = false;
-        */
         if (lobbyPlayer.isLocalPlayer)
         {
             Debug.Log("start");
@@ -132,32 +89,6 @@ public class Lobby : MonoBehaviour {
             Debug.Log("toggle ready");
             lobbyPlayer.CmdToggleReady(!lobbyPlayer.readyInLobby);
         }
-    }
-
-    public void UpdateList()
-    {
-        /*
-        for(int i = 0; i < lobbyPlayerList.transform.childCount; i++)
-        {
-            Destroy(lobbyPlayerList.transform.GetChild(i).gameObject);
-        }
-
-        int j = -1;
-        foreach (var obj in players)
-        {
-            MyNetworkLobbyPlayer mnlb = obj.GetComponent<MyNetworkLobbyPlayer>();
-            string label = "id " + mnlb.netId.Value + " | ";
-            if (mnlb.isLocalPlayer)
-                label += "local player | ";
-            label += mnlb.readyInLobby ? "Ready!" : "Not ready!";
-            
-            GameObject listEntry = (GameObject)Instantiate(listEntryObject, listEntryObject.transform.position, listEntryObject.transform.rotation);
-            listEntry.transform.SetParent(lobbyPlayerList.transform, false);
-            listEntry.GetComponent<Text>().text = label;
-            listEntry.transform.localPosition += new Vector3(0, j * listEntrySpacing, 0);
-            j--;
-        }
-         */
     }
 
     public void AddGameObject(GameObject g)
@@ -183,6 +114,6 @@ public class Lobby : MonoBehaviour {
         }
         else
             players.Add(g);
-        UpdateList();
+        menu.UpdateList();
     }
 }
