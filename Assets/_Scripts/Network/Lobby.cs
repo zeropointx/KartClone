@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking.NetworkSystem;
 
-public class Lobby : MonoBehaviour 
+public class Lobby : MonoBehaviour
+{
     NetworkClient client = null;
     public GameObject listEntryObject = null;
 
