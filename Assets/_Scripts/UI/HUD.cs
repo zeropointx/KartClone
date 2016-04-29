@@ -49,7 +49,6 @@ public class HUD : MonoBehaviour {
         int placement = gamemode.getPlacement(PlayerNetwork.localPlayer);
        
         placementText.GetComponent<Text>().text = placement + getPlacementString(placement);
-        stateNameText.GetComponent<Text>().text = PlayerNetwork.localPlayer.GetComponent<KartBehaviour>().state.GetName();
 
         gamemode.checkGameFinish();
 	}
