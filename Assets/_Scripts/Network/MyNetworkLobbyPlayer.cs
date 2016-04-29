@@ -8,9 +8,13 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
     public bool showLobbyGUI = false;
 
     [SyncVar]
+    public int kartId = -1;
+
+    [SyncVar]
     public bool readyInLobby = false;
 
     private MyNetworkLobbyManager lobbyManager;
+    private LobbyPlayerScript lobbyplayerScript = null;
 
     void OnGUI()
     {
@@ -35,7 +39,7 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
     void Awake()
     {
         GameObject.Find("Lobby").GetComponent<Lobby>().AddGameObject(gameObject);
-        readyInLobby = false;
+        lobbyplayerScript = transform.GetComponent<LobbyPlayerScript>();
     }
 
     public void StartGame()
@@ -51,16 +55,13 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
         }
     }
 
-    [Command]
-    public void CmdToggleReady(bool value)
+    /*
+    public void ToggleReady()
     {
-        SetReadyInLobby(value);
+        Debug.Log("toggle ready network lobby player");
+        lobbyplayerScript.ToggleReady();
     }
-
-    private void SetReadyInLobby(bool value)
-    {
-        readyInLobby = value;
-    }
+     * */
 
     public void KickPlayer()
     {

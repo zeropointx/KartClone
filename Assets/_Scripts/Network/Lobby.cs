@@ -87,8 +87,9 @@ public class Lobby : MonoBehaviour
         }
         else
         {
-            Debug.Log("toggle ready");
-            lobbyPlayer.CmdToggleReady(!lobbyPlayer.readyInLobby);
+            Debug.Log("toggle ready lobby");
+            LobbyPlayerScript.playerScript.ToggleReady();
+            //lobbyPlayer.ToggleReady();
         }
     }
 
