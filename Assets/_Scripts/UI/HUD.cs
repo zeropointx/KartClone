@@ -48,7 +48,7 @@ public class HUD : MonoBehaviour {
         lapText.GetComponent<Text>().text = "Lap:" + PlayerNetwork.localPlayer.GetComponent<Placement>().currentLap;
         int placement = gamemode.getPlacement(PlayerNetwork.localPlayer);
        
-        placementText.GetComponent<Text>().text = placement +" "+ getPlacementString(placement);
+        placementText.GetComponent<Text>().text = placement + getPlacementString(placement);
         stateNameText.GetComponent<Text>().text = PlayerNetwork.localPlayer.GetComponent<KartBehaviour>().state.GetName();
 
         gamemode.checkGameFinish();
@@ -84,9 +84,15 @@ public class HUD : MonoBehaviour {
         if (weaponSprite == null)
             return;
         if (currentWeapon == InventoryScript.WEAPON.noWeapon)
+        {
             imageScript.changeColorAlpha(0.0f);
+            imageScript.changeColorAlphaBackground(0.0f);
+        }
         else
+        {
             imageScript.changeColorAlpha(1.0f);
+            imageScript.changeColorAlphaBackground(1.0f);
+        }
         imageScript.updateSprite(weaponSprite);
 
         uiweapon = currentWeapon;

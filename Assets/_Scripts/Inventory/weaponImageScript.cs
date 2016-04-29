@@ -15,4 +15,11 @@ public class weaponImageScript : MonoBehaviour {
         c.a = alpha;
         gameObject.GetComponent<Image>().color = c;
     }
+    public void changeColorAlphaBackground(float alpha)
+    {
+        Color c = gameObject.transform.parent.GetComponent<Image>().color;
+        c.a = alpha;
+        gameObject.transform.parent.GetComponent<Image>().color = c;
+    }
+
 }
