@@ -17,6 +17,7 @@ public class Gamemode : NetworkBehaviour {
     public State currentState;
     float startTimer = 0.0f;
     float startDelay = 2.0f;
+    bool playersInitialized = false;
     void Awake()
     {
        hud =  GameObject.Instantiate(HUDPrefab);
@@ -102,6 +103,11 @@ public class Gamemode : NetworkBehaviour {
                     startTimer += Time.deltaTime;
                     if (startTimer >= startDelay)
                         setState(State.RACING);
+                    if (startDelay - startTimer <= 1.0f && !playersInitialized && isServer)
+                    {
+                        GameObject.Find("PlayerList").GetComponent<PlayerList>().SendPlayerInfo();
+                        playersInitialized = true;
+                    }
                     startTimerText.GetComponent<Text>().text = ((int)(startDelay - startTimer)).ToString(); 
                     break;
                 }

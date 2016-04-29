@@ -41,7 +41,6 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
     public void StartGame()
     {
         base.SendReadyToBeginMessage();
-        GameObject.Find("PlayerList").GetComponent<PlayerList>().SendPlayerInfo();
     }
 
     public void Update()
