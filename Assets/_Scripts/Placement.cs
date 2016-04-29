@@ -6,7 +6,7 @@ public class Placement : MonoBehaviour
 {
     public int currentLap = 0;              // Local players current lap
     public int currentCheckPointIndex = 0;  // Local players current checkpoint
-
+    int finalPlacement = 0;
     public GameObject miniMapObject;
 
     // These are fetched from the track information

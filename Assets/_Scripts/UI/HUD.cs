@@ -45,7 +45,7 @@ public class HUD : MonoBehaviour {
           InventoryScript.WEAPON currentWeapon = PlayerNetwork.localPlayer.GetComponent<InventoryScript>().currentWeapon;
         if(currentWeapon != uiweapon)
             updateWeaponTexture(currentWeapon);
-        lapText.GetComponent<Text>().text = "Lap:" + PlayerNetwork.localPlayer.GetComponent<Placement>().currentLap + "\\" + track.GetComponent<TrackInformation>().lapAmount;
+        lapText.GetComponent<Text>().text = "Lap:" + PlayerNetwork.localPlayer.GetComponent<Placement>().currentLap;
         int placement = gamemode.getPlacement(PlayerNetwork.localPlayer);
        
         placementText.GetComponent<Text>().text = placement +" "+ getPlacementString(placement);
