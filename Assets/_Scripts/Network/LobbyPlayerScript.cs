@@ -27,7 +27,9 @@ public class LobbyPlayerScript : NetworkBehaviour
     void Update()
     {
         if (lobbyPlayer == null)
+        {
             lobbyPlayer = transform.GetComponent<MyNetworkLobbyPlayer>();
+        }
     }
 
     public void ToggleReady()

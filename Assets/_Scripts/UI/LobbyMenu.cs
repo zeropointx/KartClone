@@ -1,6 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
+
+public class LobbyPlayerComparer : IComparer<GameObject>
+{
+    public int Compare(GameObject a, GameObject b)
+    {
+        if (a.GetComponent<MyNetworkLobbyPlayer>().isLocalPlayer)
+            return -1;
+        if (b.GetComponent<MyNetworkLobbyPlayer>().isLocalPlayer)
+            return 1;
+        return 0;
+    }
+}
 
 public class LobbyMenu : MonoBehaviour
 {
@@ -14,7 +27,7 @@ public class LobbyMenu : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        lobbyScript = transform.parent.GetComponent<Lobby>();
+        lobbyScript = transform.parent.GetComponent<Lobby>();            
     }
 
     // Update is called once per frame
@@ -41,14 +54,24 @@ public class LobbyMenu : MonoBehaviour
                 lobbyScript.lobbyPlayer = temp.GetComponent<MyNetworkLobbyPlayer>();
             }
         }
+        else
+        {
+            if (!lobbyScript.lobbyPlayer.isLocalPlayer || !everyoneReady)
+                lobbyScript.startButton.SetActive(false);
+            else
+                lobbyScript.startButton.SetActive(true);
+        }
     }
 
     public void UpdateList()
     {
+        //clear list
         for (int i = 0; i < lobbyScript.lobbyPlayerList.transform.childCount; i++)
         {
             Destroy(lobbyScript.lobbyPlayerList.transform.GetChild(i).gameObject);
         }
+
+        lobbyScript.players.Sort(new LobbyPlayerComparer());
 
         int j = -1;
         int readyCount = 0;

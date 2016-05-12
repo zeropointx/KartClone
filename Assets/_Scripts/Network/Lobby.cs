@@ -15,9 +15,10 @@ public class Lobby : MonoBehaviour
     public MyNetworkLobbyPlayer lobbyPlayer = null;
     public List<GameObject> players = new List<GameObject>();
     public GameObject lobbyPlayerList = null;
+    public GameObject startButton = null;
 
     private LobbyMenu menu;
-   // const short messageId = 1337;
+
 	// Use this for initialization
     void Start () 
     {
@@ -27,15 +28,17 @@ public class Lobby : MonoBehaviour
         lobbyManager.showLobbyGUI = true;
         lobbyPlayerList = GameObject.Find("LobbyPlayerList");
         menu = transform.FindChild("LobbyUI").GetComponent<LobbyMenu>();
+        startButton = GameObject.Find("StartButton");
 
         lobbyManager.showLobbyUI = true;
         if (ServerInfo.hosting)
-            lobbyManager.GetComponent<NetworkLobbyManager>().StartHost();
+        {
+            lobbyManager.StartHost();
+        }
         else
         {
             lobbyManager.networkAddress = ServerInfo.ip;
             client = lobbyManager.StartClient();
- //           client.RegisterHandler(messageId, Test);
         }
 	}
     /*
