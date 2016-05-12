@@ -12,6 +12,12 @@ ModelImporter:
     100008: Cube.004
     100010: Cube.005
     100012: //RootNode
+    100014: HandLeft
+    100016: HandRight
+    100018: Head
+    100020: LegLeft
+    100022: LegRight
+    100024: Torso
     400000: Cube
     400002: Cube.001
     400004: Cube.002
@@ -19,24 +25,48 @@ ModelImporter:
     400008: Cube.004
     400010: Cube.005
     400012: //RootNode
+    400014: HandLeft
+    400016: HandRight
+    400018: Head
+    400020: LegLeft
+    400022: LegRight
+    400024: Torso
     2300000: Cube
     2300002: Cube.001
     2300004: Cube.002
     2300006: Cube.003
     2300008: Cube.004
     2300010: Cube.005
+    2300012: HandLeft
+    2300014: HandRight
+    2300016: Head
+    2300018: LegLeft
+    2300020: LegRight
+    2300022: Torso
     3300000: Cube
     3300002: Cube.001
     3300004: Cube.002
     3300006: Cube.003
     3300008: Cube.004
     3300010: Cube.005
+    3300012: HandLeft
+    3300014: HandRight
+    3300016: Head
+    3300018: LegLeft
+    3300020: LegRight
+    3300022: Torso
     4300000: Cube.005
     4300002: Cube.004
     4300004: Cube.003
     4300006: Cube.002
     4300008: Cube.001
     4300010: Cube
+    4300012: LegRight
+    4300014: LegLeft
+    4300016: HandLeft
+    4300018: HandRight
+    4300020: Head
+    4300022: Torso
   materials:
     importMaterials: 1
     materialName: 0
