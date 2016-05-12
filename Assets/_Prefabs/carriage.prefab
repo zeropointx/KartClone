@@ -258,6 +258,7 @@ GameObject:
   - 4: {fileID: 485296}
   - 65: {fileID: 6599464}
   - 114: {fileID: 11494896}
+  - 95: {fileID: 9545014}
   m_Layer: 0
   m_Name: carriage
   m_TagString: kartModel
@@ -2446,7 +2447,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.155462, y: 212.83, z: -251.78}
+  m_LocalPosition: {x: -205.7477, y: -21.121002, z: -251.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426996}
@@ -3165,6 +3166,23 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 9b59a303d484c584185c1ef5b2c343cf, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &9545014
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116258}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e7c31737547ed548adca7bca63b373c, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
