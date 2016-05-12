@@ -314,6 +314,6 @@ public class KartBehaviour : MonoBehaviour
     void turnWheels()
     {
         for (int i = 0; kartInformation.frontWheels.Length > i; i++ )
-            kartInformation.frontWheels[i].transform.localRotation = Quaternion.Euler(new Vector3(0, 0, steeringWheel * 45));
+            kartInformation.frontWheels[i].transform.localRotation = Quaternion.Euler(new Vector3(270, 90 + steeringWheel * 35, 0 ));
     }
 }
