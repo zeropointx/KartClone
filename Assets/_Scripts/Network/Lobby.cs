@@ -14,7 +14,6 @@ public class Lobby : MonoBehaviour
     public MyNetworkLobbyManager lobbyManager = null;
     public MyNetworkLobbyPlayer lobbyPlayer = null;
     public List<GameObject> players = new List<GameObject>();
-    public GameObject buttonText = null;
     public GameObject lobbyPlayerList = null;
 
     private LobbyMenu menu;
@@ -26,7 +25,6 @@ public class Lobby : MonoBehaviour
 
         MyNetworkLobbyManager.networkLobbyManagerInstance = lobbyManager;
         lobbyManager.showLobbyGUI = true;
-        buttonText = GameObject.Find("ReadyText");
         lobbyPlayerList = GameObject.Find("LobbyPlayerList");
         menu = transform.FindChild("LobbyUI").GetComponent<LobbyMenu>();
 
@@ -73,24 +71,24 @@ public class Lobby : MonoBehaviour
             Debug.Log("Lobby UI has already been disabled!");
     }
 
-    public void KickPlayer()
+    public void StartGame()
     {
-        //Debug.Log("kicked " + playersInLobby.options[playersInLobby.value].text);
+        if (lobbyPlayer.isLocalPlayer)
+        {
+            Debug.Log("start button pressed");
+            if (menu.everyoneReady)
+                lobbyPlayer.StartGame();
+            else
+                Debug.Log("Wait for clients to get ready!");
+        }
+        else
+            Debug.Log("Only host can start the game!");
     }
 
     public void ToggleReady()
     {
-        if (lobbyPlayer.isLocalPlayer)
-        {
-            Debug.Log("start");
-            lobbyPlayer.StartGame();
-        }
-        else
-        {
-            Debug.Log("toggle ready lobby");
-            LobbyPlayerScript.playerScript.ToggleReady();
-            //lobbyPlayer.ToggleReady();
-        }
+        Debug.Log("toggle ready lobby pressed");
+        LobbyPlayerScript.playerScript.ToggleReady();
     }
 
     public void AddGameObject(GameObject g)

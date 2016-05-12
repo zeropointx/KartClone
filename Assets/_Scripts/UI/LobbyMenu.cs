@@ -8,7 +8,8 @@ public class LobbyMenu : MonoBehaviour
     public bool enabled = true;
 
     private Lobby lobbyScript = null;
-    const int listEntrySpacing = 48;
+    private const int listEntrySpacing = 48;
+    public bool everyoneReady = false;
 
     // Use this for initialization
     void Start()
@@ -40,22 +41,6 @@ public class LobbyMenu : MonoBehaviour
                 lobbyScript.lobbyPlayer = temp.GetComponent<MyNetworkLobbyPlayer>();
             }
         }
-        else
-        {
-            if (!lobbyScript.lobbyPlayer.showLobbyGUI)
-                return;
-            if (!lobbyScript.lobbyPlayer.isLocalPlayer)
-            {
-                if (lobbyScript.lobbyPlayer.readyToBegin)
-                    lobbyScript.buttonText.GetComponent<Text>().text = "Ready!";
-                else
-                    lobbyScript.buttonText.GetComponent<Text>().text = "Not ready yet!";
-            }
-            else
-            {
-                lobbyScript.buttonText.GetComponent<Text>().text = "Start game";
-            }
-        }
     }
 
     public void UpdateList()
@@ -66,6 +51,7 @@ public class LobbyMenu : MonoBehaviour
         }
 
         int j = -1;
+        int readyCount = 0;
         foreach (var obj in lobbyScript.players)
         {
             MyNetworkLobbyPlayer mnlb = obj.GetComponent<MyNetworkLobbyPlayer>();
@@ -73,6 +59,7 @@ public class LobbyMenu : MonoBehaviour
             if (mnlb.isLocalPlayer)
                 label += "local player | ";
             label += mnlb.readyInLobby ? "Ready!" : "Not ready!";
+            readyCount += mnlb.readyInLobby ? 1 : 0;
 
             GameObject listEntry = (GameObject)Instantiate(lobbyScript.listEntryObject, lobbyScript.listEntryObject.transform.position, lobbyScript.listEntryObject.transform.rotation);
             listEntry.transform.SetParent(lobbyScript.lobbyPlayerList.transform, false);
@@ -80,5 +67,6 @@ public class LobbyMenu : MonoBehaviour
             listEntry.transform.localPosition += new Vector3(0, j * listEntrySpacing, 0);
             j--;
         }
+        everyoneReady = (readyCount == lobbyScript.players.Count);
     }
 }

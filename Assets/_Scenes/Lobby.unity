@@ -964,6 +964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabled: 1
+  everyoneReady: 0
 --- !u!1 &198915785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2850,12 +2851,12 @@ GameObject:
   - 114: {fileID: 954044250}
   - 114: {fileID: 954044249}
   m_Layer: 5
-  m_Name: KickPlayerButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &954044248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2869,9 +2870,9 @@ RectTransform:
   - {fileID: 1949226420}
   m_Father: {fileID: 1574114732}
   m_RootOrder: 2
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -192, y: 192}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 192, y: 64}
   m_SizeDelta: {x: 256, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &954044249
@@ -2914,7 +2915,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1059956786}
-        m_MethodName: KickPlayer
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5443,7 +5444,7 @@ GameObject:
   - 222: {fileID: 1949226422}
   - 114: {fileID: 1949226421}
   m_Layer: 5
-  m_Name: KickPlayerText
+  m_Name: StartButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5498,7 +5499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Kick Player
+  m_Text: Start Game
 --- !u!222 &1949226422
 CanvasRenderer:
   m_ObjectHideFlags: 0
