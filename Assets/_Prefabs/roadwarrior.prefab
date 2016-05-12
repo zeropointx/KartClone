@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140960cbafb33084fab9fedbe7b03d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniMapIcon: {fileID: 21300000, guid: 23aca18671a7d434a8795f190d5c2d65, type: 3}
+  miniMapIcon: {fileID: 21300000, guid: cb9d0d1464ebc8040adfe191c1a6b480, type: 3}
 --- !u!137 &13786418
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
