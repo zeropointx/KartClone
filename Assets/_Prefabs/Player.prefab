@@ -29,7 +29,6 @@ GameObject:
   - 4: {fileID: 486254}
   - 114: {fileID: 11448676}
   - 114: {fileID: 11440818}
-  - 114: {fileID: 11408312}
   - 114: {fileID: 11451734}
   - 114: {fileID: 11467998}
   - 114: {fileID: 11481806}
@@ -39,6 +38,7 @@ GameObject:
   - 54: {fileID: 5458482}
   - 65: {fileID: 6540910}
   - 45: {fileID: 4574200}
+  - 114: {fileID: 11467518}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -154,46 +154,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158392}
   m_Enabled: 1
---- !u!114 &11408312
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58095763a6dcc8b4191c99312f5892c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  steeringWheel: 0
-  pedal: 0
-  speed: 0
-  currentTextureSpeedModifier: 0
-  defaultMaxSpeed: 0
-  maxSpeedChange: 0
-  maxSpeed: 0
-  maxReverse: 0
-  turnSpeed: 0
-  acceleration: 0
-  brakeForce: 0
-  engineDeceleration: 0
-  spinSpeed: 250
-  stabilizeTorqueForce: 0
-  drifting: 0
-  lastTextureName: 
-  jumpLimit: 0
-  mainCamera: {fileID: 0}
-  rigidbody: {fileID: 0}
-  boxCollider: {fileID: 0}
-  pw: {fileID: 0}
-  groundNormal: {x: 0, y: 0, z: 0}
-  groundDistance: 0
-  lastTrackPosition: {x: 0, y: 0, z: 0}
-  originalRotation: {x: 0, y: 0, z: 0, w: 0}
-  childKart: {fileID: 0}
-  defaultCameraPos: {x: 0, y: 0, z: 0}
-  targetCameraPos: {x: 0, y: 0, z: 0}
-  currentCameraState: 1
 --- !u!114 &11410198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc2cc8c436f4404d9a963f26c5c7d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KB: {fileID: 0}
   ShoppingKart: {fileID: 102352, guid: c5deb6ad58c037f42b9698e91defdf24, type: 2}
   BananaKart: {fileID: 103766, guid: ff84e26a96dbfa3469ff5106dd86c9d7, type: 2}
   roadwarrior: {fileID: 102352, guid: ebcece82773468a4d8ecbd016f36aaee, type: 2}
@@ -282,6 +243,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInputEnabled: 0
   debugMode: 0
+--- !u!114 &11467518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58095763a6dcc8b4191c99312f5892c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steeringWheel: 0
+  pedal: 0
+  speed: 0
+  currentTextureSpeedModifier: 0
+  defaultMaxSpeed: 0
+  maxSpeedChange: 0
+  maxSpeed: 0
+  maxReverse: 0
+  turnSpeed: 0
+  acceleration: 0
+  brakeForce: 0
+  engineDeceleration: 0
+  spinSpeed: 250
+  stabilizeTorqueForce: 0
+  drifting: 0
+  lastTextureName: 
+  jumpLimit: 0
+  mainCamera: {fileID: 0}
+  rigidbody: {fileID: 0}
+  boxCollider: {fileID: 0}
+  pw: {fileID: 0}
+  groundNormal: {x: 0, y: 0, z: 0}
+  groundDistance: 0
+  lastTrackPosition: {x: 0, y: 0, z: 0}
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
+  childKart: {fileID: 0}
+  defaultCameraPos: {x: 0, y: 0, z: 0}
+  targetCameraPos: {x: 0, y: 0, z: 0}
+  currentCameraState: 1
 --- !u!114 &11467998
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -86,7 +86,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLobbyGUI: 1
   showLobbyGUI: 0
+  kartId: 0
   readyInLobby: 0
+  kart: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

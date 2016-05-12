@@ -10,7 +10,7 @@ public class PlayerNetwork : NetworkBehaviour
     bool initialized = false;
     public StatusEffectHandler statusEffectHandler;
     public static GameObject localPlayer = null;
-
+    public
     //minimap
     void Start()
     {
@@ -29,8 +29,6 @@ public class PlayerNetwork : NetworkBehaviour
         networkManager = GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>();
 
 
-
-    
     }
 
     // Update is called once per frame

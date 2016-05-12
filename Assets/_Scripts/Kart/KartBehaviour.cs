@@ -46,7 +46,8 @@ public class KartBehaviour : MonoBehaviour
     float stabilizeTimer = 0.0f;
     float stabilizedelay = 1.0f;
     // Use this for initialization
-    void Start()
+    bool lateInitialized = false;
+    void LateInitialize()
     {
         defaultCameraPos = transform.Find("Main Camera").localPosition;
         targetCameraPos = defaultCameraPos;
@@ -78,11 +79,19 @@ public class KartBehaviour : MonoBehaviour
 
         childKart.localPosition = new Vector3(0, 0, 0);
         childKart.localEulerAngles = new Vector3(0, -90, 0);
+        lateInitialized = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!lateInitialized)
+        {
+            if (transform.Find("Kart") != null)
+                LateInitialize();
+            else
+                return;
+        }
         if (networkState != null)
         {
             state = networkState;
@@ -112,19 +121,25 @@ public class KartBehaviour : MonoBehaviour
     }
 
     void LateUpdate()
-    {   
+    {
+        if (!lateInitialized)
+            return;
         if (!(state is Frozen))
             mainCamera.transform.LookAt(childKart.transform);
     }
 
     void FixedUpdate()
     {
+        if (!lateInitialized)
+            return;
         UpdateGroundDistance();
         state.UpdatePhysicsState();
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (!lateInitialized)
+            return;
         state.CollisionEnter(collision);
         foreach (ContactPoint contact in collision.contacts)
         {

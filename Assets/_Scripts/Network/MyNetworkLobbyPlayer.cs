@@ -8,10 +8,12 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
     public bool showLobbyGUI = false;
 
     [SyncVar]
-    public int kartId = -1;
+    public int kartId = 0;
 
     [SyncVar]
     public bool readyInLobby = false;
+    [SyncVar]
+    public uint kartNetId = 0;
 
     private MyNetworkLobbyManager lobbyManager;
     private LobbyPlayerScript lobbyplayerScript = null;
@@ -54,23 +56,40 @@ public class MyNetworkLobbyPlayer : NetworkLobbyPlayer
             showLobbyGUI = lobbyManager.showLobbyGUI;
         }
     }
-
-    /*
-    public void ToggleReady()
+    [Command]
+    public void CmdChangeKart(int kartid)
     {
-        Debug.Log("toggle ready network lobby player");
-        lobbyplayerScript.ToggleReady();
+        this.kartId = kartid;
     }
-     * */
 
-    public void KickPlayer()
+    public static MyNetworkLobbyPlayer GetLocalLobbyPlayer()
     {
-        if (base.isLocalPlayer)
+        var players = GetLobbyPlayers();
+        foreach (MyNetworkLobbyPlayer player in players)
         {
-            ClientScene.RemovePlayer(GetComponent<NetworkIdentity>().playerControllerId);
+            if (player.isLocalPlayer)
+            {
+                return player;
+            }
         }
-        else
-            Debug.Log("Only host can kick players!");
+        return null;
+    }
+    public static MyNetworkLobbyPlayer GetLobbyPlayer(NetworkConnection conn)
+    {
+        var players = GetLobbyPlayers(); ;
+        foreach (MyNetworkLobbyPlayer player in players)
+        {
+            if (player.connectionToClient == conn)
+            {
+                return player;
+            }
+        }
+        return null;
+    }
+    public static MyNetworkLobbyPlayer[] GetLobbyPlayers()
+    {
+        return GameObject.FindObjectsOfType<MyNetworkLobbyPlayer>();
+
     }
 
 }

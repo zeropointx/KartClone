@@ -53,6 +53,8 @@ public class LobbySettings : MonoBehaviour
 
     public void ChangeCurrentCharacter(int number)
     {
-        StoredKartInfo.characterID = number;
+       var localPlayer = MyNetworkLobbyPlayer.GetLocalLobbyPlayer();
+       localPlayer.CmdChangeKart(number);
     }
+
 }
