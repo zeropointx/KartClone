@@ -33,7 +33,7 @@ public class KartBehaviour : MonoBehaviour
 
     public Quaternion originalRotation;
     public Transform childKart;
-
+    public KartInformation kartInformation;
 
     //Camera
     public Vector3 defaultCameraPos;
@@ -55,6 +55,7 @@ public class KartBehaviour : MonoBehaviour
         originalRotation = childKart.transform.localRotation;
         rigidbody = gameObject.GetComponent<Rigidbody>();
         boxCollider = gameObject.GetComponent<BoxCollider>();
+        kartInformation = gameObject.transform.Find("Kart").GetComponent<KartInformation>();
 
         //stats
         defaultMaxSpeed = 65;
@@ -109,6 +110,8 @@ public class KartBehaviour : MonoBehaviour
         {
             Reset(0, true);
         }
+
+        turnWheels();
     }
 
     void LateUpdate()
@@ -306,5 +309,11 @@ public class KartBehaviour : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    void turnWheels()
+    {
+        for (int i = 0; kartInformation.frontWheels.Length > i; i++ )
+            kartInformation.frontWheels[i].transform.localRotation = Quaternion.Euler(new Vector3(0, 0, steeringWheel * 45));
     }
 }

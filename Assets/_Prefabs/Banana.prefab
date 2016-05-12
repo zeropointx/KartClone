@@ -641,7 +641,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -177.6956, y: 212.63249, z: -283.9872}
+  m_LocalPosition: {x: -0.12056327, y: -3.880444, z: 0.76658154}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 460250}
@@ -1178,6 +1178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140960cbafb33084fab9fedbe7b03d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frontWheels:
+  - {fileID: 188168}
+  - {fileID: 161622}
   miniMapIcon: {fileID: 21300000, guid: 447e318156ad4ab4bbac55f5bad95de6, type: 3}
 --- !u!137 &13739888
 SkinnedMeshRenderer:
