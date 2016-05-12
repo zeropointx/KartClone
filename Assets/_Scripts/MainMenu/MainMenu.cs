@@ -64,4 +64,9 @@ public class MainMenu : MonoBehaviour {
         pinging = true;
         Debug.Log("started pinging " + ServerInfo.ip);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

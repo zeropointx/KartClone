@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 436146}
+  - 114: {fileID: 11471894}
   m_Layer: 0
   m_Name: Rfront
   m_TagString: Untagged
@@ -268,6 +269,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 408344}
+  - 114: {fileID: 11416416}
   m_Layer: 0
   m_Name: Lfront
   m_TagString: Untagged
@@ -1195,7 +1197,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -183.9853, y: 211.60616, z: -282.03833}
+  m_LocalPosition: {x: -220.25414, y: 219.9565, z: 46.17754}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 469808}
@@ -1793,6 +1795,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11416416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8650770a9df4d1b4e9eafc44fb902b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11456218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1805,6 +1818,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniMapIcon: {fileID: 21300000, guid: f61ad67f2bdca2b4ab1947157a23ebac, type: 3}
+--- !u!114 &11471894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8650770a9df4d1b4e9eafc44fb902b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &13764928
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MenuSettings : MonoBehaviour {
 
@@ -52,7 +53,10 @@ public class MenuSettings : MonoBehaviour {
 
     public void QuitGame()
     {
-        Application.Quit();
+        GameObject.Find("Lobby").GetComponent<MyNetworkLobbyManager>().StopHost();
+        Destroy(GameObject.Find("Lobby"));
+        Destroy(GameObject.Find("PlayerList"));
+        SceneManager.LoadScene("mainMenu");
     }
 
     public void Back()
