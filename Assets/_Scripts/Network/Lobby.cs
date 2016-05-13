@@ -64,7 +64,7 @@ public class Lobby : MonoBehaviour
 
     public void OnGUI()
     {
-        if (menu != null || !UIDisabled)
+        if (menu != null && !UIDisabled)
             menu.UpdateList();
     }
 
