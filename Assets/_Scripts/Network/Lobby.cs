@@ -18,6 +18,8 @@ public class Lobby : MonoBehaviour
     public GameObject startButton = null;
 
     private LobbyMenu menu;
+    [SerializeField]
+    private bool UIDisabled = false;
 
 	// Use this for initialization
     void Start () 
@@ -62,14 +64,17 @@ public class Lobby : MonoBehaviour
 
     public void OnGUI()
     {
-        if (menu != null)
+        if (menu != null || !UIDisabled)
             menu.UpdateList();
     }
 
     public void DisableUI()
     {
         if (menu != null)
+        {
             Destroy(transform.FindChild("LobbyUI").gameObject);
+            UIDisabled = true;
+        }
         else
             Debug.Log("Lobby UI has already been disabled!");
     }
