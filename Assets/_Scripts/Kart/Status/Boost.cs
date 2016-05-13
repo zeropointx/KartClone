@@ -21,7 +21,7 @@ public class Boost : StatusEffect
 
         
       //  KB.speed = KB.maxSpeed;
-        KB.rigidbody.velocity = KB.transform.forward * KB.maxSpeed;
+        KB.GetComponent<Rigidbody>().velocity = KB.transform.forward * KB.maxSpeed;
     }
     public override void RemoveEffect()
     {
