@@ -16,8 +16,8 @@ public class HitStatus : StatusEffect
         KB.maxSpeed = KB.defaultMaxSpeed + KB.maxSpeedChange;
 
         //  KB.speed = KB.maxSpeed;
-        KB.rigidbody.velocity = Vector3.zero;
-        KB.childKart.GetComponent<Animator>().SetTrigger("Hit");
+        KB.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        KB.transform.Find("Kart").GetComponent<Animator>().SetTrigger("Hit");
         KB.GetComponent<KartInput>().DisableInput();
     }
     public override void RemoveEffect()
