@@ -1,19 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
-
-public class LobbyPlayerComparer : IComparer<GameObject>
-{
-    public int Compare(GameObject a, GameObject b)
-    {
-        if (a.GetComponent<MyNetworkLobbyPlayer>().isLocalPlayer)
-            return -1;
-        if (b.GetComponent<MyNetworkLobbyPlayer>().isLocalPlayer)
-            return 1;
-        return 0;
-    }
-}
 
 public class LobbyMenu : MonoBehaviour
 {
@@ -71,7 +58,17 @@ public class LobbyMenu : MonoBehaviour
             Destroy(lobbyScript.lobbyPlayerList.transform.GetChild(i).gameObject);
         }
 
-        lobbyScript.players.Sort(new LobbyPlayerComparer());
+        //local player to top
+        for (int i = 0; i < lobbyScript.players.Count; i++)
+        {
+            var obj = lobbyScript.players[i];
+            if (obj.GetComponent<MyNetworkLobbyPlayer>().isLocalPlayer)
+            {
+                lobbyScript.players.RemoveAt(i);
+                lobbyScript.players.Insert(0, obj);
+                break;
+            }
+        }
 
         int j = -1;
         int readyCount = 0;
