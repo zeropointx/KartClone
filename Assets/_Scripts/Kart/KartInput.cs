@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class KartInput : MonoBehaviour
+public class KartInput : NetworkBehaviour
 {
     private KartBehaviour kartScript;
     public bool isInputEnabled = false;
     public bool debugMode;
-
+    public bool noclip = false;
     // Use this for initialization
     void Start()
     {
@@ -17,7 +18,8 @@ public class KartInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isInputEnabled)
+
+        if (!isInputEnabled && !noclip)
         {
             kartScript.SetPedal(0);
             kartScript.SetSteer(0);
@@ -35,7 +37,24 @@ public class KartInput : MonoBehaviour
 
         //weapons
 
+        if (Input.GetButtonDown("Exit"))
+         {
+           MenuSettings.OpenMenu();
+         }
 
+         if (Input.GetKeyDown(KeyCode.N))
+         {
+             noclip = !noclip;
+             if (noclip)
+             {
+                 ToggleUI();
+                 CmdToggleNoclip();
+                
+                 
+             }
+         }
+         if (noclip)
+             return;
         //debug
         if (debugMode)
         {
@@ -50,19 +69,47 @@ public class KartInput : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.O))
             {
-                GameObject hud = Gamemode.hud;
-                Debug.Log(hud.activeSelf);
-                hud.SetActive(!hud.activeSelf);
-                PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);
+                ToggleUI();
             }
 
-            if (Input.GetButtonDown("Exit"))
-            {
-                    MenuSettings.OpenMenu();
-            }
+
+       
         }
     }
+    [Command]
+    public void CmdToggleNoclip()
+    {
+        ToggleNoclip();
+        RpcToggleNoclip();
+    }
+    [ClientRpc]
+    public void RpcToggleNoclip()
+    {
+        ToggleNoclip();
+    }
+    public void ToggleUI()
+    {
+        GameObject hud = Gamemode.hud;
+        Debug.Log(hud.activeSelf);
+        hud.SetActive(!hud.activeSelf);
+        PlayerNetwork.localPlayer.transform.FindChild("Kart").gameObject.SetActive(hud.activeSelf);
+    }
+    public void ToggleNoclip()
+    {
+        GetComponent<KartBehaviour>().enabled = false;
+        GetComponent<UpdateKartInformation>().enabled = false;
+        GetComponent<Weapon>().enabled = false;
+        GetComponent<Placement>().enabled = false;
 
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<BoxCollider>().enabled = false;
+
+        transform.Find("Kart").gameObject.active = false;
+        gameObject.AddComponent<Noclip>();
+
+        GameObject.Find("Gamemode").GetComponent<Gamemode>().RemovePlayer(gameObject);
+    }
     public void DisableInput()
     {
         isInputEnabled = false;
